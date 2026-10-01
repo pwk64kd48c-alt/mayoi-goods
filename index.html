@@ -2,8 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>迷子グッズメーカー</title>
 
 <style>
@@ -13,468 +12,591 @@
 
 body{
   margin:0;
-  background:#fff;
-  color:#222;
+  background:#f5f5f5;
+  color:#333;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",
-  "Noto Sans JP",sans-serif;
+    "Noto Sans JP",sans-serif;
 }
 
 header{
-  padding:15px;
-  border-bottom:1px solid #eee;
   background:#fff;
-  position:sticky;
-  top:0;
-  z-index:20;
-}
-
-header h1{
-  margin:0;
+  padding:18px 16px;
+  text-align:center;
+  font-weight:bold;
   font-size:20px;
-}
-
-header p{
-  margin:4px 0 0;
-  font-size:12px;
-  color:#888;
+  border-bottom:1px solid #eee;
 }
 
 main{
   max-width:900px;
   margin:auto;
-  padding:12px;
+  padding:16px;
 }
 
-.box{
-  margin-bottom:12px;
-  padding:14px;
-  border:1px solid #eee;
-  border-radius:14px;
+section{
   background:#fff;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:16px;
 }
 
-button,
-.file-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
+h2{
+  margin:0 0 12px;
+  font-size:17px;
+}
+
+button{
   border:0;
-  border-radius:9px;
-  padding:9px 13px;
-  background:#222;
+  border-radius:10px;
+  padding:10px 14px;
+  background:#333;
   color:#fff;
-  font-weight:bold;
-  font-size:13px;
+  font-size:14px;
   cursor:pointer;
 }
 
-button.gray{
+button.sub{
   background:#eee;
-  color:#222;
+  color:#333;
 }
 
-input[type=file]{
-  display:none;
+button.danger{
+  background:#e66;
 }
 
-.small{
-  font-size:11px;
-  color:#888;
-  line-height:1.6;
+input,
+select,
+textarea{
+  font:inherit;
 }
 
-
-/* =========================
-   画像編集エリア
-========================= */
-
-#editorArea{
-  display:none;
+.file{
+  width:100%;
+  padding:10px;
+  background:#f7f7f7;
+  border-radius:10px;
 }
 
-.editor-title{
-  font-size:14px;
-  font-weight:bold;
-  margin-bottom:8px;
+.info{
+  font-size:12px;
+  color:#777;
+  line-height:1.7;
+  margin-top:8px;
 }
 
-#editor{
-  position:relative;
+/* 選択キャンバス */
+.canvas-wrap{
   width:100%;
   overflow:hidden;
-  background:#f5f5f5;
-  border-radius:8px;
-  touch-action:none;
+  border-radius:10px;
+  background:#eee;
 }
 
-#editor img{
+#selectCanvas{
   display:block;
   width:100%;
   height:auto;
-}
-
-.crop-box{
-  position:absolute;
-  border:2px solid #222;
-  background:rgba(255,255,255,.12);
-  cursor:move;
   touch-action:none;
+  cursor:crosshair;
 }
 
-.crop-box.active{
-  border-color:#ff4f91;
-  background:rgba(255,79,145,.12);
-}
-
-.crop-number{
-  position:absolute;
-  top:-25px;
-  left:0;
-  background:#222;
-  color:white;
-  border-radius:5px;
-  padding:3px 7px;
-  font-size:11px;
-}
-
-.crop-delete{
-  position:absolute;
-  right:-12px;
-  top:-12px;
-  width:25px;
-  height:25px;
-  padding:0;
-  border-radius:50%;
-  background:white;
-  color:#222;
-  border:1px solid #aaa;
-  font-size:15px;
-}
-
-.editor-buttons{
+.select-buttons{
   display:flex;
+  gap:8px;
   flex-wrap:wrap;
-  gap:7px;
   margin-top:10px;
 }
 
-
-/* =========================
-   グッズ一覧
-========================= */
-
-#goodsList{
-  position:relative;
-  width:100%;
-  min-height:100px;
-  background:#fff;
-}
-
-
-/*
-  グッズはabsolute配置。
-  これで元画像の位置関係を維持。
-*/
-
-.goods{
-  position:absolute;
-  text-align:center;
-}
-
-.goods-image{
-  position:relative;
-  width:100%;
-  cursor:pointer;
-}
-
-.goods-image img{
-  width:100%;
-  height:auto;
-  display:block;
-  transition:opacity .2s;
-}
-
-
-/* 決定状態 */
-
-.goods.done .goods-image img{
-  opacity:.25;
-}
-
-
-/* 星 */
-
-.goods-star{
-  position:absolute;
-  right:2px;
-  top:0;
-  font-size:22px;
-  line-height:1;
-  z-index:3;
-  cursor:pointer;
-  user-select:none;
-}
-
-
-/* 下の白いスペース */
-
-.goods-info{
-  background:#fff;
-  min-height:48px;
-  padding-top:3px;
-}
-
-
-/* 名前 */
-
-.goods-name{
-  width:100%;
-  border:0;
-  border-bottom:1px solid #ddd;
-  text-align:center;
-  font-size:11px;
-  padding:3px 2px;
-  outline:none;
-  background:#fff;
-}
-
-
-/* 数量 */
-
-.goods-quantity{
-  width:45px;
-  border:0;
-  text-align:center;
-  font-size:14px;
-  padding:3px;
-  outline:none;
-  background:#fff;
-}
-
-
-/* 星色 */
-
-.star-select{
-  border:0;
-  background:#fff;
-  font-size:10px;
-  margin-top:1px;
-}
-
-
-/* 削除 */
-
-.goods-delete{
-  position:absolute;
-  left:-8px;
-  top:-8px;
-  width:23px;
-  height:23px;
-  border-radius:50%;
-  border:1px solid #aaa;
-  background:#fff;
-  color:#222;
-  padding:0;
-  z-index:5;
-}
-
-
-/* =========================
-   説明
-========================= */
-
-.legend-row{
+/* 選択済み */
+.selected-list{
   display:flex;
-  align-items:center;
-  gap:7px;
-  margin-top:7px;
+  gap:10px;
+  overflow-x:auto;
+  padding:8px 0 2px;
 }
 
-.legend-row input[type=color]{
-  width:35px;
-  height:30px;
-  padding:2px;
-  border:1px solid #ccc;
+.selected-item{
+  flex:0 0 90px;
+  position:relative;
+  background:#fafafa;
+  border-radius:10px;
+  padding:6px;
+  text-align:center;
+}
+
+.selected-item img{
+  width:100%;
+  height:70px;
+  object-fit:contain;
+  display:block;
+  background:#fff;
   border-radius:6px;
 }
 
-.legend-row input[type=text]{
-  flex:1;
+.selected-number{
+  font-size:11px;
+  color:#777;
+  margin-top:4px;
+}
+
+.selected-delete{
+  position:absolute;
+  top:3px;
+  right:3px;
+  width:22px;
+  height:22px;
+  padding:0;
+  border-radius:50%;
+  background:#e66;
+  font-size:12px;
+}
+
+/* 設定 */
+.setting-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.setting-row label{
+  font-size:13px;
+  min-width:150px;
+}
+
+.setting-row input[type="number"]{
+  width:80px;
   padding:7px;
   border:1px solid #ddd;
-  border-radius:7px;
+  border-radius:8px;
 }
 
-
-/* =========================
-   スクショモード
-========================= */
-
-body.screenshot-mode header,
-body.screenshot-mode .control-area{
-  display:none;
+.legend-editor{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
-body.screenshot-mode main{
-  padding:0;
-  max-width:none;
+.legend-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
 }
 
-body.screenshot-mode .box{
-  border:0;
-  padding:0;
-  margin:0;
+.legend-row input[type="color"]{
+  width:38px;
+  height:35px;
+  padding:2px;
 }
 
-body.screenshot-mode #goodsList{
+.legend-row input[type="text"]{
+  flex:1;
+  min-width:0;
+  padding:8px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+/* 完成画像 */
+#previewArea{
+  background:#fff;
+  overflow:hidden;
+}
+
+#goodsCanvas{
+  position:relative;
+  width:100%;
+  background:#fff;
+  overflow:hidden;
+}
+
+/* グッズ1個 */
+.goods{
+  position:absolute;
+  transform-origin:top left;
+}
+
+.goods-image-wrap{
+  position:relative;
   width:100%;
 }
 
+.goods-image{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:contain;
+  user-select:none;
+  -webkit-user-drag:none;
+  cursor:pointer;
+  transition:opacity .2s;
+}
 
-/* =========================
-   スマホ
-========================= */
+.goods.done .goods-image{
+  opacity:.28;
+}
 
-@media(max-width:600px){
+/* 星 */
+.star{
+  position:absolute;
+  top:2px;
+  right:2px;
+  border:0;
+  background:transparent;
+  padding:0;
+  margin:0;
+  font-size:24px;
+  line-height:1;
+  cursor:pointer;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));
+}
 
-  main{
-    padding:8px;
-  }
+/* 自動記載欄 */
+.goods-info{
+  width:100%;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  padding:3px 5px;
+}
 
-  .box{
-    padding:11px;
-  }
+.quantity{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:15px;
+  font-weight:bold;
+  line-height:1;
+}
 
-  #goodsList{
-    min-height:100px;
-  }
+.quantity input{
+  width:34px;
+  padding:1px;
+  border:0;
+  outline:0;
+  background:transparent;
+  text-align:center;
+  font-weight:bold;
+  font-size:15px;
+}
 
+.name-input{
+  width:100%;
+  border:0;
+  outline:0;
+  text-align:center;
+  background:transparent;
+  font-size:11px;
+  color:#333;
+}
+
+.memo-input{
+  width:100%;
+  border:0;
+  outline:0;
+  text-align:center;
+  background:transparent;
+  font-size:10px;
+  color:#777;
+  resize:none;
+  height:18px;
+}
+
+.edit-tools{
+  display:flex;
+  align-items:center;
+  gap:3px;
+  justify-content:center;
+}
+
+.star-color{
+  font-size:9px;
+  border:0;
+  padding:1px 3px;
+  background:#f3f3f3;
+  border-radius:5px;
+}
+
+/* 削除 */
+.goods-delete{
+  position:absolute;
+  top:2px;
+  left:2px;
+  width:21px;
+  height:21px;
+  border-radius:50%;
+  padding:0;
+  background:rgba(0,0,0,.6);
+  color:#fff;
+  font-size:12px;
+  z-index:5;
+}
+
+/* 凡例 */
+.legend-output{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 16px;
+  padding:12px 4px 0;
+  font-size:12px;
+}
+
+.legend-output-item{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+.legend-star{
+  font-size:16px;
+}
+
+/* スクショモード */
+body.screenshot-mode{
+  background:#fff;
+}
+
+body.screenshot-mode header,
+body.screenshot-mode .edit-only{
+  display:none !important;
+}
+
+body.screenshot-mode main{
+  max-width:none;
+  padding:0;
+}
+
+body.screenshot-mode section{
+  padding:0;
+  margin:0;
+  border-radius:0;
+}
+
+body.screenshot-mode #selectionSection,
+body.screenshot-mode #settingSection{
+  display:none;
+}
+
+body.screenshot-mode #previewSection{
+  display:block;
+}
+
+body.screenshot-mode .goods-delete,
+body.screenshot-mode .star-color{
+  display:none;
+}
+
+body.screenshot-mode .name-input,
+body.screenshot-mode .memo-input{
+  pointer-events:none;
+}
+
+body.screenshot-mode .quantity input{
+  pointer-events:none;
+}
+
+body.screenshot-mode .star{
+  pointer-events:none;
+}
+
+body.screenshot-mode .goods-info{
+  border:0;
+}
+
+.status{
+  font-size:12px;
+  color:#777;
+  margin-top:8px;
+}
+
+.hidden{
+  display:none !important;
 }
 </style>
 </head>
 
-
 <body>
 
 <header>
-  <h1>迷子グッズメーカー</h1>
-  <p>グッズを並べて、交換用画像を作ろう！</p>
+  迷子グッズメーカー
 </header>
-
 
 <main>
 
-<!-- =========================
-     操作
-========================= -->
+<!-- 画像読み込み -->
+<section>
+  <h2>① 元画像を入れる</h2>
 
-<section class="box control-area">
-
-  <label class="file-btn">
-    📷 画像を登録
-    <input
-      id="imageInput"
-      type="file"
-      accept="image/*"
-    >
-  </label>
-
-  <button
-    class="gray"
-    onclick="clearAll()"
+  <input
+    id="imageInput"
+    class="file"
+    type="file"
+    accept="image/*"
   >
-    リセット
-  </button>
 
-  <button
-    class="gray"
-    onclick="toggleScreenshot()"
-  >
-    📱 スクショ表示
-  </button>
-
-  <p
-    id="status"
-    class="small"
-  >
-    まず元になるグッズ画像を登録してね。
-  </p>
-
+  <div class="info">
+    グッズが並んでいる画像を入れてね。<br>
+    画像を読み込んだら、グッズを1個ずつ指で囲んで切り抜けます。
+  </div>
 </section>
 
 
-<!-- =========================
-     編集
-========================= -->
+<!-- 選択 -->
+<section id="selectionSection">
 
-<section
-  id="editorArea"
-  class="box control-area"
->
+  <h2>② グッズを選択</h2>
 
-  <div class="editor-title">
-    ✂️ グッズを切り出す
+  <div class="canvas-wrap">
+    <canvas id="selectCanvas"></canvas>
   </div>
 
-  <div class="small">
-    「グッズを追加」を押して、画像の上で切り出したい範囲を指定できます。<br>
-    追加した枠はドラッグして位置を調整できます。
-  </div>
+  <div class="select-buttons">
 
-  <div
-    id="editor"
-  >
-    <img
-      id="sourceImage"
-    >
-  </div>
-
-  <div class="editor-buttons">
-
-    <button onclick="addCrop()">
-      ＋ グッズを追加
+    <button id="selectModeBtn">
+      ✂️ 選択モード ON
     </button>
 
     <button
-      class="gray"
-      onclick="finishEditing()"
+      id="clearSelectedBtn"
+      class="sub"
     >
-      ✓ グッズ一覧を作る
+      選択を全部消す
     </button>
+
+  </div>
+
+  <div class="status" id="selectionStatus">
+    画像を入れて、グッズを指で囲んでね。
+  </div>
+
+  <div
+    id="selectedList"
+    class="selected-list"
+  ></div>
+
+</section>
+
+
+<!-- 設定 -->
+<section id="settingSection">
+
+  <h2>③ 記載欄の設定</h2>
+
+  <div class="setting-row">
+    <label>
+      画像の下の記載欄の高さ
+    </label>
+
+    <input
+      id="blankHeight"
+      type="number"
+      min="30"
+      max="150"
+      value="65"
+    >
+
+    <span>px</span>
+  </div>
+
+  <div class="info">
+    グッズ画像の真下に、この高さの白い記載欄が自動で付きます。
+  </div>
+
+  <hr>
+
+  <div class="legend-editor">
+
+    <strong style="font-size:13px">
+      ⭐ 星の説明
+    </strong>
+
+    <div class="legend-row">
+      <input
+        id="legendColor1"
+        type="color"
+        value="#FFD43B"
+      >
+
+      <input
+        id="legendText1"
+        type="text"
+        value="交換優先"
+        placeholder="説明"
+      >
+    </div>
+
+    <div class="legend-row">
+      <input
+        id="legendColor2"
+        type="color"
+        value="#FF8FB3"
+      >
+
+      <input
+        id="legendText2"
+        type="text"
+        value="抱き合わせ希望"
+        placeholder="説明"
+      >
+    </div>
+
+    <div class="legend-row">
+      <input
+        id="legendColor3"
+        type="color"
+        value="#9AA0A6"
+      >
+
+      <input
+        id="legendText3"
+        type="text"
+        value="通常"
+        placeholder="説明"
+      >
+    </div>
 
   </div>
 
 </section>
 
 
-<!-- =========================
-     星の説明
-========================= -->
+<!-- 完成 -->
+<section id="previewSection">
 
-<section class="box control-area">
+  <h2 class="edit-only">
+    ④ 完成イメージ
+  </h2>
 
-  <strong>⭐ 星の説明</strong>
+  <div id="previewArea">
+    <div id="goodsCanvas"></div>
 
-  <div id="legend"></div>
+    <div
+      id="legendOutput"
+      class="legend-output"
+    ></div>
+  </div>
 
-  <button
-    class="gray"
-    onclick="addLegend()"
-    style="margin-top:9px;"
+  <div
+    class="select-buttons edit-only"
+    style="margin-top:12px"
   >
-    ＋ 説明を追加
-  </button>
 
-</section>
+    <button id="screenshotBtn">
+      📱 スクショモード
+    </button>
 
+    <button
+      id="resetBtn"
+      class="danger"
+    >
+      リセット
+    </button>
 
-<!-- =========================
-     グッズ一覧
-========================= -->
-
-<section class="box">
-
-  <div id="goodsList"></div>
+  </div>
 
 </section>
 
@@ -483,538 +605,820 @@ body.screenshot-mode #goodsList{
 
 <script>
 
-/* =========================================================
-   データ
-========================================================= */
+const imageInput =
+  document.getElementById("imageInput");
 
-let sourceImageData = null;
+const selectCanvas =
+  document.getElementById("selectCanvas");
 
-let sourceImageWidth = 0;
-let sourceImageHeight = 0;
+const selectCtx =
+  selectCanvas.getContext("2d");
 
-let crops = [];
+const selectedList =
+  document.getElementById("selectedList");
 
-let goods = [];
+const selectionStatus =
+  document.getElementById("selectionStatus");
 
-let legends = [
-  {
-    color:"#f5b700",
-    text:"交換優先"
-  },
-  {
-    color:"#e91e63",
-    text:"抱き合わせ希望"
-  }
+const goodsCanvas =
+  document.getElementById("goodsCanvas");
+
+const blankHeightInput =
+  document.getElementById("blankHeight");
+
+const selectModeBtn =
+  document.getElementById("selectModeBtn");
+
+const clearSelectedBtn =
+  document.getElementById("clearSelectedBtn");
+
+const screenshotBtn =
+  document.getElementById("screenshotBtn");
+
+const resetBtn =
+  document.getElementById("resetBtn");
+
+
+let sourceImage = null;
+
+let sourceWidth = 0;
+let sourceHeight = 0;
+
+let selecting = true;
+
+let isDragging = false;
+
+let startPoint = null;
+let currentPoint = null;
+
+let items = [];
+
+let itemId = 1;
+
+
+/* 星の色 */
+const starColors = [
+  "#FFD43B",
+  "#FF8FB3",
+  "#9AA0A6",
+  "#7CC7FF",
+  "#B98CFF"
 ];
 
 
-/* =========================================================
-   画像登録
-========================================================= */
+/* =========================
+   画像読み込み
+========================= */
 
-document
-.getElementById("imageInput")
-.addEventListener("change",function(e){
+imageInput.addEventListener(
+  "change",
+  function(){
 
-  const file = e.target.files[0];
+    const file = this.files[0];
 
-  if(!file){
-    return;
-  }
+    if(!file) return;
 
-  const reader = new FileReader();
+    const reader =
+      new FileReader();
 
-  reader.onload = function(event){
+    reader.onload = function(e){
 
-    sourceImageData =
-      event.target.result;
+      const img = new Image();
 
-    const img =
-      document.getElementById("sourceImage");
+      img.onload = function(){
 
-    img.onload = function(){
+        sourceImage = img;
 
-      sourceImageWidth =
-        img.naturalWidth;
+        sourceWidth =
+          img.naturalWidth;
 
-      sourceImageHeight =
-        img.naturalHeight;
+        sourceHeight =
+          img.naturalHeight;
 
-      document
-        .getElementById("editorArea")
-        .style.display = "block";
+        selectCanvas.width =
+          sourceWidth;
 
-      document
-        .getElementById("status")
-        .textContent =
-        "画像を登録したよ！「＋グッズを追加」で切り出してね。";
+        selectCanvas.height =
+          sourceHeight;
+
+        items = [];
+
+        itemId = 1;
+
+        drawSelectionCanvas();
+
+        renderSelectedList();
+
+        renderPreview();
+
+        selecting = true;
+
+        updateSelectButton();
+
+        selectionStatus.textContent =
+          "グッズを1個ずつ指で囲んでね。";
+
+      };
+
+      img.src = e.target.result;
 
     };
 
-    img.src =
-      sourceImageData;
+    reader.readAsDataURL(file);
 
-  };
-
-  reader.readAsDataURL(file);
-
-});
-
-
-/* =========================================================
-   グッズ切り出し枠追加
-========================================================= */
-
-function addCrop(){
-
-  if(!sourceImageData){
-    alert("先に画像を登録してね！");
-    return;
   }
+);
 
-  /*
-    最初は画像中央に小さめの枠を作る
-  */
 
-  const crop = {
+/* =========================
+   選択モード
+========================= */
 
-    id:Date.now(),
+selectModeBtn.addEventListener(
+  "click",
+  function(){
 
-    x:30,
+    selecting = !selecting;
 
-    y:30,
+    updateSelectButton();
 
-    width:25,
+  }
+);
 
-    height:25
 
-  };
+function updateSelectButton(){
 
-  crops.push(crop);
+  if(selecting){
 
-  renderCrops();
+    selectModeBtn.textContent =
+      "✂️ 選択モード ON";
+
+  }else{
+
+    selectModeBtn.textContent =
+      "✋ 選択モード OFF";
+
+  }
 
 }
 
 
-/* =========================================================
-   切り出し枠表示
-========================================================= */
+/* =========================
+   Canvas 座標
+========================= */
 
-function renderCrops(){
+function getCanvasPoint(e){
 
-  const editor =
-    document.getElementById("editor");
+  const rect =
+    selectCanvas.getBoundingClientRect();
 
-  document
-    .querySelectorAll(".crop-box")
-    .forEach(el => el.remove());
+  if(!rect.width || !rect.height){
 
+    return {
+      x:0,
+      y:0
+    };
 
-  crops.forEach(function(crop,index){
+  }
 
-    const box =
-      document.createElement("div");
+  const x =
+    (e.clientX - rect.left)
+    *
+    sourceWidth
+    /
+    rect.width;
 
-    box.className =
-      "crop-box";
+  const y =
+    (e.clientY - rect.top)
+    *
+    sourceHeight
+    /
+    rect.height;
 
-    box.style.left =
-      crop.x + "%";
+  return {
 
-    box.style.top =
-      crop.y + "%";
+    x:Math.max(
+      0,
+      Math.min(sourceWidth,x)
+    ),
 
-    box.style.width =
-      crop.width + "%";
+    y:Math.max(
+      0,
+      Math.min(sourceHeight,y)
+    )
 
-    box.style.height =
-      crop.height + "%";
+  };
 
-
-    const number =
-      document.createElement("div");
-
-    number.className =
-      "crop-number";
-
-    number.textContent =
-      index + 1;
-
-
-    const del =
-      document.createElement("button");
-
-    del.className =
-      "crop-delete";
-
-    del.textContent =
-      "×";
+}
 
 
-    del.onclick =
-      function(e){
+/* =========================
+   指で選択
+========================= */
 
-        e.stopPropagation();
+selectCanvas.addEventListener(
+  "pointerdown",
+  function(e){
 
-        crops =
-          crops.filter(
-            x => x.id !== crop.id
-          );
+    if(!sourceImage || !selecting)
+      return;
 
-        renderCrops();
+    e.preventDefault();
 
-      };
+    selectCanvas.setPointerCapture(e.pointerId);
 
+    isDragging = true;
 
-    box.appendChild(number);
+    startPoint =
+      getCanvasPoint(e);
 
-    box.appendChild(del);
+    currentPoint =
+      startPoint;
 
-    editor.appendChild(box);
+    drawSelectionCanvas();
 
-
-    /* -------------------------
-       ドラッグ
-    ------------------------- */
-
-    let dragging = false;
-
-    let startX = 0;
-    let startY = 0;
-
-    let startLeft = 0;
-    let startTop = 0;
+  }
+);
 
 
-    box.addEventListener(
-      "pointerdown",
-      function(e){
+selectCanvas.addEventListener(
+  "pointermove",
+  function(e){
 
-        if(
-          e.target === del
-        ){
-          return;
-        }
+    if(!isDragging)
+      return;
 
-        dragging = true;
+    e.preventDefault();
 
-        startX = e.clientX;
-        startY = e.clientY;
+    currentPoint =
+      getCanvasPoint(e);
 
-        startLeft = crop.x;
-        startTop = crop.y;
+    drawSelectionCanvas();
 
-        box.classList.add("active");
+  }
+);
 
-        box.setPointerCapture(
-          e.pointerId
+
+selectCanvas.addEventListener(
+  "pointerup",
+  function(e){
+
+    if(!isDragging)
+      return;
+
+    e.preventDefault();
+
+    isDragging = false;
+
+    currentPoint =
+      getCanvasPoint(e);
+
+    createCrop();
+
+  }
+);
+
+
+selectCanvas.addEventListener(
+  "pointercancel",
+  function(){
+
+    isDragging = false;
+
+  }
+);
+
+
+/* =========================
+   選択画面を描画
+========================= */
+
+function drawSelectionCanvas(){
+
+  if(!sourceImage)
+    return;
+
+  selectCtx.clearRect(
+    0,
+    0,
+    sourceWidth,
+    sourceHeight
+  );
+
+  selectCtx.drawImage(
+    sourceImage,
+    0,
+    0,
+    sourceWidth,
+    sourceHeight
+  );
+
+
+  /* 選択済み範囲 */
+  items.forEach(
+    function(item,index){
+
+      selectCtx.save();
+
+      selectCtx.strokeStyle =
+        "#4CAF50";
+
+      selectCtx.lineWidth =
+        Math.max(
+          3,
+          sourceWidth / 400
         );
 
-      }
+      selectCtx.setLineDash([
+        8,
+        5
+      ]);
+
+      selectCtx.strokeRect(
+        item.x,
+        item.y,
+        item.w,
+        item.h
+      );
+
+      selectCtx.fillStyle =
+        "#4CAF50";
+
+      selectCtx.font =
+        `bold ${Math.max(
+          20,
+          sourceWidth / 30
+        )}px sans-serif`;
+
+      selectCtx.fillText(
+        String(index + 1),
+        item.x + 5,
+        item.y + 25
+      );
+
+      selectCtx.restore();
+
+    }
+  );
+
+
+  /* 現在選択中 */
+  if(
+    isDragging &&
+    startPoint &&
+    currentPoint
+  ){
+
+    const x =
+      Math.min(
+        startPoint.x,
+        currentPoint.x
+      );
+
+    const y =
+      Math.min(
+        startPoint.y,
+        currentPoint.y
+      );
+
+    const w =
+      Math.abs(
+        currentPoint.x -
+        startPoint.x
+      );
+
+    const h =
+      Math.abs(
+        currentPoint.y -
+        startPoint.y
+      );
+
+
+    selectCtx.save();
+
+    selectCtx.fillStyle =
+      "rgba(255,255,255,.18)";
+
+    selectCtx.fillRect(
+      x,
+      y,
+      w,
+      h
+    );
+
+    selectCtx.strokeStyle =
+      "#ff4d88";
+
+    selectCtx.lineWidth =
+      Math.max(
+        3,
+        sourceWidth / 400
+      );
+
+    selectCtx.setLineDash([]);
+
+    selectCtx.strokeRect(
+      x,
+      y,
+      w,
+      h
+    );
+
+    selectCtx.restore();
+
+  }
+
+}
+
+
+/* =========================
+   実際に切り抜く
+========================= */
+
+function createCrop(){
+
+  if(
+    !startPoint ||
+    !currentPoint ||
+    !sourceImage
+  )
+    return;
+
+
+  const x =
+    Math.round(
+      Math.min(
+        startPoint.x,
+        currentPoint.x
+      )
+    );
+
+  const y =
+    Math.round(
+      Math.min(
+        startPoint.y,
+        currentPoint.y
+      )
+    );
+
+  const w =
+    Math.round(
+      Math.abs(
+        currentPoint.x -
+        startPoint.x
+      )
+    );
+
+  const h =
+    Math.round(
+      Math.abs(
+        currentPoint.y -
+        startPoint.y
+      )
     );
 
 
-    box.addEventListener(
-      "pointermove",
-      function(e){
+  /* 小さすぎる選択は無視 */
+  if(w < 8 || h < 8){
 
-        if(!dragging){
-          return;
-        }
+    selectionStatus.textContent =
+      "もう少し大きくグッズを囲んでね。";
 
-        const rect =
-          editor.getBoundingClientRect();
+    drawSelectionCanvas();
 
-        const dx =
-          (e.clientX - startX)
-          / rect.width * 100;
+    return;
 
-        const dy =
-          (e.clientY - startY)
-          / rect.height * 100;
+  }
 
 
-        crop.x =
-          Math.max(
-            0,
-            Math.min(
-              100 - crop.width,
-              startLeft + dx
-            )
-          );
+  const cropCanvas =
+    document.createElement("canvas");
 
-        crop.y =
-          Math.max(
-            0,
-            Math.min(
-              100 - crop.height,
-              startTop + dy
-            )
-          );
+  cropCanvas.width = w;
+  cropCanvas.height = h;
 
+  const cropCtx =
+    cropCanvas.getContext("2d");
 
-        box.style.left =
-          crop.x + "%";
-
-        box.style.top =
-          crop.y + "%";
-
-      }
-    );
+  cropCtx.drawImage(
+    sourceImage,
+    x,
+    y,
+    w,
+    h,
+    0,
+    0,
+    w,
+    h
+  );
 
 
-    box.addEventListener(
-      "pointerup",
-      function(){
+  const dataUrl =
+    cropCanvas.toDataURL("image/png");
 
-        dragging = false;
 
-        box.classList.remove(
-          "active"
-        );
+  items.push({
 
-      }
-    );
+    id:itemId++,
+
+    x:x,
+    y:y,
+    w:w,
+    h:h,
+
+    dataUrl:dataUrl,
+
+    quantity:1,
+
+    name:"",
+
+    memo:"",
+
+    starIndex:0,
+
+    done:false
 
   });
 
+
+  renderSelectedList();
+
+  drawSelectionCanvas();
+
+  renderPreview();
+
+
+  selectionStatus.textContent =
+    `選択済み ${items.length}個。続けて他のグッズも囲めるよ！`;
+
 }
 
 
-/* =========================================================
-   一覧作成
-========================================================= */
+/* =========================
+   選択済み一覧
+========================= */
 
-function finishEditing(){
+function renderSelectedList(){
 
-  if(crops.length === 0){
+  selectedList.innerHTML = "";
 
-    alert("まずグッズを1個以上追加してね！");
+  items.forEach(
+    function(item,index){
 
-    return;
+      const box =
+        document.createElement("div");
 
-  }
+      box.className =
+        "selected-item";
 
 
-  goods = crops.map(
-    function(crop,index){
+      const img =
+        document.createElement("img");
 
-      return {
+      img.src =
+        item.dataUrl;
 
-        id:crop.id,
 
-        x:crop.x,
+      const number =
+        document.createElement("div");
 
-        y:crop.y,
+      number.className =
+        "selected-number";
 
-        width:crop.width,
+      number.textContent =
+        `#${index + 1}`;
 
-        height:crop.height,
 
-        name:"",
+      const del =
+        document.createElement("button");
 
-        quantity:"",
+      del.className =
+        "selected-delete";
 
-        starColor:"#f5b700",
+      del.textContent =
+        "×";
 
-        done:false
+      del.addEventListener(
+        "click",
+        function(){
 
-      };
+          items =
+            items.filter(
+              x => x.id !== item.id
+            );
+
+          renderSelectedList();
+
+          drawSelectionCanvas();
+
+          renderPreview();
+
+        }
+      );
+
+
+      box.appendChild(img);
+
+      box.appendChild(number);
+
+      box.appendChild(del);
+
+      selectedList.appendChild(box);
 
     }
   );
 
-
-  document
-    .getElementById("editorArea")
-    .style.display = "none";
-
-
-  renderGoods();
-
-  saveData();
-
 }
 
 
-/* =========================================================
-   グッズ一覧表示
-========================================================= */
+/* =========================
+   全消去
+========================= */
 
-function renderGoods(){
+clearSelectedBtn.addEventListener(
+  "click",
+  function(){
 
-  const list =
-    document.getElementById("goodsList");
+    items = [];
 
-  list.innerHTML = "";
+    renderSelectedList();
+
+    drawSelectionCanvas();
+
+    renderPreview();
+
+    selectionStatus.textContent =
+      "選択を全部消したよ。";
+
+  }
+);
 
 
-  if(goods.length === 0){
+/* =========================
+   プレビュー
+========================= */
 
-    list.innerHTML =
-      '<div class="small" style="padding:30px;text-align:center;">グッズがありません</div>';
+function renderPreview(){
+
+  goodsCanvas.innerHTML = "";
+
+  if(!sourceImage || items.length === 0){
+
+    goodsCanvas.style.height =
+      "150px";
+
+    renderLegend();
 
     return;
 
   }
 
 
+  const blankHeight =
+    Math.max(
+      30,
+      Number(blankHeightInput.value) || 65
+    );
+
+
   /*
-    元画像の比率を使って
-    一覧エリアの高さを決める
+    一番下のグッズ＋記載欄まで
+    入るように全体の高さを計算
   */
 
-  const ratio =
-    sourceImageHeight /
-    sourceImageWidth;
+  let layoutHeight =
+    sourceHeight;
 
 
-  const listWidth =
-    list.clientWidth ||
-    350;
-
-
-  list.style.height =
-    (listWidth * ratio) + "px";
-
-
-  goods.forEach(
+  items.forEach(
     function(item){
 
-      createGood(item);
+      layoutHeight =
+        Math.max(
+          layoutHeight,
+          item.y +
+          item.h +
+          blankHeight
+        );
 
     }
   );
 
+
+  goodsCanvas.dataset.layoutHeight =
+    layoutHeight;
+
+
+  /* アイテム生成 */
+  items.forEach(
+    function(item,index){
+
+      createGoodsElement(
+        item,
+        index
+      );
+
+    }
+  );
+
+
+  updatePreviewSize();
+
+  renderLegend();
+
 }
 
 
-/* =========================================================
-   グッズ1個
-========================================================= */
+/* =========================
+   グッズ1個を作る
+========================= */
 
-function createGood(item){
+function createGoodsElement(
+  item,
+  index
+){
 
-  const list =
-    document.getElementById("goodsList");
-
-
-  const good =
+  const goods =
     document.createElement("div");
 
-  good.className =
+  goods.className =
     "goods";
 
-
-  /*
-    元画像上の位置をそのまま使用
-  */
-
-  good.style.left =
-    item.x + "%";
-
-  good.style.top =
-    item.y + "%";
-
-  good.style.width =
-    item.width + "%";
+  goods.dataset.id =
+    item.id;
 
 
-  if(item.done){
-    good.classList.add("done");
-  }
+  /* 元画像の位置 */
+  goods.style.left =
+    `${item.x / sourceWidth * 100}%`;
+
+  goods.style.top =
+    `${item.y / sourceHeight * 100}%`;
+
+  goods.style.width =
+    `${item.w / sourceWidth * 100}%`;
 
 
-  /* =========================
-     画像
-  ========================= */
-
-  const image =
+  /* 画像部分 */
+  const imageWrap =
     document.createElement("div");
 
-  image.className =
-    "goods-image";
+  imageWrap.className =
+    "goods-image-wrap";
 
 
   const img =
     document.createElement("img");
 
+  img.className =
+    "goods-image";
+
   img.src =
-    sourceImageData;
+    item.dataUrl;
+
+  img.draggable =
+    false;
+
+
+  if(item.done){
+
+    goods.classList.add("done");
+
+  }
 
 
   /*
-    元画像から指定範囲だけ表示
+    画像タップで決定状態
   */
 
-  img.style.width =
-    (100 / item.width) + "%";
-
-  img.style.maxWidth =
-    "none";
-
-
-  img.style.position =
-    "absolute";
-
-
-  img.style.left =
-    -(item.x / item.width * 100) + "%";
-
-  img.style.top =
-    -(item.y / item.height * 100) + "%";
-
-
-  /*
-    切り出し部分の縦横比
-  */
-
-  image.style.aspectRatio =
-    item.width + " / " + item.height;
-
-
-  image.style.overflow =
-    "hidden";
-
-
-  /*
-    タップで薄くする
-  */
-
-  image.addEventListener(
+  img.addEventListener(
     "click",
     function(){
 
       item.done =
         !item.done;
 
-      good.classList.toggle(
+      goods.classList.toggle(
         "done",
         item.done
       );
-
-      saveData();
 
     }
   );
 
 
-  /* =========================
-     星
-  ========================= */
-
+  /* 星 */
   const star =
-    document.createElement("div");
+    document.createElement("button");
 
   star.className =
-    "goods-star";
+    "star";
 
   star.textContent =
     "★";
 
   star.style.color =
-    item.starColor;
+    starColors[item.starIndex];
 
 
   star.addEventListener(
@@ -1023,51 +1427,60 @@ function createGood(item){
 
       e.stopPropagation();
 
+      item.starIndex =
+        (item.starIndex + 1)
+        %
+        starColors.length;
+
+      star.style.color =
+        starColors[item.starIndex];
+
     }
   );
 
 
-  /* =========================
-     削除
-  ========================= */
-
+  /* 削除 */
   const deleteBtn =
     document.createElement("button");
 
   deleteBtn.className =
-    "goods-delete";
+    "goods-delete edit-only";
 
   deleteBtn.textContent =
     "×";
 
 
-  deleteBtn.onclick =
+  deleteBtn.addEventListener(
+    "click",
     function(e){
 
       e.stopPropagation();
 
-      goods =
-        goods.filter(
+      items =
+        items.filter(
           x => x.id !== item.id
         );
 
-      renderGoods();
+      renderSelectedList();
 
-      saveData();
+      drawSelectionCanvas();
 
-    };
+      renderPreview();
 
-
-  image.appendChild(img);
-
-  image.appendChild(star);
-
-  image.appendChild(deleteBtn);
+    }
+  );
 
 
-  /* =========================
-     下の白いスペース
-  ========================= */
+  imageWrap.appendChild(img);
+
+  imageWrap.appendChild(star);
+
+  imageWrap.appendChild(deleteBtn);
+
+
+  /* =================
+     自動記載欄
+  ================= */
 
   const info =
     document.createElement("div");
@@ -1076,13 +1489,67 @@ function createGood(item){
     "goods-info";
 
 
-  /* 名前 */
+  /* 数量 */
+  const quantity =
+    document.createElement("div");
 
+  quantity.className =
+    "quantity";
+
+
+  const left =
+    document.createElement("span");
+
+  left.textContent =
+    "（";
+
+
+  const quantityInput =
+    document.createElement("input");
+
+  quantityInput.type =
+    "number";
+
+  quantityInput.min =
+    "0";
+
+  quantityInput.value =
+    item.quantity;
+
+  quantityInput.addEventListener(
+    "input",
+    function(){
+
+      item.quantity =
+        this.value;
+
+    }
+  );
+
+
+  const right =
+    document.createElement("span");
+
+  right.textContent =
+    "）";
+
+
+  quantity.appendChild(left);
+
+  quantity.appendChild(quantityInput);
+
+  quantity.appendChild(right);
+
+
+  /* 名前 */
   const name =
     document.createElement("input");
 
   name.className =
-    "goods-name";
+    "name-input";
+
+  name.type =
+    "text";
 
   name.placeholder =
     "グッズ名";
@@ -1090,99 +1557,75 @@ function createGood(item){
   name.value =
     item.name;
 
-
   name.addEventListener(
     "input",
     function(){
 
       item.name =
-        name.value;
-
-      saveData();
+        this.value;
 
     }
   );
 
 
-  /* 数量 */
-
-  const quantity =
+  /* メモ */
+  const memo =
     document.createElement("input");
 
-  quantity.className =
-    "goods-quantity";
+  memo.className =
+    "memo-input";
 
-  quantity.type =
-    "number";
+  memo.type =
+    "text";
 
-  quantity.min =
-    "0";
+  memo.placeholder =
+    "メモ";
 
-  quantity.placeholder =
-    "数量";
+  memo.value =
+    item.memo;
 
-  quantity.value =
-    item.quantity;
-
-
-  quantity.addEventListener(
+  memo.addEventListener(
     "input",
     function(){
 
-      item.quantity =
-        quantity.value;
-
-      saveData();
+      item.memo =
+        this.value;
 
     }
   );
 
 
-  /* 星色 */
+  /* 星カラー変更 */
+  const editTools =
+    document.createElement("div");
 
-  const starSelect =
+  editTools.className =
+    "edit-tools edit-only";
+
+
+  const starColor =
     document.createElement("select");
 
-  starSelect.className =
-    "star-select";
-
-
-  const starColors = [
-
-    ["#f5b700","💛"],
-
-    ["#e91e63","🩷"],
-
-    ["#35a9e0","🩵"],
-
-    ["#65b96b","💚"],
-
-    ["#9b59b6","💜"],
-
-    ["#aaa","☆"]
-
-  ];
+  starColor.className =
+    "star-color";
 
 
   starColors.forEach(
-    function(data){
+    function(color,i){
 
       const option =
         document.createElement("option");
 
       option.value =
-        data[0];
+        i;
 
       option.textContent =
-        data[1];
+        "★ " + (i + 1);
 
-      if(
-        data[0] === item.starColor
-      ){
-        option.selected = true;
-      }
+      option.style.color =
+        color;
 
-      starSelect.appendChild(
+      starColor.appendChild(
         option
       );
 
@@ -1190,381 +1633,307 @@ function createGood(item){
   );
 
 
-  starSelect.addEventListener(
+  starColor.value =
+    item.starIndex;
+
+
+  starColor.addEventListener(
     "change",
     function(){
 
-      item.starColor =
-        starSelect.value;
+      item.starIndex =
+        Number(this.value);
 
       star.style.color =
-        item.starColor;
-
-      saveData();
+        starColors[item.starIndex];
 
     }
   );
 
 
-  info.appendChild(name);
+  editTools.appendChild(
+    starColor
+  );
+
 
   info.appendChild(quantity);
 
-  info.appendChild(starSelect);
+  info.appendChild(name);
+
+  info.appendChild(memo);
+
+  info.appendChild(editTools);
 
 
-  good.appendChild(image);
+  goods.appendChild(imageWrap);
 
-  good.appendChild(info);
+  goods.appendChild(info);
 
-
-  list.appendChild(good);
+  goodsCanvas.appendChild(goods);
 
 }
 
 
-/* =========================================================
-   星の説明
-========================================================= */
+/* =========================
+   プレビューサイズ調整
+========================= */
+
+function updatePreviewSize(){
+
+  if(!sourceWidth)
+    return;
+
+
+  const layoutHeight =
+    Number(
+      goodsCanvas.dataset.layoutHeight
+    )
+    || sourceHeight;
+
+
+  const width =
+    goodsCanvas.clientWidth;
+
+
+  if(!width)
+    return;
+
+
+  const scale =
+    width / sourceWidth;
+
+
+  goodsCanvas.style.height =
+    `${layoutHeight * scale}px`;
+
+
+  /*
+    記載欄の高さも画像と一緒に
+    元画像サイズに合わせて縮小・拡大
+  */
+
+  const blankHeight =
+    Math.max(
+      30,
+      Number(blankHeightInput.value) || 65
+    );
+
+
+  document
+    .querySelectorAll(".goods-info")
+    .forEach(
+      function(info){
+
+        info.style.height =
+          `${blankHeight * scale}px`;
+
+      }
+    );
+
+}
+
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    updatePreviewSize();
+
+  }
+);
+
+
+blankHeightInput.addEventListener(
+  "input",
+  function(){
+
+    renderPreview();
+
+  }
+);
+
+
+/* =========================
+   凡例
+========================= */
 
 function renderLegend(){
 
-  const area =
-    document.getElementById("legend");
+  const output =
+    document.getElementById(
+      "legendOutput"
+    );
 
-  area.innerHTML = "";
-
-
-  legends.forEach(
-    function(item,index){
-
-      const row =
-        document.createElement("div");
-
-      row.className =
-        "legend-row";
+  output.innerHTML = "";
 
 
-      const color =
-        document.createElement("input");
+  for(let i=1;i<=3;i++){
 
-      color.type =
-        "color";
+    const color =
+      document.getElementById(
+        "legendColor" + i
+      ).value;
 
-      color.value =
-        item.color;
-
-
-      color.addEventListener(
-        "input",
-        function(){
-
-          item.color =
-            color.value;
-
-          renderGoods();
-
-          renderLegend();
-
-          saveData();
-
-        }
-      );
+    const text =
+      document.getElementById(
+        "legendText" + i
+      ).value;
 
 
-      const text =
-        document.createElement("input");
-
-      text.type =
-        "text";
-
-      text.placeholder =
-        "例：交換優先";
-
-      text.value =
-        item.text;
+    if(!text)
+      continue;
 
 
-      text.addEventListener(
-        "input",
-        function(){
+    const row =
+      document.createElement("div");
 
-          item.text =
-            text.value;
-
-          saveData();
-
-        }
-      );
+    row.className =
+      "legend-output-item";
 
 
-      const del =
-        document.createElement("button");
+    const star =
+      document.createElement("span");
 
-      del.className =
-        "gray";
+    star.className =
+      "legend-star";
 
-      del.textContent =
-        "×";
+    star.textContent =
+      "★";
 
-
-      del.onclick =
-        function(){
-
-          legends.splice(
-            index,
-            1
-          );
-
-          renderLegend();
-
-          saveData();
-
-        };
+    star.style.color =
+      color;
 
 
-      row.appendChild(color);
+    const label =
+      document.createElement("span");
 
-      row.appendChild(text);
+    label.textContent =
+      text;
 
-      row.appendChild(del);
 
-      area.appendChild(row);
+    row.appendChild(star);
 
-    }
-  );
+    row.appendChild(label);
+
+    output.appendChild(row);
+
+  }
 
 }
 
 
-function addLegend(){
+[
+  "legendColor1",
+  "legendColor2",
+  "legendColor3",
+  "legendText1",
+  "legendText2",
+  "legendText3"
+].forEach(
+  function(id){
 
-  legends.push({
-    color:"#000000",
-    text:""
-  });
+    document
+      .getElementById(id)
+      .addEventListener(
+        "input",
+        renderLegend
+      );
 
-  renderLegend();
-
-  saveData();
-
-}
+  }
+);
 
 
-/* =========================================================
+/* =========================
    スクショモード
-========================================================= */
+========================= */
 
-function toggleScreenshot(){
+screenshotBtn.addEventListener(
+  "click",
+  function(){
 
-  document.body.classList.toggle(
-    "screenshot-mode"
-  );
-
-  /*
-    表示サイズが変わるので再計算
-  */
-
-  setTimeout(
-    function(){
-
-      renderGoods();
-
-    },
-    50
-  );
-
-}
+    document.body.classList.toggle(
+      "screenshot-mode"
+    );
 
 
-/* =========================================================
+    if(
+      document.body.classList.contains(
+        "screenshot-mode"
+      )
+    ){
+
+      screenshotBtn.textContent =
+        "✏️ 編集に戻る";
+
+    }else{
+
+      screenshotBtn.textContent =
+        "📱 スクショモード";
+
+    }
+
+
+    setTimeout(
+      updatePreviewSize,
+      50
+    );
+
+  }
+);
+
+
+/* =========================
    リセット
-========================================================= */
+========================= */
 
-function clearAll(){
+resetBtn.addEventListener(
+  "click",
+  function(){
 
-  if(
-    !confirm(
-      "全部リセットする？"
+    if(
+      !confirm(
+        "全部リセットする？"
+      )
     )
-  ){
-    return;
-  }
-
-
-  sourceImageData = null;
-
-  crops = [];
-
-  goods = [];
-
-
-  localStorage.removeItem(
-    "mayoiGoodsData"
-  );
-
-
-  document
-    .getElementById("grid");
-
-
-  document
-    .getElementById("editorArea")
-    .style.display = "none";
-
-
-  document
-    .getElementById("goodsList")
-    .innerHTML = "";
-
-
-  document
-    .getElementById("status")
-    .textContent =
-    "まず元になるグッズ画像を登録してね。";
-
-
-  document
-    .getElementById("imageInput")
-    .value = "";
-
-}
-
-
-/* =========================================================
-   保存
-========================================================= */
-
-function saveData(){
-
-  try{
-
-    localStorage.setItem(
-      "mayoiGoodsData",
-      JSON.stringify({
-
-        sourceImageData,
-
-        sourceImageWidth,
-
-        sourceImageHeight,
-
-        crops,
-
-        goods,
-
-        legends
-
-      })
-    );
-
-  }catch(e){
-
-    console.log(
-      "保存できませんでした",
-      e
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   読み込み
-========================================================= */
-
-window.addEventListener(
-"load",
-function(){
-
-  renderLegend();
-
-
-  try{
-
-    const saved =
-      localStorage.getItem(
-        "mayoiGoodsData"
-      );
-
-
-    if(!saved){
       return;
-    }
 
 
-    const data =
-      JSON.parse(saved);
+    sourceImage = null;
 
+    sourceWidth = 0;
 
-    if(data.sourceImageData){
+    sourceHeight = 0;
 
-      sourceImageData =
-        data.sourceImageData;
+    items = [];
 
-      sourceImageWidth =
-        data.sourceImageWidth;
+    itemId = 1;
 
-      sourceImageHeight =
-        data.sourceImageHeight;
+    imageInput.value = "";
 
-      crops =
-        data.crops || [];
-
-      goods =
-        data.goods || [];
-
-      legends =
-        data.legends || legends;
-
-
-      document
-        .getElementById("status")
-        .textContent =
-        "前回のデータを読み込みました。";
-
-
-      renderLegend();
-
-
-      if(
-        goods.length > 0
-      ){
-
-        renderGoods();
-
-      }
-
-    }
-
-  }catch(e){
-
-    console.log(
-      "読み込みエラー",
-      e
+    selectCtx.clearRect(
+      0,
+      0,
+      selectCanvas.width,
+      selectCanvas.height
     );
 
+    selectedList.innerHTML = "";
+
+    goodsCanvas.innerHTML = "";
+
+    goodsCanvas.style.height =
+      "150px";
+
+    selectionStatus.textContent =
+      "画像を入れて、グッズを指で囲んでね。";
+
   }
+);
 
-});
 
+/* 初期表示 */
 
-/* =========================================================
-   画面サイズ変更
-========================================================= */
-
-window.addEventListener(
-"resize",
-function(){
-
-  if(
-    goods.length > 0
-  ){
-    renderGoods();
-  }
-
-});
+renderLegend();
 
 </script>
 
