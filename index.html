@@ -2,223 +2,187 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>迷子グッズメーカー</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
-  background:#f5f5f5;
+  background:#f6f6f6;
   color:#333;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",
-  "Noto Sans JP",sans-serif;
+    "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
 }
 
 header{
   background:#fff;
   padding:18px 16px;
-  text-align:center;
-  font-weight:bold;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+header h1{
+  margin:0 0 6px;
   font-size:20px;
-  border-bottom:1px solid #eee;
+}
+
+header p{
+  margin:0;
+  color:#777;
+  font-size:13px;
 }
 
 main{
-  max-width:900px;
+  max-width:1200px;
   margin:auto;
   padding:16px;
 }
 
-section{
-  background:#fff;
-  border-radius:14px;
-  padding:16px;
-  margin-bottom:16px;
-}
-
-h2{
-  margin:0 0 12px;
-  font-size:17px;
-}
-
-button{
-  border:0;
-  border-radius:10px;
-  padding:10px 14px;
-  background:#333;
-  color:#fff;
-  font-size:14px;
-  cursor:pointer;
-}
-
-button.sub{
-  background:#eee;
-  color:#333;
-}
-
-button.danger{
-  background:#e66;
-}
-
+button,
 input,
-select,
-textarea{
+select{
   font:inherit;
 }
 
-.file{
-  width:100%;
-  padding:10px;
-  background:#f7f7f7;
-  border-radius:10px;
+button{
+  border:1px solid #ccc;
+  background:#fff;
+  border-radius:8px;
+  padding:8px 12px;
+  cursor:pointer;
 }
 
-.info{
-  font-size:12px;
-  color:#777;
-  line-height:1.7;
-  margin-top:8px;
+button:hover{
+  background:#f0f0f0;
 }
 
-/* 選択画面 */
-.canvas-wrap{
-  width:100%;
-  overflow:hidden;
-  border-radius:10px;
-  background:#eee;
+.primary{
+  background:#333;
+  color:#fff;
+  border-color:#333;
 }
 
-#selectCanvas{
-  display:block;
-  width:100%;
-  height:auto;
-  touch-action:none;
-  cursor:crosshair;
+.primary:hover{
+  background:#222;
 }
 
-.select-buttons{
+.danger{
+  color:#d33;
+}
+
+.panel{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:16px;
+}
+
+.panel h2{
+  margin:0 0 12px;
+  font-size:16px;
+}
+
+.row{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
-  margin-top:10px;
+  align-items:center;
+}
+
+.file-label{
+  display:inline-block;
+  padding:9px 13px;
+  background:#333;
+  color:#fff;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.file-label input{
+  display:none;
 }
 
 .status{
-  font-size:12px;
-  color:#777;
-  margin-top:8px;
-}
-
-/* 選択済み一覧 */
-.selected-list{
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding:8px 0 2px;
-}
-
-.selected-item{
-  flex:0 0 90px;
-  position:relative;
-  background:#fafafa;
-  border-radius:10px;
-  padding:6px;
-  text-align:center;
-}
-
-.selected-item img{
-  width:100%;
-  height:70px;
-  object-fit:contain;
-  display:block;
-  background:#fff;
-  border-radius:6px;
-}
-
-.selected-number{
-  font-size:11px;
-  color:#777;
-  margin-top:4px;
-}
-
-.selected-delete{
-  position:absolute;
-  top:3px;
-  right:3px;
-  width:22px;
-  height:22px;
-  padding:0;
-  border-radius:50%;
-  background:#e66;
-  font-size:12px;
-}
-
-/* 設定 */
-.setting-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:12px;
-  flex-wrap:wrap;
-}
-
-.setting-row label{
   font-size:13px;
-  min-width:150px;
+  color:#666;
+  margin-top:10px;
 }
 
-.setting-row input[type="number"]{
-  width:80px;
-  padding:7px;
-  border:1px solid #ddd;
+#sourceArea{
+  display:none;
+}
+
+.source-wrap{
+  position:relative;
+  max-width:100%;
+  overflow:auto;
+  background:#eee;
   border-radius:8px;
+  padding:10px;
 }
 
-.legend-editor{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.legend-row{
-  display:flex;
-  gap:8px;
-  align-items:center;
-}
-
-.legend-row input[type="color"]{
-  width:38px;
-  height:35px;
-  padding:2px;
-}
-
-.legend-row input[type="text"]{
-  flex:1;
-  min-width:0;
-  padding:8px;
-  border:1px solid #ddd;
-  border-radius:8px;
-}
-
-/* 完成エリア */
-#previewArea{
+#sourceCanvas{
+  display:block;
+  max-width:100%;
+  height:auto;
   background:#fff;
-  overflow:hidden;
+}
+
+#detectOverlay{
+  position:absolute;
+  left:10px;
+  top:10px;
+  pointer-events:none;
+}
+
+.detect-box{
+  position:absolute;
+  border:2px solid #35a853;
+  background:rgba(52,168,83,.08);
+  border-radius:4px;
+}
+
+.detect-number{
+  position:absolute;
+  left:-2px;
+  top:-22px;
+  background:#35a853;
+  color:#fff;
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:4px 4px 4px 0;
+}
+
+#previewPanel{
+  display:none;
+}
+
+.preview-scroll{
+  width:100%;
+  overflow:auto;
+  background:#eee;
+  padding:10px;
+  border-radius:10px;
 }
 
 #goodsCanvas{
   position:relative;
-  width:100%;
   background:#fff;
+  margin:0 auto;
   overflow:hidden;
 }
 
-/* グッズ */
 .goods{
   position:absolute;
-  transform-origin:top left;
+  overflow:visible;
 }
 
 .goods-image-wrap{
@@ -227,10 +191,9 @@ textarea{
 }
 
 .goods-image{
+  display:block;
   width:100%;
   height:auto;
-  display:block;
-  object-fit:contain;
   user-select:none;
   -webkit-user-drag:none;
   cursor:pointer;
@@ -241,170 +204,198 @@ textarea{
   opacity:.28;
 }
 
-/* 星 */
 .star{
   position:absolute;
-  top:2px;
-  right:2px;
-  border:0;
-  background:transparent;
+  right:3px;
+  top:3px;
+  width:30px;
+  height:30px;
   padding:0;
-  margin:0;
-  font-size:24px;
-  line-height:1;
-  cursor:pointer;
-  filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));
+  border:0;
+  background:rgba(255,255,255,.9);
+  border-radius:50%;
+  font-size:21px;
+  line-height:30px;
+  z-index:5;
 }
 
-/* 自動記載欄 */
+.delete-item{
+  position:absolute;
+  left:3px;
+  top:3px;
+  width:26px;
+  height:26px;
+  padding:0;
+  border:0;
+  background:rgba(255,255,255,.95);
+  color:#d33;
+  border-radius:50%;
+  z-index:5;
+  font-size:16px;
+}
+
 .goods-info{
   width:100%;
   background:#fff;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:2px;
-  padding:3px 5px;
+  border:1px solid #eee;
+  border-radius:0 0 5px 5px;
+  padding:5px;
+  overflow:hidden;
 }
 
-.quantity{
+.quantity-row{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:15px;
-  font-weight:bold;
-  line-height:1;
+  gap:3px;
 }
 
-.quantity input{
-  width:34px;
-  padding:1px;
+.quantity-mark{
+  font-size:13px;
+}
+
+.quantity-input{
+  width:42px;
   border:0;
-  outline:0;
-  background:transparent;
+  border-bottom:1px solid #aaa;
   text-align:center;
-  font-weight:bold;
-  font-size:15px;
+  padding:2px;
+  background:transparent;
 }
 
-.name-input{
+.goods-name,
+.goods-memo{
   width:100%;
   border:0;
-  outline:0;
-  text-align:center;
-  background:transparent;
+  border-bottom:1px solid #ddd;
+  padding:3px 2px;
   font-size:11px;
-  color:#333;
+  outline:none;
+  background:transparent;
 }
 
-.memo-input{
-  width:100%;
-  border:0;
-  outline:0;
-  text-align:center;
-  background:transparent;
-  font-size:10px;
+.goods-memo{
   color:#777;
-  resize:none;
-  height:18px;
 }
 
 .edit-tools{
   display:flex;
-  align-items:center;
-  gap:3px;
   justify-content:center;
+  gap:5px;
+  margin-top:3px;
 }
 
 .star-color{
-  font-size:9px;
-  border:0;
-  padding:1px 3px;
-  background:#f3f3f3;
-  border-radius:5px;
+  font-size:10px;
+  padding:2px;
+  max-width:100%;
 }
 
-/* 削除 */
-.goods-delete{
-  position:absolute;
-  top:2px;
-  left:2px;
-  width:21px;
-  height:21px;
-  border-radius:50%;
-  padding:0;
-  background:rgba(0,0,0,.6);
-  color:#fff;
-  font-size:12px;
-  z-index:5;
-}
-
-/* 凡例 */
-.legend-output{
+.legend{
   display:flex;
   flex-wrap:wrap;
-  gap:10px 16px;
-  padding:12px 4px 0;
-  font-size:12px;
+  gap:8px;
+  margin-top:10px;
 }
 
-.legend-output-item{
+.legend-item{
   display:flex;
   align-items:center;
-  gap:4px;
+  gap:5px;
+  font-size:12px;
 }
 
 .legend-star{
-  font-size:16px;
+  font-size:18px;
 }
 
-/* スクショモード */
-body.screenshot-mode{
-  background:#fff;
+.legend-editor{
+  display:grid;
+  gap:7px;
 }
 
-body.screenshot-mode header,
-body.screenshot-mode .edit-only{
+.legend-line{
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.legend-line input[type="text"]{
+  flex:1;
+  min-width:0;
+  border:1px solid #ddd;
+  border-radius:6px;
+  padding:6px;
+}
+
+.color-input{
+  width:42px;
+  height:32px;
+  padding:1px;
+}
+
+.small{
+  font-size:12px;
+  color:#777;
+}
+
+#emptyMessage{
+  text-align:center;
+  padding:40px 10px;
+  color:#999;
+}
+
+.screenshot-mode header,
+.screenshot-mode .editor-only,
+.screenshot-mode #sourceArea,
+.screenshot-mode #settingsPanel,
+.screenshot-mode #previewControls{
   display:none !important;
 }
 
-body.screenshot-mode main{
+.screenshot-mode main{
+  padding:10px;
   max-width:none;
-  padding:0;
 }
 
-body.screenshot-mode section{
+.screenshot-mode .panel{
+  border:0;
   padding:0;
   margin:0;
-  border-radius:0;
 }
 
-body.screenshot-mode #selectionSection,
-body.screenshot-mode #settingSection{
-  display:none;
+.screenshot-mode .preview-scroll{
+  padding:0;
+  background:#fff;
+  overflow:visible;
 }
 
-body.screenshot-mode #previewSection{
-  display:block;
+.screenshot-mode .delete-item,
+.screenshot-mode .edit-tools{
+  display:none !important;
 }
 
-body.screenshot-mode .goods-delete,
-body.screenshot-mode .star-color{
-  display:none;
+.screenshot-mode .goods-info{
+  border:0;
 }
 
-body.screenshot-mode .name-input,
-body.screenshot-mode .memo-input{
+.screenshot-mode input{
   pointer-events:none;
+  border:0;
 }
 
-body.screenshot-mode .quantity input{
-  pointer-events:none;
-}
+@media(max-width:600px){
+  header h1{
+    font-size:18px;
+  }
 
-body.screenshot-mode .star{
-  pointer-events:none;
+  main{
+    padding:10px;
+  }
+
+  .panel{
+    padding:10px;
+  }
 }
 </style>
 </head>
@@ -412,1624 +403,1978 @@ body.screenshot-mode .star{
 <body>
 
 <header>
-迷子グッズメーカー
+  <h1>迷子グッズメーカー</h1>
+  <p>画像からグッズを自動で切り分けます</p>
 </header>
 
 <main>
 
-<!-- 画像 -->
-<section>
-<h2>① 元画像を入れる</h2>
+  <!-- アップロード -->
+  <section class="panel editor-only">
+    <h2>① 画像を選ぶ</h2>
 
-<input
-  id="imageInput"
-  class="file"
-  type="file"
-  accept="image/*"
->
+    <div class="row">
+      <label class="file-label">
+        画像をアップロード
+        <input type="file" id="imageInput" accept="image/*">
+      </label>
 
-<div class="info">
-グッズが並んでいる画像を入れてね。<br>
-画像を読み込んだら、グッズを1個ずつ指で囲んで切り抜けます。
-</div>
-</section>
+      <button id="detectBtn" class="primary" disabled>
+        グッズを自動検出
+      </button>
+    </div>
 
-
-<!-- 選択 -->
-<section id="selectionSection">
-
-<h2>② グッズを選択</h2>
-
-<div class="canvas-wrap">
-<canvas id="selectCanvas"></canvas>
-</div>
-
-<div class="select-buttons">
-
-<button id="selectModeBtn">
-✂️ 選択モード ON
-</button>
-
-<button id="clearSelectedBtn" class="sub">
-選択を全部消す
-</button>
-
-</div>
-
-<div class="status" id="selectionStatus">
-画像を入れて、グッズを指で囲んでね。
-</div>
-
-<div id="selectedList" class="selected-list"></div>
-
-</section>
+    <div id="status" class="status">
+      画像を選択してください
+    </div>
+  </section>
 
 
-<!-- 設定 -->
-<section id="settingSection">
+  <!-- 自動検出結果 -->
+  <section id="sourceArea" class="panel editor-only">
 
-<h2>③ 記載欄の設定</h2>
+    <h2>② 自動検出結果</h2>
 
-<div class="setting-row">
+    <div class="row">
+      <button id="redetectBtn" class="primary">
+        もう一度自動検出
+      </button>
 
-<label>
-画像の下の記載欄の高さ
-</label>
+      <button id="addAllBtn">
+        検出したものを全部採用
+      </button>
 
-<input
-  id="blankHeight"
-  type="number"
-  min="30"
-  max="150"
-  value="65"
->
+      <button id="clearSelectedBtn" class="danger">
+        採用を全部解除
+      </button>
+    </div>
 
-<span>px</span>
+    <p class="small">
+      緑の枠が自動検出されたグッズです。不要なものは下の一覧から削除できます。
+    </p>
 
-</div>
+    <div class="source-wrap">
+      <canvas id="sourceCanvas"></canvas>
+      <div id="detectOverlay"></div>
+    </div>
 
-<div class="info">
-グッズ画像の真下に、この高さの白い記載欄が自動で付きます。
-</div>
-
-<hr>
-
-<div class="legend-editor">
-
-<strong style="font-size:13px">
-⭐ 星の説明
-</strong>
-
-<div class="legend-row">
-
-<input
-  id="legendColor1"
-  type="color"
-  value="#FFD43B"
->
-
-<input
-  id="legendText1"
-  type="text"
-  value="交換優先"
-  placeholder="説明"
->
-
-</div>
-
-<div class="legend-row">
-
-<input
-  id="legendColor2"
-  type="color"
-  value="#FF8FB3"
->
-
-<input
-  id="legendText2"
-  type="text"
-  value="抱き合わせ希望"
-  placeholder="説明"
->
-
-</div>
-
-<div class="legend-row">
-
-<input
-  id="legendColor3"
-  type="color"
-  value="#9AA0A6"
->
-
-<input
-  id="legendText3"
-  type="text"
-  value="通常"
-  placeholder="説明"
->
-
-</div>
-
-</div>
-
-</section>
+  </section>
 
 
-<!-- 完成 -->
-<section id="previewSection">
+  <!-- プレビュー -->
+  <section id="previewPanel" class="panel">
 
-<h2 class="edit-only">
-④ 完成イメージ
-</h2>
+    <div id="previewControls" class="editor-only">
 
-<div id="previewArea">
+      <h2>③ 完成イメージ</h2>
 
-<div id="goodsCanvas"></div>
+      <div class="row">
+        <button id="screenshotBtn" class="primary">
+          スクショ用表示
+        </button>
 
-<div id="legendOutput" class="legend-output"></div>
+        <button id="resetBtn" class="danger">
+          全部リセット
+        </button>
+      </div>
 
-</div>
+      <p class="small">
+        グッズ画像をタップすると決定済み表示になります。
+        ⭐をタップすると色が変わります。
+      </p>
 
-<div class="select-buttons edit-only">
+    </div>
 
-<button id="screenshotBtn">
-📱 スクショモード
-</button>
+    <div class="preview-scroll">
+      <div id="goodsCanvas">
+        <div id="emptyMessage">
+          グッズを検出するとここに表示されます
+        </div>
+      </div>
+    </div>
 
-<button id="resetBtn" class="danger">
-リセット
-</button>
+    <div id="legend" class="legend"></div>
 
-</div>
+  </section>
 
-</section>
+
+  <!-- 設定 -->
+  <section id="settingsPanel" class="panel editor-only">
+
+    <h2>表示設定</h2>
+
+    <div class="row">
+      <label>
+        グッズ下の空白
+        <input
+          id="blankHeight"
+          type="number"
+          min="30"
+          max="150"
+          value="65"
+          style="width:70px"
+        >
+        px
+      </label>
+    </div>
+
+    <hr>
+
+    <h2>⭐ 星の説明</h2>
+
+    <div class="legend-editor">
+
+      <div class="legend-line">
+        <input
+          class="color-input"
+          type="color"
+          id="legendColor0"
+          value="#FFD43B"
+        >
+
+        <span>⭐</span>
+
+        <input
+          type="text"
+          id="legendText0"
+          value="交換優先"
+        >
+      </div>
+
+
+      <div class="legend-line">
+        <input
+          class="color-input"
+          type="color"
+          id="legendColor1"
+          value="#FF8FB3"
+        >
+
+        <span>⭐</span>
+
+        <input
+          type="text"
+          id="legendText1"
+          value="抱き合わせ希望"
+        >
+      </div>
+
+
+      <div class="legend-line">
+        <input
+          class="color-input"
+          type="color"
+          id="legendColor2"
+          value="#9AA0A6"
+        >
+
+        <span>⭐</span>
+
+        <input
+          type="text"
+          id="legendText2"
+          value="通常"
+        >
+      </div>
+
+    </div>
+
+  </section>
 
 </main>
 
 
 <script>
 
-const imageInput =
-document.getElementById("imageInput");
+const imageInput = document.getElementById("imageInput");
+const detectBtn = document.getElementById("detectBtn");
+const redetectBtn = document.getElementById("redetectBtn");
+const addAllBtn = document.getElementById("addAllBtn");
+const clearSelectedBtn = document.getElementById("clearSelectedBtn");
 
-const selectCanvas =
-document.getElementById("selectCanvas");
+const sourceArea = document.getElementById("sourceArea");
+const sourceCanvas = document.getElementById("sourceCanvas");
+const sourceCtx = sourceCanvas.getContext("2d");
 
-const selectCtx =
-selectCanvas.getContext("2d");
+const detectOverlay = document.getElementById("detectOverlay");
 
-const selectedList =
-document.getElementById("selectedList");
+const previewPanel = document.getElementById("previewPanel");
+const goodsCanvas = document.getElementById("goodsCanvas");
+const emptyMessage = document.getElementById("emptyMessage");
 
-const selectionStatus =
-document.getElementById("selectionStatus");
+const statusEl = document.getElementById("status");
 
-const goodsCanvas =
-document.getElementById("goodsCanvas");
+const blankHeightInput = document.getElementById("blankHeight");
 
-const blankHeightInput =
-document.getElementById("blankHeight");
+const screenshotBtn = document.getElementById("screenshotBtn");
+const resetBtn = document.getElementById("resetBtn");
 
-const selectModeBtn =
-document.getElementById("selectModeBtn");
-
-const clearSelectedBtn =
-document.getElementById("clearSelectedBtn");
-
-const screenshotBtn =
-document.getElementById("screenshotBtn");
-
-const resetBtn =
-document.getElementById("resetBtn");
-
-
-let sourceImage = null;
+let originalImage = null;
 
 let sourceWidth = 0;
 let sourceHeight = 0;
 
-let selecting = true;
-
-let isDragging = false;
-
-let startPoint = null;
-let currentPoint = null;
-
+let detectedItems = [];
 let items = [];
 
 let itemId = 1;
 
+let screenshotMode = false;
 
-/* 星の色 */
 const starColors = [
-"#FFD43B",
-"#FF8FB3",
-"#9AA0A6",
-"#7CC7FF",
-"#B98CFF"
+  "#FFD43B",
+  "#FF8FB3",
+  "#9AA0A6",
+  "#7CC7FF",
+  "#B98CFF"
 ];
 
 
 /* =========================
-画像読み込み
+   画像読み込み
 ========================= */
 
-imageInput.addEventListener(
-"change",
-function(){
+imageInput.addEventListener("change", function(){
 
-const file = this.files[0];
+  const file = this.files[0];
 
-if(!file) return;
+  if(!file) return;
 
-const reader = new FileReader();
+  const reader = new FileReader();
 
-reader.onload = function(e){
+  reader.onload = function(e){
 
-const img = new Image();
+    const img = new Image();
 
-img.onload = function(){
+    img.onload = function(){
 
-sourceImage = img;
+      originalImage = img;
 
-sourceWidth =
-img.naturalWidth;
+      sourceWidth = img.naturalWidth;
+      sourceHeight = img.naturalHeight;
 
-sourceHeight =
-img.naturalHeight;
+      sourceCanvas.width = sourceWidth;
+      sourceCanvas.height = sourceHeight;
 
-selectCanvas.width =
-sourceWidth;
+      sourceCtx.clearRect(
+        0,
+        0,
+        sourceWidth,
+        sourceHeight
+      );
 
-selectCanvas.height =
-sourceHeight;
+      sourceCtx.drawImage(
+        img,
+        0,
+        0
+      );
 
-items = [];
+      sourceArea.style.display = "block";
 
-itemId = 1;
+      detectBtn.disabled = false;
 
-drawSelectionCanvas();
+      statusEl.textContent =
+        "画像を読み込みました。自動検出を押してください。";
 
-renderSelectedList();
+      detectItems();
 
-renderPreview();
+    };
 
-selecting = true;
+    img.src = e.target.result;
 
-updateSelectButton();
+  };
 
-selectionStatus.textContent =
-"グッズを1個ずつ指で囲んでね。";
-
-};
-
-img.src = e.target.result;
-
-};
-
-reader.readAsDataURL(file);
+  reader.readAsDataURL(file);
 
 });
+
+
+detectBtn.addEventListener("click", detectItems);
+redetectBtn.addEventListener("click", detectItems);
 
 
 /* =========================
-選択モード
+   自動検出
 ========================= */
 
-selectModeBtn.addEventListener(
-"click",
-function(){
+function detectItems(){
 
-selecting = !selecting;
+  if(!originalImage) return;
 
-updateSelectButton();
+  statusEl.textContent = "グッズを自動検出中…";
 
-});
+  detectedItems = [];
+
+  const scale = Math.min(
+    1,
+    1100 / sourceWidth
+  );
+
+  const w = Math.max(
+    1,
+    Math.round(sourceWidth * scale)
+  );
+
+  const h = Math.max(
+    1,
+    Math.round(sourceHeight * scale)
+  );
 
 
-function updateSelectButton(){
+  const tempCanvas = document.createElement("canvas");
 
-if(selecting){
+  tempCanvas.width = w;
+  tempCanvas.height = h;
 
-selectModeBtn.textContent =
-"✂️ 選択モード ON";
+  const ctx = tempCanvas.getContext("2d");
 
-}else{
+  ctx.drawImage(
+    originalImage,
+    0,
+    0,
+    w,
+    h
+  );
 
-selectModeBtn.textContent =
-"✋ 選択モード OFF";
 
-}
+  const imageData = ctx.getImageData(
+    0,
+    0,
+    w,
+    h
+  );
+
+  const data = imageData.data;
+
+  const mask = new Uint8Array(w * h);
+
+
+  /*
+    白背景ではなく、
+
+    ・暗い色
+    ・色のついた部分
+    ・薄い枠線
+
+    を検出
+  */
+
+  for(let y=0; y<h; y++){
+
+    for(let x=0; x<w; x++){
+
+      const i = (y*w+x)*4;
+
+      const r = data[i];
+      const g = data[i+1];
+      const b = data[i+2];
+
+      const max = Math.max(r,g,b);
+      const min = Math.min(r,g,b);
+
+      const brightness =
+        (r+g+b)/3;
+
+      const saturation =
+        max-min;
+
+      if(
+        brightness < 244 ||
+        saturation > 18
+      ){
+        mask[y*w+x] = 1;
+      }
+
+    }
+
+  }
+
+
+  /*
+    少し膨張させる。
+
+    カード内の画像・文字・枠を
+    ひとつにつなげやすくする。
+  */
+
+  const dilated = dilateMask(
+    mask,
+    w,
+    h,
+    4
+  );
+
+
+  /*
+    連結成分を探す
+  */
+
+  const visited = new Uint8Array(
+    w*h
+  );
+
+  const components = [];
+
+
+  for(let y=0; y<h; y++){
+
+    for(let x=0; x<w; x++){
+
+      const index = y*w+x;
+
+      if(
+        !dilated[index] ||
+        visited[index]
+      ){
+        continue;
+      }
+
+
+      const queue = [index];
+
+      visited[index] = 1;
+
+      let minX = x;
+      let maxX = x;
+      let minY = y;
+      let maxY = y;
+
+      let count = 0;
+
+
+      while(queue.length){
+
+        const current = queue.pop();
+
+        const cy =
+          Math.floor(current/w);
+
+        const cx =
+          current - cy*w;
+
+        count++;
+
+
+        minX = Math.min(minX,cx);
+        maxX = Math.max(maxX,cx);
+
+        minY = Math.min(minY,cy);
+        maxY = Math.max(maxY,cy);
+
+
+        const neighbors = [
+
+          current-1,
+          current+1,
+          current-w,
+          current+w
+
+        ];
+
+
+        for(const n of neighbors){
+
+          if(
+            n < 0 ||
+            n >= w*h ||
+            visited[n] ||
+            !dilated[n]
+          ){
+            continue;
+          }
+
+          /*
+            左右端をまたぐのを防ぐ
+          */
+
+          if(
+            Math.abs(
+              (n%w)-(current%w)
+            ) > 1
+          ){
+            continue;
+          }
+
+          visited[n] = 1;
+
+          queue.push(n);
+
+        }
+
+      }
+
+
+      const bw = maxX-minX+1;
+      const bh = maxY-minY+1;
+      const area = bw*bh;
+
+      /*
+        小さすぎるノイズを除外
+      */
+
+      if(
+        area > w*h*0.00025 &&
+        bw > 25 &&
+        bh > 35
+      ){
+
+        components.push({
+          x:minX,
+          y:minY,
+          w:bw,
+          h:bh,
+          area,
+          pixels:count
+        });
+
+      }
+
+    }
+
+  }
+
+
+  /*
+    カード候補を整理
+  */
+
+  let candidates =
+    mergeNearbyComponents(
+      components,
+      w,
+      h
+    );
+
+
+  /*
+    大きすぎる領域は除外。
+    今回のようなカード画像なら
+    だいたい縦長になる。
+  */
+
+  candidates =
+    candidates.filter(c => {
+
+      const ratio =
+        c.w/c.h;
+
+      const areaRatio =
+        (c.w*c.h)/(w*h);
+
+      if(areaRatio > 0.18){
+        return false;
+      }
+
+      if(c.w < 35 || c.h < 45){
+        return false;
+      }
+
+      if(ratio > 2.2){
+        return false;
+      }
+
+      return true;
+
+    });
+
+
+  /*
+    重複した候補を整理
+  */
+
+  candidates =
+    removeNestedBoxes(
+      candidates
+    );
+
+
+  /*
+    元画像サイズに戻す
+  */
+
+  const sx =
+    sourceWidth/w;
+
+  const sy =
+    sourceHeight/h;
+
+
+  detectedItems =
+    candidates.map(c => {
+
+      const padX =
+        Math.max(
+          5,
+          Math.round(c.w*0.06)
+        );
+
+      const padY =
+        Math.max(
+          5,
+          Math.round(c.h*0.04)
+        );
+
+
+      let x =
+        Math.max(
+          0,
+          c.x-padX
+        );
+
+      let y =
+        Math.max(
+          0,
+          c.y-padY
+        );
+
+      let right =
+        Math.min(
+          w,
+          c.x+c.w+padX
+        );
+
+      let bottom =
+        Math.min(
+          h,
+          c.y+c.h+padY
+        );
+
+
+      return {
+
+        x:Math.round(x*sx),
+        y:Math.round(y*sy),
+
+        w:Math.round(
+          (right-x)*sx
+        ),
+
+        h:Math.round(
+          (bottom-y)*sy
+        )
+
+      };
+
+    });
+
+
+  /*
+    大きい順ではなく
+    上→下、左→右
+  */
+
+  detectedItems.sort((a,b)=>{
+
+    const tolerance =
+      Math.min(a.h,b.h)*0.45;
+
+    if(
+      Math.abs(a.y-b.y) < tolerance
+    ){
+      return a.x-b.x;
+    }
+
+    return a.y-b.y;
+
+  });
+
+
+  drawDetectionOverlay();
+
+  statusEl.textContent =
+    `自動検出：${detectedItems.length}個`;
 
 }
 
 
 /* =========================
-Canvas座標
+   マスク膨張
 ========================= */
 
-function getCanvasPoint(e){
-
-const rect =
-selectCanvas.getBoundingClientRect();
-
-if(!rect.width || !rect.height){
-
-return {
-x:0,
-y:0
-};
-
-}
-
-const x =
-(e.clientX - rect.left)
-*
-sourceWidth
-/
-rect.width;
-
-const y =
-(e.clientY - rect.top)
-*
-sourceHeight
-/
-rect.height;
-
-return {
-
-x:Math.max(
-0,
-Math.min(sourceWidth,x)
-),
-
-y:Math.max(
-0,
-Math.min(sourceHeight,y)
-)
-
-};
-
-}
-
-
-/* =========================
-指で選択
-========================= */
-
-selectCanvas.addEventListener(
-"pointerdown",
-function(e){
-
-if(!sourceImage || !selecting)
-return;
-
-e.preventDefault();
-
-selectCanvas.setPointerCapture(
-e.pointerId
-);
-
-isDragging = true;
-
-startPoint =
-getCanvasPoint(e);
-
-currentPoint =
-startPoint;
-
-drawSelectionCanvas();
-
-});
-
-
-selectCanvas.addEventListener(
-"pointermove",
-function(e){
-
-if(!isDragging)
-return;
-
-e.preventDefault();
-
-currentPoint =
-getCanvasPoint(e);
-
-drawSelectionCanvas();
-
-});
-
-
-selectCanvas.addEventListener(
-"pointerup",
-function(e){
-
-if(!isDragging)
-return;
-
-e.preventDefault();
-
-isDragging = false;
-
-currentPoint =
-getCanvasPoint(e);
-
-createCrop();
-
-});
-
-
-selectCanvas.addEventListener(
-"pointercancel",
-function(){
-
-isDragging = false;
-
-});
-
-
-/* =========================
-選択画面描画
-========================= */
-
-function drawSelectionCanvas(){
-
-if(!sourceImage)
-return;
-
-selectCtx.clearRect(
-0,
-0,
-sourceWidth,
-sourceHeight
-);
-
-selectCtx.drawImage(
-sourceImage,
-0,
-0,
-sourceWidth,
-sourceHeight
-);
-
-
-/* 選択済み */
-items.forEach(
-function(item,index){
-
-selectCtx.save();
-
-selectCtx.strokeStyle =
-"#4CAF50";
-
-selectCtx.lineWidth =
-Math.max(
-3,
-sourceWidth / 400
-);
-
-selectCtx.setLineDash([
-8,
-5
-]);
-
-selectCtx.strokeRect(
-item.x,
-item.y,
-item.w,
-item.h
-);
-
-selectCtx.fillStyle =
-"#4CAF50";
-
-selectCtx.font =
-`bold ${Math.max(
-20,
-sourceWidth / 30
-)}px sans-serif`;
-
-selectCtx.fillText(
-String(index + 1),
-item.x + 5,
-item.y + 25
-);
-
-selectCtx.restore();
-
-});
-
-
-/* 現在選択中 */
-if(
-isDragging &&
-startPoint &&
-currentPoint
+function dilateMask(
+  mask,
+  w,
+  h,
+  radius
 ){
 
-const x =
-Math.min(
-startPoint.x,
-currentPoint.x
-);
+  const output =
+    new Uint8Array(w*h);
 
-const y =
-Math.min(
-startPoint.y,
-currentPoint.y
-);
+  for(let y=0; y<h; y++){
 
-const w =
-Math.abs(
-currentPoint.x -
-startPoint.x
-);
+    for(let x=0; x<w; x++){
 
-const h =
-Math.abs(
-currentPoint.y -
-startPoint.y
-);
+      let found = false;
 
-selectCtx.save();
+      for(
+        let dy=-radius;
+        dy<=radius && !found;
+        dy++
+      ){
 
-selectCtx.fillStyle =
-"rgba(255,255,255,.18)";
+        const yy=y+dy;
 
-selectCtx.fillRect(
-x,
-y,
-w,
-h
-);
+        if(
+          yy<0 ||
+          yy>=h
+        ){
+          continue;
+        }
 
-selectCtx.strokeStyle =
-"#ff4d88";
+        for(
+          let dx=-radius;
+          dx<=radius;
+          dx++
+        ){
 
-selectCtx.lineWidth =
-Math.max(
-3,
-sourceWidth / 400
-);
+          const xx=x+dx;
 
-selectCtx.setLineDash([]);
+          if(
+            xx<0 ||
+            xx>=w
+          ){
+            continue;
+          }
 
-selectCtx.strokeRect(
-x,
-y,
-w,
-h
-);
+          if(
+            mask[yy*w+xx]
+          ){
 
-selectCtx.restore();
+            found=true;
+            break;
 
-}
+          }
+
+        }
+
+      }
+
+      if(found){
+        output[y*w+x]=1;
+      }
+
+    }
+
+  }
+
+  return output;
 
 }
 
 
 /* =========================
-実際に切り抜く
+   近い成分を結合
 ========================= */
 
-function createCrop(){
+function mergeNearbyComponents(
+  components,
+  w,
+  h
+){
 
-if(
-!startPoint ||
-!currentPoint ||
-!sourceImage
-)
-return;
+  const result =
+    components.map(c=>({...c}));
 
-const x =
-Math.round(
-Math.min(
-startPoint.x,
-currentPoint.x
-)
-);
-
-const y =
-Math.round(
-Math.min(
-startPoint.y,
-currentPoint.y
-)
-);
-
-const w =
-Math.round(
-Math.abs(
-currentPoint.x -
-startPoint.x
-)
-);
-
-const h =
-Math.round(
-Math.abs(
-currentPoint.y -
-startPoint.y
-)
-);
+  let changed = true;
 
 
-if(w < 8 || h < 8){
+  while(changed){
 
-selectionStatus.textContent =
-"もう少し大きくグッズを囲んでね。";
+    changed=false;
 
-drawSelectionCanvas();
+    outer:
 
-return;
+    for(let i=0;i<result.length;i++){
 
-}
+      for(let j=i+1;j<result.length;j++){
 
-
-const cropCanvas =
-document.createElement("canvas");
-
-cropCanvas.width = w;
-cropCanvas.height = h;
-
-const cropCtx =
-cropCanvas.getContext("2d");
-
-cropCtx.drawImage(
-sourceImage,
-x,
-y,
-w,
-h,
-0,
-0,
-w,
-h
-);
-
-const dataUrl =
-cropCanvas.toDataURL("image/png");
+        const a=result[i];
+        const b=result[j];
 
 
-items.push({
+        const ax2=a.x+a.w;
+        const ay2=a.y+a.h;
 
-id:itemId++,
-
-x:x,
-y:y,
-w:w,
-h:h,
-
-dataUrl:dataUrl,
-
-quantity:1,
-
-name:"",
-
-memo:"",
-
-starIndex:0,
-
-done:false
-
-});
+        const bx2=b.x+b.w;
+        const by2=b.y+b.h;
 
 
-renderSelectedList();
+        const gapX =
+          Math.max(
+            0,
+            Math.max(
+              a.x-bx2,
+              b.x-ax2
+            )
+          );
 
-drawSelectionCanvas();
+        const gapY =
+          Math.max(
+            0,
+            Math.max(
+              a.y-by2,
+              b.y-ay2
+            )
+          );
 
-renderPreview();
 
-selectionStatus.textContent =
-`選択済み ${items.length}個。続けて他のグッズも囲めるよ！`;
+        /*
+          同じカード内部の
+          画像・文字・枠をまとめる。
+
+          ただしカード同士は
+          離れているので結合しない。
+        */
+
+        const nearX =
+          gapX < Math.max(
+            8,
+            Math.min(a.w,b.w)*0.12
+          );
+
+        const nearY =
+          gapY < Math.max(
+            8,
+            Math.min(a.h,b.h)*0.12
+          );
+
+
+        const overlapX =
+          Math.min(ax2,bx2)-
+          Math.max(a.x,b.x);
+
+        const overlapY =
+          Math.min(ay2,by2)-
+          Math.max(a.y,b.y);
+
+
+        const sameRegion =
+          (
+            nearX &&
+            overlapY > 0
+          ) ||
+          (
+            nearY &&
+            overlapX > 0
+          );
+
+
+        if(sameRegion){
+
+          const nx =
+            Math.min(a.x,b.x);
+
+          const ny =
+            Math.min(a.y,b.y);
+
+          const nr =
+            Math.max(ax2,bx2);
+
+          const nb =
+            Math.max(ay2,by2);
+
+
+          result[i]={
+            x:nx,
+            y:ny,
+            w:nr-nx,
+            h:nb-ny,
+            area:(nr-nx)*(nb-ny),
+            pixels:a.pixels+b.pixels
+          };
+
+          result.splice(j,1);
+
+          changed=true;
+
+          break outer;
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+  return result;
 
 }
 
 
 /* =========================
-選択済み一覧
+   内包された箱を削除
 ========================= */
 
-function renderSelectedList(){
+function removeNestedBoxes(
+  boxes
+){
 
-selectedList.innerHTML = "";
+  return boxes.filter(
+    (box,i)=>{
 
-items.forEach(
-function(item,index){
+      for(let j=0;j<boxes.length;j++){
 
-const box =
-document.createElement("div");
+        if(i===j) continue;
 
-box.className =
-"selected-item";
+        const other=boxes[j];
 
-const img =
-document.createElement("img");
+        const inside =
+          box.x >= other.x &&
+          box.y >= other.y &&
+          box.x+box.w <=
+            other.x+other.w &&
+          box.y+box.h <=
+            other.y+other.h;
 
-img.src =
-item.dataUrl;
 
-const number =
-document.createElement("div");
+        if(
+          inside &&
+          other.w*other.h >
+            box.w*box.h*1.25
+        ){
 
-number.className =
-"selected-number";
+          return false;
 
-number.textContent =
-`#${index + 1}`;
+        }
 
-const del =
-document.createElement("button");
+      }
 
-del.className =
-"selected-delete";
+      return true;
 
-del.textContent =
-"×";
-
-del.addEventListener(
-"click",
-function(){
-
-items =
-items.filter(
-x => x.id !== item.id
-);
-
-renderSelectedList();
-
-drawSelectionCanvas();
-
-renderPreview();
-
-});
-
-box.appendChild(img);
-
-box.appendChild(number);
-
-box.appendChild(del);
-
-selectedList.appendChild(box);
-
-});
+    }
+  );
 
 }
 
 
 /* =========================
-全部消す
+   検出結果表示
+========================= */
+
+function drawDetectionOverlay(){
+
+  detectOverlay.innerHTML="";
+
+  const displayedWidth =
+    sourceCanvas.clientWidth ||
+    sourceCanvas.width;
+
+  const displayedHeight =
+    sourceCanvas.clientHeight ||
+    sourceCanvas.height;
+
+
+  const scaleX =
+    displayedWidth/sourceWidth;
+
+  const scaleY =
+    displayedHeight/sourceHeight;
+
+
+  detectOverlay.style.width =
+    displayedWidth+"px";
+
+  detectOverlay.style.height =
+    displayedHeight+"px";
+
+
+  detectedItems.forEach(
+    (item,index)=>{
+
+      const box =
+        document.createElement("div");
+
+      box.className="detect-box";
+
+      box.style.left =
+        item.x*scaleX+"px";
+
+      box.style.top =
+        item.y*scaleY+"px";
+
+      box.style.width =
+        item.w*scaleX+"px";
+
+      box.style.height =
+        item.h*scaleY+"px";
+
+
+      const number =
+        document.createElement("div");
+
+      number.className=
+        "detect-number";
+
+      number.textContent =
+        index+1;
+
+
+      box.appendChild(number);
+
+      detectOverlay.appendChild(box);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   全部採用
+========================= */
+
+addAllBtn.addEventListener(
+  "click",
+  function(){
+
+    if(!detectedItems.length){
+      return;
+    }
+
+
+    items=[];
+
+    detectedItems.forEach(
+      (rect)=>{
+
+        const dataUrl =
+          cropImage(rect);
+
+
+        items.push({
+
+          id:itemId++,
+
+          x:rect.x,
+          y:rect.y,
+          w:rect.w,
+          h:rect.h,
+
+          dataUrl:dataUrl,
+
+          quantity:1,
+          name:"",
+          memo:"",
+
+          starIndex:0,
+
+          done:false
+
+        });
+
+      }
+    );
+
+
+    renderGoods();
+
+    previewPanel.style.display =
+      "block";
+
+    statusEl.textContent =
+      `${items.length}個採用しました！`;
+
+  }
+);
+
+
+/* =========================
+   採用を全部解除
 ========================= */
 
 clearSelectedBtn.addEventListener(
-"click",
-function(){
+  "click",
+  function(){
 
-items = [];
+    items=[];
 
-renderSelectedList();
+    renderGoods();
 
-drawSelectionCanvas();
+    statusEl.textContent =
+      "採用を解除しました";
 
-renderPreview();
-
-selectionStatus.textContent =
-"選択を全部消したよ。";
-
-});
+  }
+);
 
 
 /* =========================
-プレビュー
+   画像切り抜き
 ========================= */
 
-function renderPreview(){
+function cropImage(rect){
 
-goodsCanvas.innerHTML = "";
+  const canvas =
+    document.createElement("canvas");
 
-if(
-!sourceImage ||
-items.length === 0
-){
+  canvas.width =
+    Math.max(1,rect.w);
 
-goodsCanvas.style.height =
-"150px";
+  canvas.height =
+    Math.max(1,rect.h);
 
-renderLegend();
+  const ctx =
+    canvas.getContext("2d");
 
-return;
 
-}
+  ctx.drawImage(
 
+    originalImage,
 
-const blankHeight =
-Math.max(
-30,
-Number(blankHeightInput.value) || 65
-);
+    rect.x,
+    rect.y,
+    rect.w,
+    rect.h,
 
+    0,
+    0,
+    rect.w,
+    rect.h
 
-/*
-元画像のY位置から
-何段目かを自動判定
-*/
+  );
 
-const sorted =
-[...items].sort(
-(a,b) => a.y - b.y
-);
 
-const rows = [];
-
-
-sorted.forEach(
-function(item){
-
-const centerY =
-item.y + item.h / 2;
-
-let row = null;
-
-
-for(
-let i = 0;
-i < rows.length;
-i++
-){
-
-const tolerance =
-Math.max(
-item.h,
-rows[i].maxH
-) * 0.55;
-
-if(
-Math.abs(
-centerY -
-rows[i].centerY
-)
-<
-tolerance
-){
-
-row = rows[i];
-
-break;
-
-}
-
-}
-
-
-if(!row){
-
-row = {
-
-items:[],
-centerY:centerY,
-maxH:item.h,
-minY:item.y
-
-};
-
-rows.push(row);
-
-}
-
-
-row.items.push(item);
-
-row.maxH =
-Math.max(
-row.maxH,
-item.h
-);
-
-row.minY =
-Math.min(
-row.minY,
-item.y
-);
-
-row.centerY =
-row.items.reduce(
-(sum,x) =>
-sum +
-x.y +
-x.h / 2,
-0
-)
-/
-row.items.length;
-
-});
-
-
-/* 上から順番 */
-rows.sort(
-(a,b) =>
-a.minY -
-b.minY
-);
-
-
-/*
-各段を配置
-*/
-
-const rowGap = 12;
-
-let currentY =
-rows.length
-?
-rows[0].minY
-:
-0;
-
-
-rows.forEach(
-function(row){
-
-row.layoutY =
-currentY;
-
-currentY +=
-row.maxH +
-blankHeight +
-rowGap;
-
-});
-
-
-/*
-全体の高さ
-*/
-
-let layoutHeight =
-sourceHeight;
-
-
-if(rows.length){
-
-const lastRow =
-rows[rows.length - 1];
-
-layoutHeight =
-Math.max(
-sourceHeight,
-lastRow.layoutY +
-lastRow.maxH +
-blankHeight +
-10
-);
-
-}
-
-
-goodsCanvas.dataset.layoutHeight =
-layoutHeight;
-
-
-/*
-グッズを配置
-*/
-
-rows.forEach(
-function(row){
-
-row.items.forEach(
-function(item){
-
-createGoodsElement(
-item,
-items.indexOf(item),
-row.layoutY,
-layoutHeight
-);
-
-});
-
-});
-
-
-updatePreviewSize();
-
-renderLegend();
+  return canvas.toDataURL(
+    "image/png"
+  );
 
 }
 
 
 /* =========================
-グッズ1個
+   行を自動判定
 ========================= */
 
-function createGoodsElement(
-item,
-index,
-layoutY,
-layoutHeight
-){
+function makeRows(){
 
-const goods =
-document.createElement("div");
+  const sorted =
+    [...items].sort(
+      (a,b)=>a.y-b.y
+    );
 
-goods.className =
-"goods";
 
-goods.dataset.id =
-item.id;
+  const rows=[];
 
 
-/* 横位置は元画像 */
-goods.style.left =
-`${item.x / sourceWidth * 100}%`;
+  sorted.forEach(item=>{
 
+    const centerY =
+      item.y+item.h/2;
 
-/* 縦位置は自動 */
-goods.style.top =
-`${layoutY / layoutHeight * 100}%`;
 
+    let target=null;
 
-goods.style.width =
-`${item.w / sourceWidth * 100}%`;
 
+    for(const row of rows){
 
-/* 画像 */
-const imageWrap =
-document.createElement("div");
+      const tolerance =
+        Math.max(
+          item.h,
+          row.maxH
+        )*0.55;
 
-imageWrap.className =
-"goods-image-wrap";
 
+      if(
+        Math.abs(
+          centerY-row.centerY
+        ) < tolerance
+      ){
 
-const img =
-document.createElement("img");
+        target=row;
+        break;
 
-img.className =
-"goods-image";
+      }
 
-img.src =
-item.dataUrl;
+    }
 
-img.draggable =
-false;
 
+    if(!target){
 
-if(item.done){
+      target={
+        items:[],
+        centerY:centerY,
+        maxH:item.h,
+        minY:item.y,
+        layoutY:0
+      };
 
-goods.classList.add("done");
+      rows.push(target);
 
-}
+    }
 
 
-img.addEventListener(
-"click",
-function(){
+    target.items.push(item);
 
-item.done =
-!item.done;
+    target.maxH =
+      Math.max(
+        target.maxH,
+        item.h
+      );
 
-goods.classList.toggle(
-"done",
-item.done
-);
+    target.minY =
+      Math.min(
+        target.minY,
+        item.y
+      );
 
-});
 
+    target.centerY =
+      target.items.reduce(
+        (sum,x)=>
+          sum+x.y+x.h/2,
+        0
+      )/
+      target.items.length;
 
-/* 星 */
-const star =
-document.createElement("button");
+  });
 
-star.className =
-"star";
 
-star.textContent =
-"★";
+  rows.sort(
+    (a,b)=>a.minY-b.minY
+  );
 
-star.style.color =
-starColors[item.starIndex];
 
+  const blankHeight =
+    Number(
+      blankHeightInput.value
+    ) || 65;
 
-star.addEventListener(
-"click",
-function(e){
 
-e.stopPropagation();
+  const rowGap=12;
 
-item.starIndex =
-(
-item.starIndex + 1
-)
-%
-starColors.length;
 
-star.style.color =
-starColors[item.starIndex];
+  let currentY =
+    rows.length ?
+      rows[0].minY :
+      0;
 
-});
 
+  rows.forEach(row=>{
 
-/* 削除 */
-const deleteBtn =
-document.createElement("button");
+    row.layoutY=currentY;
 
-deleteBtn.className =
-"goods-delete edit-only";
+    currentY +=
+      row.maxH+
+      blankHeight+
+      rowGap;
 
-deleteBtn.textContent =
-"×";
+  });
 
 
-deleteBtn.addEventListener(
-"click",
-function(e){
-
-e.stopPropagation();
-
-items =
-items.filter(
-x => x.id !== item.id
-);
-
-renderSelectedList();
-
-drawSelectionCanvas();
-
-renderPreview();
-
-});
-
-
-imageWrap.appendChild(img);
-imageWrap.appendChild(star);
-imageWrap.appendChild(deleteBtn);
-
-
-/* =================
-記載欄
-================= */
-
-const info =
-document.createElement("div");
-
-info.className =
-"goods-info";
-
-
-/* 数量 */
-const quantity =
-document.createElement("div");
-
-quantity.className =
-"quantity";
-
-
-const left =
-document.createElement("span");
-
-left.textContent =
-"（";
-
-
-const quantityInput =
-document.createElement("input");
-
-quantityInput.type =
-"number";
-
-quantityInput.min =
-"0";
-
-quantityInput.value =
-item.quantity;
-
-
-quantityInput.addEventListener(
-"input",
-function(){
-
-item.quantity =
-this.value;
-
-});
-
-
-const right =
-document.createElement("span");
-
-right.textContent =
-"）";
-
-
-quantity.appendChild(left);
-quantity.appendChild(quantityInput);
-quantity.appendChild(right);
-
-
-/* グッズ名 */
-const name =
-document.createElement("input");
-
-name.className =
-"name-input";
-
-name.type =
-"text";
-
-name.placeholder =
-"グッズ名";
-
-name.value =
-item.name;
-
-
-name.addEventListener(
-"input",
-function(){
-
-item.name =
-this.value;
-
-});
-
-
-/* メモ */
-const memo =
-document.createElement("input");
-
-memo.className =
-"memo-input";
-
-memo.type =
-"text";
-
-memo.placeholder =
-"メモ";
-
-memo.value =
-item.memo;
-
-
-memo.addEventListener(
-"input",
-function(){
-
-item.memo =
-this.value;
-
-});
-
-
-/* 星カラー */
-const editTools =
-document.createElement("div");
-
-editTools.className =
-"edit-tools edit-only";
-
-
-const starColor =
-document.createElement("select");
-
-starColor.className =
-"star-color";
-
-
-starColors.forEach(
-function(color,i){
-
-const option =
-document.createElement("option");
-
-option.value =
-i;
-
-option.textContent =
-"★ " + (i + 1);
-
-starColor.appendChild(
-option
-);
-
-});
-
-
-starColor.value =
-item.starIndex;
-
-
-starColor.addEventListener(
-"change",
-function(){
-
-item.starIndex =
-Number(this.value);
-
-star.style.color =
-starColors[item.starIndex];
-
-});
-
-
-editTools.appendChild(
-starColor
-);
-
-
-info.appendChild(quantity);
-
-info.appendChild(name);
-
-info.appendChild(memo);
-
-info.appendChild(editTools);
-
-
-goods.appendChild(imageWrap);
-
-goods.appendChild(info);
-
-goodsCanvas.appendChild(goods);
+  return {
+    rows,
+    height:currentY+10
+  };
 
 }
 
 
 /* =========================
-サイズ調整
+   グッズ表示
+========================= */
+
+function renderGoods(){
+
+  goodsCanvas.innerHTML="";
+
+
+  if(!items.length){
+
+    goodsCanvas.appendChild(
+      emptyMessage
+    );
+
+    goodsCanvas.style.height=
+      "200px";
+
+    return;
+
+  }
+
+
+  const layout =
+    makeRows();
+
+
+  const layoutHeight =
+    layout.height;
+
+
+  goodsCanvas.style.height =
+    layoutHeight+"px";
+
+
+  const blankHeight =
+    Number(
+      blankHeightInput.value
+    ) || 65;
+
+
+  layout.rows.forEach(
+    row=>{
+
+      row.items
+        .sort((a,b)=>a.x-b.x)
+        .forEach(item=>{
+
+          const goods =
+            document.createElement("div");
+
+          goods.className="goods";
+
+
+          goods.style.left =
+            (
+              item.x/sourceWidth*100
+            )+"%";
+
+
+          goods.style.top =
+            (
+              row.layoutY/layoutHeight*100
+            )+"%";
+
+
+          goods.style.width =
+            (
+              item.w/sourceWidth*100
+            )+"%";
+
+
+          if(item.done){
+            goods.classList.add(
+              "done"
+            );
+          }
+
+
+          /* 画像 */
+
+          const imageWrap =
+            document.createElement("div");
+
+          imageWrap.className=
+            "goods-image-wrap";
+
+
+          const img =
+            document.createElement("img");
+
+          img.className="goods-image";
+
+          img.src=item.dataUrl;
+
+          img.alt=
+            item.name ||
+            "グッズ";
+
+
+          img.addEventListener(
+            "click",
+            function(){
+
+              item.done =
+                !item.done;
+
+              goods.classList.toggle(
+                "done",
+                item.done
+              );
+
+            }
+          );
+
+
+          imageWrap.appendChild(img);
+
+
+          /* 星 */
+
+          const star =
+            document.createElement("button");
+
+          star.className="star";
+
+          star.textContent="★";
+
+          star.style.color =
+            starColors[
+              item.starIndex
+            ];
+
+
+          star.addEventListener(
+            "click",
+            function(e){
+
+              e.stopPropagation();
+
+              item.starIndex =
+                (
+                  item.starIndex+1
+                )%
+                starColors.length;
+
+
+              star.style.color =
+                starColors[
+                  item.starIndex
+                ];
+
+              updateLegend();
+
+            }
+          );
+
+
+          imageWrap.appendChild(star);
+
+
+          /* 削除 */
+
+          const deleteBtn =
+            document.createElement("button");
+
+          deleteBtn.className=
+            "delete-item";
+
+          deleteBtn.textContent="×";
+
+
+          deleteBtn.addEventListener(
+            "click",
+            function(e){
+
+              e.stopPropagation();
+
+              items =
+                items.filter(
+                  x=>x.id!==item.id
+                );
+
+              renderGoods();
+
+            }
+          );
+
+
+          imageWrap.appendChild(
+            deleteBtn
+          );
+
+
+          goods.appendChild(
+            imageWrap
+          );
+
+
+          /* 情報欄 */
+
+          const info =
+            document.createElement("div");
+
+          info.className=
+            "goods-info";
+
+
+          info.style.height =
+            blankHeight+"px";
+
+
+          /* 個数 */
+
+          const quantityRow =
+            document.createElement("div");
+
+          quantityRow.className=
+            "quantity-row";
+
+
+          const left =
+            document.createElement("span");
+
+          left.className=
+            "quantity-mark";
+
+          left.textContent="（";
+
+
+          const quantity =
+            document.createElement("input");
+
+          quantity.className=
+            "quantity-input";
+
+          quantity.type="number";
+
+          quantity.min="0";
+
+          quantity.value=
+            item.quantity;
+
+
+          quantity.addEventListener(
+            "input",
+            function(){
+
+              item.quantity =
+                Number(
+                  quantity.value
+                ) || 0;
+
+            }
+          );
+
+
+          const right =
+            document.createElement("span");
+
+          right.className=
+            "quantity-mark";
+
+          right.textContent="）";
+
+
+          quantityRow.appendChild(left);
+          quantityRow.appendChild(quantity);
+          quantityRow.appendChild(right);
+
+
+          info.appendChild(
+            quantityRow
+          );
+
+
+          /* 名前 */
+
+          const name =
+            document.createElement("input");
+
+          name.className=
+            "goods-name";
+
+          name.placeholder=
+            "グッズ名";
+
+          name.value=
+            item.name;
+
+
+          name.addEventListener(
+            "input",
+            function(){
+
+              item.name =
+                name.value;
+
+            }
+          );
+
+
+          info.appendChild(name);
+
+
+          /* メモ */
+
+          const memo =
+            document.createElement("input");
+
+          memo.className=
+            "goods-memo";
+
+          memo.placeholder=
+            "メモ";
+
+          memo.value=
+            item.memo;
+
+
+          memo.addEventListener(
+            "input",
+            function(){
+
+              item.memo =
+                memo.value;
+
+            }
+          );
+
+
+          info.appendChild(memo);
+
+
+          /* 星色変更 */
+
+          const tools =
+            document.createElement("div");
+
+          tools.className=
+            "edit-tools";
+
+
+          const select =
+            document.createElement("select");
+
+          select.className=
+            "star-color";
+
+
+          starColors.forEach(
+            (color,index)=>{
+
+              const option =
+                document.createElement(
+                  "option"
+                );
+
+              option.value=index;
+
+              option.textContent =
+                "★ "+
+                (
+                  index+1
+                );
+
+              option.style.color=
+                color;
+
+              select.appendChild(
+                option
+              );
+
+            }
+          );
+
+
+          select.value =
+            item.starIndex;
+
+
+          select.addEventListener(
+            "change",
+            function(){
+
+              item.starIndex =
+                Number(
+                  select.value
+                );
+
+              star.style.color =
+                starColors[
+                  item.starIndex
+                ];
+
+              updateLegend();
+
+            }
+          );
+
+
+          tools.appendChild(
+            select
+          );
+
+
+          info.appendChild(
+            tools
+          );
+
+
+          goods.appendChild(
+            info
+          );
+
+
+          goodsCanvas.appendChild(
+            goods
+          );
+
+        });
+
+    });
+
+
+  updatePreviewSize();
+
+  updateLegend();
+
+}
+
+
+/* =========================
+   プレビューサイズ
 ========================= */
 
 function updatePreviewSize(){
 
-if(!sourceWidth)
-return;
+  if(!items.length){
+    return;
+  }
 
 
-const layoutHeight =
-Number(
-goodsCanvas.dataset.layoutHeight
-)
-||
-sourceHeight;
+  const layout =
+    makeRows();
 
 
-const width =
-goodsCanvas.clientWidth;
+  const naturalWidth =
+    sourceWidth;
 
 
-if(!width)
-return;
+  const availableWidth =
+    goodsCanvas.parentElement
+      .clientWidth;
 
 
-const scale =
-width /
-sourceWidth;
+  const scale =
+    Math.min(
+      1,
+      availableWidth/naturalWidth
+    );
 
 
-goodsCanvas.style.height =
-`${layoutHeight * scale}px`;
+  goodsCanvas.style.width =
+    naturalWidth*scale+"px";
 
 
-const blankHeight =
-Math.max(
-30,
-Number(blankHeightInput.value) || 65
-);
+  goodsCanvas.style.height =
+    layout.height*scale+"px";
 
 
-document
-.querySelectorAll(".goods-info")
-.forEach(
-function(info){
+  document
+    .querySelectorAll(
+      ".goods-info"
+    )
+    .forEach(info=>{
 
-info.style.height =
-`${blankHeight * scale}px`;
+      const blankHeight =
+        Number(
+          blankHeightInput.value
+        ) || 65;
 
-});
+      info.style.height =
+        blankHeight*scale+"px";
+
+    });
 
 }
 
 
-window.addEventListener(
-"resize",
-function(){
-
-updatePreviewSize();
-
-});
-
-
-blankHeightInput.addEventListener(
-"input",
-function(){
-
-renderPreview();
-
-});
-
-
 /* =========================
-凡例
+   星の説明
 ========================= */
 
-function renderLegend(){
+function updateLegend(){
 
-const output =
-document.getElementById(
-"legendOutput"
-);
+  const legend =
+    document.getElementById(
+      "legend"
+    );
 
-output.innerHTML = "";
-
-
-for(
-let i=1;
-i<=3;
-i++
-){
-
-const color =
-document.getElementById(
-"legendColor" + i
-).value;
-
-const text =
-document.getElementById(
-"legendText" + i
-).value;
+  legend.innerHTML="";
 
 
-if(!text)
-continue;
+  for(let i=0;i<3;i++){
+
+    const color =
+      document.getElementById(
+        "legendColor"+i
+      ).value;
+
+    const text =
+      document.getElementById(
+        "legendText"+i
+      ).value;
 
 
-const row =
-document.createElement("div");
+    const div =
+      document.createElement("div");
 
-row.className =
-"legend-output-item";
-
-
-const star =
-document.createElement("span");
-
-star.className =
-"legend-star";
-
-star.textContent =
-"★";
-
-star.style.color =
-color;
+    div.className=
+      "legend-item";
 
 
-const label =
-document.createElement("span");
+    const star =
+      document.createElement("span");
 
-label.textContent =
-text;
+    star.className=
+      "legend-star";
+
+    star.textContent="★";
+
+    star.style.color=color;
 
 
-row.appendChild(star);
-row.appendChild(label);
+    const label =
+      document.createElement("span");
 
-output.appendChild(row);
+    label.textContent=text;
+
+
+    div.appendChild(star);
+    div.appendChild(label);
+
+    legend.appendChild(div);
+
+  }
 
 }
-
-}
-
-
-[
-"legendColor1",
-"legendColor2",
-"legendColor3",
-"legendText1",
-"legendText2",
-"legendText3"
-].forEach(
-function(id){
-
-document
-.getElementById(id)
-.addEventListener(
-"input",
-renderLegend
-);
-
-});
 
 
 /* =========================
-スクショモード
+   設定変更
+========================= */
+
+blankHeightInput.addEventListener(
+  "input",
+  function(){
+
+    renderGoods();
+
+  }
+);
+
+
+for(let i=0;i<3;i++){
+
+  document
+    .getElementById(
+      "legendColor"+i
+    )
+    .addEventListener(
+      "input",
+      updateLegend
+    );
+
+
+  document
+    .getElementById(
+      "legendText"+i
+    )
+    .addEventListener(
+      "input",
+      updateLegend
+    );
+
+}
+
+
+/* =========================
+   スクショモード
 ========================= */
 
 screenshotBtn.addEventListener(
-"click",
-function(){
+  "click",
+  function(){
 
-document.body.classList.toggle(
-"screenshot-mode"
+    screenshotMode=true;
+
+    document.body.classList.add(
+      "screenshot-mode"
+    );
+
+    updatePreviewSize();
+
+  }
 );
 
 
-if(
-document.body.classList.contains(
-"screenshot-mode"
-)
-){
+document.body.addEventListener(
+  "click",
+  function(e){
 
-screenshotBtn.textContent =
-"✏️ 編集に戻る";
+    if(
+      screenshotMode &&
+      !e.target.closest(".goods")
+    ){
 
-}else{
+      screenshotMode=false;
 
-screenshotBtn.textContent =
-"📱 スクショモード";
+      document.body.classList.remove(
+        "screenshot-mode"
+      );
 
-}
+      updatePreviewSize();
 
+    }
 
-setTimeout(
-updatePreviewSize,
-50
+  }
 );
-
-});
 
 
 /* =========================
-リセット
+   リセット
 ========================= */
 
 resetBtn.addEventListener(
-"click",
-function(){
+  "click",
+  function(){
 
-if(
-!confirm(
-"全部リセットする？"
-)
-)
-return;
+    if(
+      !confirm(
+        "全部リセットしますか？"
+      )
+    ){
+      return;
+    }
 
 
-sourceImage = null;
+    originalImage=null;
 
-sourceWidth = 0;
+    detectedItems=[];
 
-sourceHeight = 0;
+    items=[];
 
-items = [];
+    itemId=1;
 
-itemId = 1;
+    imageInput.value="";
 
-imageInput.value = "";
+    sourceArea.style.display=
+      "none";
 
-selectCtx.clearRect(
-0,
-0,
-selectCanvas.width,
-selectCanvas.height
+    previewPanel.style.display=
+      "none";
+
+    detectBtn.disabled=true;
+
+    statusEl.textContent=
+      "画像を選択してください";
+
+    sourceCtx.clearRect(
+      0,
+      0,
+      sourceCanvas.width,
+      sourceCanvas.height
+    );
+
+    detectOverlay.innerHTML="";
+
+    renderGoods();
+
+  }
 );
 
-selectedList.innerHTML = "";
 
-goodsCanvas.innerHTML = "";
+/* =========================
+   画面サイズ変更
+========================= */
 
-goodsCanvas.style.height =
-"150px";
+window.addEventListener(
+  "resize",
+  function(){
 
-selectionStatus.textContent =
-"画像を入れて、グッズを指で囲んでね。";
+    drawDetectionOverlay();
 
-});
+    updatePreviewSize();
+
+  }
+);
 
 
 /* 初期表示 */
-renderLegend();
+
+updateLegend();
 
 </script>
 
