@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>迷子グッズメーカー</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#f5f5f5;
+  color:#222;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Noto Sans JP",sans-serif;
+}
+
+header{
+  background:white;
+  padding:16px;
+  border-bottom:1px solid #ddd;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+h1{
+  margin:0;
+  font-size:20px;
+}
+
+.small{
+  font-size:12px;
+  color:#777;
+  margin-top:4px;
+}
+
+main{
+  max-width:900px;
+  margin:auto;
+  padding:12px;
+}
+
+.box{
+  background:white;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:12px;
+  border:1px solid #ddd;
+}
+
+button,
+.file-button{
+  border:none;
+  border-radius:10px;
+  padding:10px 14px;
+  background:#222;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button.gray{
+  background:#eee;
+  color:#222;
+}
+
+input[type="file"]{
+  display:none;
+}
+
+.file-button{
+  display:inline-block;
+}
+
+.settings{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.setting label{
+  font-size:12px;
+  color:#666;
+}
+
+.setting input{
+  width:100%;
+  margin-top:4px;
+  padding:9px;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
+
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  font-size:12px;
+}
+
+.star{
+  font-size:22px;
+  cursor:pointer;
+  user-select:none;
+}
+
+#grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.card{
+  position:relative;
+  text-align:center;
+  min-width:0;
+}
+
+.image-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:1/1.25;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:9px;
+  cursor:pointer;
+}
+
+.image-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:opacity .2s;
+}
+
+/* 決定状態 */
+.card.done .image-wrap img{
+  opacity:.25;
+}
+
+.card-name{
+  width:100%;
+  margin-top:5px;
+  padding:7px;
+  border:1px solid #ccc;
+  border-radius:7px;
+  font-size:13px;
+  text-align:center;
+}
+
+.quantity{
+  width:65px;
+  height:34px;
+  margin-top:5px;
+  border:2px solid #222;
+  border-radius:7px;
+  text-align:center;
+  font-size:16px;
+}
+
+.card-bottom{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  margin-top:3px;
+}
+
+.delete{
+  position:absolute;
+  top:5px;
+  right:5px;
+  width:27px;
+  height:27px;
+  padding:0;
+  border-radius:50%;
+  background:white;
+  color:#222;
+  border:1px solid #aaa;
+  z-index:2;
+}
+
+.color-select{
+  border:1px solid #ccc;
+  border-radius:7px;
+  padding:5px;
+  background:white;
+}
+
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  color:#999;
+  padding:40px 10px;
+}
+
+.description{
+  width:100%;
+  margin-top:12px;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  resize:vertical;
+  min-height:55px;
+}
+
+@media(max-width:600px){
+  main{
+    padding:9px;
+  }
+
+  #grid{
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
+  }
+
+  .card-name{
+    font-size:11px;
+    padding:6px 3px;
+  }
+
+  .quantity{
+    width:55px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>迷子グッズメーカー</h1>
+  <div class="small">
+    グッズを登録して、名前・数量・優先度を設定
+  </div>
+</header>
+
+<main>
+
+<!-- 画像登録 -->
+<section class="box">
+
+  <label class="file-button">
+    📷 画像を登録
+    <input id="imageInput" type="file" accept="image/*">
+  </label>
+
+  <button class="gray" onclick="createItems()">
+    グッズを作る
+  </button>
+
+  <button class="gray" onclick="resetAll()">
+    リセット
+  </button>
+
+  <div class="small" id="status">
+    まだ画像が登録されていません。
+  </div>
+
+</section>
+
+
+<!-- 分割設定 -->
+<section class="box">
+
+  <div class="settings">
+
+    <div class="setting">
+      <label>列数</label>
+      <input
+        id="columns"
+        type="number"
+        min="1"
+        max="20"
+        value="6"
+      >
+    </div>
+
+    <div class="setting">
+      <label>行数</label>
+      <input
+        id="rows"
+        type="number"
+        min="1"
+        max="20"
+        value="6"
+      >
+    </div>
+
+  </div>
+
+  <div class="small">
+    画像に並んでいるグッズの列数・行数を合わせてね。
+  </div>
+
+</section>
+
+
+<!-- 星の説明 -->
+<section class="box">
+
+  <strong>⭐ 優先度の説明</strong>
+
+  <div class="legend">
+
+    <div class="legend-item">
+      <span style="color:#e91e63">★</span>
+      <input
+        id="desc-pink"
+        placeholder="例：交換優先"
+        value="交換優先"
+        oninput="saveData()"
+      >
+    </div>
+
+    <div class="legend-item">
+      <span style="color:#f5b700">★</span>
+      <input
+        id="desc-yellow"
+        placeholder="例：抱き合わせ希望"
+        value="抱き合わせ希望"
+        oninput="saveData()"
+      >
+    </div>
+
+    <div class="legend-item">
+      <span style="color:#35a9e0">★</span>
+      <input
+        id="desc-blue"
+        placeholder="例：通常"
+        value="通常"
+        oninput="saveData()"
+      >
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- グッズ一覧 -->
+<section class="box">
+
+  <div id="grid">
+    <div class="empty">
+      ここにグッズが表示されます
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+
+<script>
+
+let originalImage = null;
+
+
+/* =========================
+   画像登録
+========================= */
+
+document
+.getElementById("imageInput")
+.addEventListener("change", function(event){
+
+  const file = event.target.files[0];
+
+  if(!file){
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    originalImage = e.target.result;
+
+    document.getElementById("status").textContent =
+      "画像を登録しました！列数・行数を合わせて「グッズを作る」を押してね。";
+
+    localStorage.setItem(
+      "mayoiImage",
+      originalImage
+    );
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+/* =========================
+   グッズ作成
+========================= */
+
+function createItems(){
+
+  if(!originalImage){
+
+    alert("先に画像を登録してね！");
+
+    return;
+  }
+
+  const columns =
+    Number(document.getElementById("columns").value);
+
+  const rows =
+    Number(document.getElementById("rows").value);
+
+  if(columns < 1 || rows < 1){
+
+    alert("列数と行数を入力してね！");
+
+    return;
+  }
+
+
+  const grid =
+    document.getElementById("grid");
+
+  grid.innerHTML = "";
+
+  const total = columns * rows;
+
+
+  for(let i=0;i<total;i++){
+
+    createCard(
+      originalImage,
+      i,
+      columns,
+      rows
+    );
+
+  }
+
+
+  document.getElementById("status").textContent =
+    total + "個のグッズを作成しました。";
+
+  saveData();
+
+}
+
+
+/* =========================
+   グッズカード
+========================= */
+
+function createCard(
+  image,
+  index,
+  columns,
+  rows
+){
+
+  const grid =
+    document.getElementById("grid");
+
+
+  const card =
+    document.createElement("div");
+
+  card.className = "card";
+
+
+  /*
+    グッズ画像
+  */
+
+  const imageWrap =
+    document.createElement("div");
+
+  imageWrap.className =
+    "image-wrap";
+
+
+  const img =
+    document.createElement("img");
+
+  img.src = image;
+
+
+  /*
+    グリッド位置
+  */
+
+  const column =
+    index % columns;
+
+  const row =
+    Math.floor(index / columns);
+
+
+  /*
+    元画像をグリッド状に切り抜く
+  */
+
+  const width =
+    100 / columns;
+
+  const height =
+    100 / rows;
+
+
+  img.style.width =
+    columns * 100 + "%";
+
+  img.style.height =
+    rows * 100 + "%";
+
+  img.style.maxWidth =
+    "none";
+
+
+  img.style.position =
+    "absolute";
+
+
+  img.style.left =
+    -(column * 100) + "%";
+
+  img.style.top =
+    -(row * 100) + "%";
+
+
+  /*
+    画像タップで決定状態
+  */
+
+  imageWrap.addEventListener(
+    "click",
+    function(){
+
+      card.classList.toggle("done");
+
+      saveData();
+
+    }
+  );
+
+
+  imageWrap.appendChild(img);
+
+
+  /*
+    削除ボタン
+  */
+
+  const deleteButton =
+    document.createElement("button");
+
+  deleteButton.className =
+    "delete";
+
+  deleteButton.textContent =
+    "×";
+
+
+  deleteButton.addEventListener(
+    "click",
+    function(event){
+
+      event.stopPropagation();
+
+      card.remove();
+
+      saveData();
+
+    }
+  );
+
+
+  imageWrap.appendChild(
+    deleteButton
+  );
+
+
+  /*
+    名前
+  */
+
+  const name =
+    document.createElement("input");
+
+  name.className =
+    "card-name";
+
+  name.placeholder =
+    "グッズ名";
+
+  name.addEventListener(
+    "input",
+    saveData
+  );
+
+
+  /*
+    数量
+  */
+
+  const quantity =
+    document.createElement("input");
+
+  quantity.className =
+    "quantity";
+
+  quantity.type =
+    "number";
+
+  quantity.min =
+    "0";
+
+  quantity.placeholder =
+    "数量";
+
+  quantity.addEventListener(
+    "input",
+    saveData
+  );
+
+
+  /*
+    星
+  */
+
+  const bottom =
+    document.createElement("div");
+
+  bottom.className =
+    "card-bottom";
+
+
+  const star =
+    document.createElement("span");
+
+  star.className =
+    "star";
+
+  star.textContent =
+    "★";
+
+
+  const color =
+    document.createElement("select");
+
+  color.className =
+    "color-select";
+
+
+  const options = [
+
+    ["pink","🩷"],
+
+    ["yellow","💛"],
+
+    ["blue","🩵"],
+
+    ["none","☆"]
+
+  ];
+
+
+  options.forEach(function(option){
+
+    const o =
+      document.createElement("option");
+
+    o.value =
+      option[0];
+
+    o.textContent =
+      option[1];
+
+    color.appendChild(o);
+
+  });
+
+
+  function updateStar(){
+
+    if(color.value === "pink"){
+
+      star.style.color =
+        "#e91e63";
+
+    }
+
+    else if(color.value === "yellow"){
+
+      star.style.color =
+        "#f5b700";
+
+    }
+
+    else if(color.value === "blue"){
+
+      star.style.color =
+        "#35a9e0";
+
+    }
+
+    else{
+
+      star.style.color =
+        "#aaa";
+
+    }
+
+  }
+
+
+  color.addEventListener(
+    "change",
+    function(){
+
+      updateStar();
+
+      saveData();
+
+    }
+  );
+
+
+  updateStar();
+
+
+  bottom.appendChild(star);
+  bottom.appendChild(color);
+
+
+  /*
+    カード完成
+  */
+
+  card.appendChild(imageWrap);
+  card.appendChild(name);
+  card.appendChild(quantity);
+  card.appendChild(bottom);
+
+
+  grid.appendChild(card);
+
+}
+
+
+/* =========================
+   保存
+========================= */
+
+function saveData(){
+
+  /*
+    今回は画像・設定を保存
+    グッズの入力内容も次の更新用に
+    localStorageへ保存する土台
+  */
+
+  if(originalImage){
+
+    localStorage.setItem(
+      "mayoiImage",
+      originalImage
+    );
+
+  }
+
+  localStorage.setItem(
+    "mayoiColumns",
+    document.getElementById("columns").value
+  );
+
+  localStorage.setItem(
+    "mayoiRows",
+    document.getElementById("rows").value
+  );
+
+  localStorage.setItem(
+    "descPink",
+    document.getElementById("desc-pink").value
+  );
+
+  localStorage.setItem(
+    "descYellow",
+    document.getElementById("desc-yellow").value
+  );
+
+  localStorage.setItem(
+    "descBlue",
+    document.getElementById("desc-blue").value
+  );
+
+}
+
+
+/* =========================
+   リセット
+========================= */
+
+function resetAll(){
+
+  if(!confirm("全部リセットする？")){
+    return;
+  }
+
+  localStorage.removeItem("mayoiImage");
+
+  originalImage = null;
+
+  document.getElementById("imageInput").value = "";
+
+  document.getElementById("grid").innerHTML =
+    '<div class="empty">ここにグッズが表示されます</div>';
+
+  document.getElementById("status").textContent =
+    "まだ画像が登録されていません。";
+
+}
+
+
+/* =========================
+   前回画像読み込み
+========================= */
+
+window.addEventListener(
+"load",
+function(){
+
+  const saved =
+    localStorage.getItem("mayoiImage");
+
+  if(saved){
+
+    originalImage = saved;
+
+    document.getElementById("status").textContent =
+      "前回登録した画像があります。";
+
+  }
+
+  const c =
+    localStorage.getItem("mayoiColumns");
+
+  const r =
+    localStorage.getItem("mayoiRows");
+
+  if(c){
+    document.getElementById("columns").value = c;
+  }
+
+  if(r){
+    document.getElementById("rows").value = r;
+  }
+
+});
+
+
+</script>
+
+</body>
+</html>
