@@ -6,22 +6,17 @@
 <title>迷子グッズ</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
-  background:#f7f7f7;
+  background:#f6f6f6;
   color:#444;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",
-    "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+  "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
 }
 
-button,
-input,
-select,
-textarea{
+button,input,select{
   font:inherit;
 }
 
@@ -31,7 +26,7 @@ button{
 
 header{
   background:#fff;
-  padding:20px 16px 14px;
+  padding:20px 15px 14px;
   text-align:center;
   border-bottom:1px solid #ddd;
 }
@@ -42,31 +37,31 @@ header h1{
   letter-spacing:.08em;
 }
 
-.top-nav{
+.nav{
   display:flex;
-  gap:10px;
-  padding:14px;
+  gap:8px;
+  padding:12px;
   background:#fff;
 }
 
-.top-nav button{
+.nav button{
   flex:1;
   border:0;
   border-radius:12px;
-  padding:13px 5px;
-  background:#e8e8e8;
+  padding:12px 5px;
+  background:#e5e5e5;
   color:#555;
   font-weight:bold;
 }
 
-.top-nav button.active{
+.nav button.active{
   background:#777;
   color:#fff;
 }
 
 main{
-  max-width:700px;
-  margin:0 auto;
+  max-width:720px;
+  margin:auto;
   padding:15px;
 }
 
@@ -78,10 +73,10 @@ main{
   display:block;
 }
 
-.section-title{
-  font-size:18px;
+.title{
+  font-size:19px;
   font-weight:bold;
-  margin:8px 0 14px;
+  margin:5px 0 14px;
 }
 
 .card{
@@ -89,34 +84,7 @@ main{
   border:1px solid #ddd;
   border-radius:15px;
   padding:15px;
-  margin-bottom:15px;
-}
-
-label{
-  display:block;
-  font-size:13px;
-  font-weight:bold;
-  margin-bottom:6px;
-}
-
-input[type="text"],
-input[type="number"],
-select,
-textarea{
-  width:100%;
-  border:1px solid #ccc;
-  border-radius:9px;
-  padding:10px;
-  background:#fff;
-}
-
-textarea{
-  min-height:90px;
-  resize:vertical;
-}
-
-.form-group{
-  margin-bottom:15px;
+  margin-bottom:14px;
 }
 
 .primary{
@@ -129,7 +97,7 @@ textarea{
   font-weight:bold;
 }
 
-.sub-btn{
+.sub{
   border:0;
   border-radius:9px;
   padding:9px 12px;
@@ -137,62 +105,94 @@ textarea{
   color:#555;
 }
 
-.danger{
-  background:#eee;
-  color:#c55;
+.full{
+  width:100%;
 }
 
-.image-preview{
+.group{
+  margin-bottom:16px;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+input[type="number"],
+select{
+  width:100%;
+  border:1px solid #ccc;
+  border-radius:9px;
+  padding:10px;
+  background:#fff;
+}
+
+input[type="file"]{
+  width:100%;
+}
+
+.preview{
+  display:block;
   max-width:100%;
   max-height:260px;
-  display:block;
   margin:10px auto 0;
   border-radius:8px;
   object-fit:contain;
 }
 
-.char-actions{
+.char-tools{
   display:flex;
-  gap:8px;
+  gap:7px;
   margin-bottom:10px;
 }
 
-.char-actions button{
+.char-tools button{
   flex:1;
 }
 
-.char-list{
+.unit{
+  font-size:13px;
+  font-weight:bold;
+  margin:14px 0 7px;
+  padding-bottom:5px;
+  border-bottom:1px solid #ddd;
+}
+
+.char-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:7px;
 }
 
-.char-item{
-  border:1px solid #ddd;
-  border-radius:9px;
-  padding:9px;
+.char{
   display:flex;
   align-items:center;
   gap:7px;
+  padding:9px;
+  border:1px solid #ddd;
+  border-radius:9px;
   background:#fafafa;
+  font-size:13px;
 }
 
-.char-item input{
-  width:auto;
-}
-
-.char-item.selected{
+.char.selected{
   background:#eee;
   border-color:#999;
 }
 
-.char-detail{
-  margin-top:12px;
-  border-top:1px solid #eee;
-  padding-top:12px;
+.char input{
+  width:auto;
 }
 
-.char-row{
+.quantity-title{
+  margin:15px 0 7px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.qty-row{
   display:grid;
   grid-template-columns:1fr 75px 75px;
   gap:6px;
@@ -200,76 +200,82 @@ textarea{
   margin-bottom:7px;
 }
 
-.char-row-name{
+.qty-row .name{
   font-weight:bold;
-  font-size:14px;
+  font-size:13px;
 }
 
-.char-row input{
-  padding:8px 5px;
+.qty-row input{
   text-align:center;
+  padding:8px 4px;
 }
 
-.legend{
-  font-size:12px;
-  color:#777;
-  margin-bottom:10px;
+.note{
+  font-size:11px;
+  color:#888;
+  margin-bottom:8px;
 }
 
-.saved-item{
+.saved{
   background:#fff;
   border:1px solid #ddd;
   border-radius:14px;
   padding:12px;
-  margin-bottom:12px;
+  margin-top:12px;
 }
 
-.saved-head{
+.saved-top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:10px;
+  gap:8px;
 }
 
 .saved-type{
   font-weight:bold;
 }
 
-.saved-buttons{
+.saved-actions{
   display:flex;
   gap:5px;
 }
 
-.saved-buttons button{
+.saved-actions button{
   border:0;
   border-radius:8px;
   padding:6px 9px;
-  font-size:12px;
   background:#eee;
+  font-size:12px;
 }
 
-.saved-preview{
+.saved-image{
+  display:block;
   max-width:100%;
   max-height:150px;
-  display:block;
   margin:10px auto;
   border-radius:7px;
 }
 
-.saved-chars{
+.chips{
   display:flex;
   flex-wrap:wrap;
   gap:5px;
 }
 
-.saved-chip{
-  background:#f0f0f0;
+.chip{
+  background:#eee;
   border-radius:20px;
   padding:4px 8px;
-  font-size:12px;
+  font-size:11px;
 }
 
-.screenshot-box{
+.empty{
+  text-align:center;
+  color:#999;
+  padding:30px 10px;
+}
+
+.screenshot{
   background:#fff;
   border:1px solid #ddd;
   border-radius:12px;
@@ -278,15 +284,15 @@ textarea{
 
 .ss-title{
   text-align:center;
-  font-size:17px;
   font-weight:bold;
-  margin-bottom:5px;
+  font-size:17px;
+  margin-bottom:4px;
 }
 
-.ss-legend{
+.legend{
   text-align:center;
-  font-size:11px;
   color:#777;
+  font-size:11px;
   margin-bottom:12px;
 }
 
@@ -296,60 +302,62 @@ textarea{
 
 .ss-type{
   font-weight:bold;
-  font-size:14px;
+  font-size:13px;
   border-bottom:1px solid #ddd;
   padding-bottom:4px;
-  margin-bottom:6px;
+  margin-bottom:5px;
 }
 
 .ss-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:4px 15px;
+  gap:3px 15px;
 }
 
-.ss-char{
+.ss-row{
   display:flex;
   justify-content:space-between;
   border-bottom:1px dotted #ddd;
   padding:4px 0;
-  font-size:13px;
+  font-size:12px;
 }
 
 .retrade{
+  font-size:10px;
   margin-left:3px;
-  font-size:11px;
+}
+
+.promise-head,
+.promise-row{
+  display:grid;
+  grid-template-columns:1fr 65px 65px 65px;
+  gap:5px;
+  align-items:center;
+}
+
+.promise-head{
+  color:#888;
+  font-size:10px;
+  margin-bottom:5px;
 }
 
 .promise-row{
-  display:grid;
-  grid-template-columns:1fr 75px 75px 75px;
-  gap:5px;
-  align-items:center;
   margin-bottom:7px;
 }
 
 .promise-row input{
-  padding:8px 4px;
+  width:100%;
+  padding:8px 3px;
   text-align:center;
+  border:1px solid #ccc;
+  border-radius:8px;
 }
 
-.promise-head{
-  display:grid;
-  grid-template-columns:1fr 75px 75px 75px;
-  gap:5px;
-  font-size:11px;
-  color:#888;
-  margin-bottom:5px;
+.promise-row input:last-child{
+  background:#f1f1f1;
 }
 
-.empty{
-  text-align:center;
-  color:#999;
-  padding:30px 10px;
-}
-
-.back-btn{
+.back{
   margin-bottom:12px;
 }
 </style>
@@ -361,9 +369,14 @@ textarea{
   <h1>迷子グッズ</h1>
 </header>
 
-<div class="top-nav">
-  <button id="navMayoi" class="active" onclick="showScreen('mayoi')">🧸 迷子</button>
-  <button id="navPromise" onclick="showScreen('promise')">🤝 仮約束</button>
+<div class="nav">
+  <button id="navMayoi" class="active" onclick="showScreen('mayoi')">
+    🧸 迷子
+  </button>
+
+  <button id="navPromise" onclick="showScreen('promise')">
+    🤝 仮約束
+  </button>
 </div>
 
 <main>
@@ -376,19 +389,17 @@ textarea{
 
   <div id="mayoiHome">
 
-    <div class="section-title">🧸 迷子</div>
+    <div class="title">🧸 迷子</div>
 
     <button class="primary" onclick="openMayoiForm()">
       ＋ 迷子グッズを登録
     </button>
 
-    <div style="height:12px"></div>
+    <div style="height:10px"></div>
 
-    <button class="sub-btn" style="width:100%" onclick="showMayoiScreenshot()">
+    <button class="sub full" onclick="showMayoiScreenshot()">
       📸 スクショ用を見る
     </button>
-
-    <div style="height:15px"></div>
 
     <div id="mayoiList"></div>
 
@@ -397,17 +408,18 @@ textarea{
 
   <div id="mayoiForm" style="display:none">
 
-    <button class="sub-btn back-btn" onclick="closeMayoiForm()">
+    <button class="sub back" onclick="closeMayoiForm()">
       ← 戻る
     </button>
 
-    <div class="section-title" id="mayoiFormTitle">
+    <div class="title" id="mayoiFormTitle">
       迷子グッズを登録
     </div>
 
     <div class="card">
 
-      <div class="form-group">
+      <div class="group">
+
         <label>グッズ種類</label>
 
         <select id="mayoiType">
@@ -419,10 +431,11 @@ textarea{
           <option>ぬいぐるみ</option>
           <option>その他</option>
         </select>
+
       </div>
 
 
-      <div class="form-group">
+      <div class="group">
 
         <label>グッズ画像</label>
 
@@ -430,54 +443,44 @@ textarea{
           type="file"
           id="mayoiImage"
           accept="image/*"
-          onchange="previewMayoiImage()"
+          onchange="previewImage()"
         >
 
         <img
-          id="mayoiImagePreview"
-          class="image-preview"
+          id="imagePreview"
+          class="preview"
           style="display:none"
         >
 
       </div>
 
 
-      <div class="form-group">
+      <div class="group">
 
-        <label>キャラ名</label>
+        <label>キャラ</label>
 
-        <div class="legend">
-          1行に1人ずつ入力してね
+        <div class="note">
+          画像にいるキャラを選択してね。全員選択もできるよ！
         </div>
 
-        <textarea
-          id="charNames"
-          placeholder="レオ&#10;泉&#10;凛月&#10;司&#10;嵐"
-        ></textarea>
+        <div class="char-tools">
 
-      </div>
-
-
-      <div class="form-group">
-
-        <label>持っているキャラ</label>
-
-        <div class="char-actions">
-          <button class="sub-btn" onclick="selectAllChars()">
+          <button class="sub" onclick="selectAll()">
             ☑ 全員選択
           </button>
 
-          <button class="sub-btn" onclick="clearAllChars()">
+          <button class="sub" onclick="clearAll()">
             □ 全解除
           </button>
+
         </div>
 
-        <div id="charList" class="char-list"></div>
+        <div id="characterList"></div>
 
       </div>
 
 
-      <div id="charDetail" class="char-detail"></div>
+      <div id="quantityArea"></div>
 
 
       <button class="primary" onclick="saveMayoi()">
@@ -491,13 +494,11 @@ textarea{
 
   <div id="mayoiScreenshot" style="display:none">
 
-    <button class="sub-btn back-btn" onclick="closeMayoiScreenshot()">
+    <button class="sub back" onclick="closeMayoiScreenshot()">
       ← 戻る
     </button>
 
-    <div class="section-title">
-      📸 スクショ用
-    </div>
+    <div class="title">📸 スクショ用</div>
 
     <div id="mayoiScreenshotContent"></div>
 
@@ -514,19 +515,17 @@ textarea{
 
   <div id="promiseHome">
 
-    <div class="section-title">🤝 仮約束</div>
+    <div class="title">🤝 仮約束</div>
 
     <button class="primary" onclick="openPromiseForm()">
       ＋ 仮約束を登録
     </button>
 
-    <div style="height:12px"></div>
+    <div style="height:10px"></div>
 
-    <button class="sub-btn" style="width:100%" onclick="showPromiseScreenshot()">
+    <button class="sub full" onclick="showPromiseScreenshot()">
       📸 スクショ用を見る
     </button>
-
-    <div style="height:15px"></div>
 
     <div id="promiseList"></div>
 
@@ -535,17 +534,17 @@ textarea{
 
   <div id="promiseForm" style="display:none">
 
-    <button class="sub-btn back-btn" onclick="closePromiseForm()">
+    <button class="sub back" onclick="closePromiseForm()">
       ← 戻る
     </button>
 
-    <div class="section-title" id="promiseFormTitle">
+    <div class="title">
       仮約束を登録
     </div>
 
     <div class="card">
 
-      <div class="form-group">
+      <div class="group">
 
         <label>グッズ種類</label>
 
@@ -562,25 +561,16 @@ textarea{
       </div>
 
 
-      <div class="form-group">
+      <div class="group">
 
-        <label>キャラ名</label>
+        <label>キャラ</label>
 
-        <textarea
-          id="promiseChars"
-          placeholder="レオ&#10;泉&#10;凛月"
-        ></textarea>
+        <div id="promiseCharacterList"></div>
 
       </div>
 
 
-      <div class="form-group">
-
-        <label>数量</label>
-
-        <div class="legend">
-          所持数 → 仮約束数 → 残り
-        </div>
+      <div class="group">
 
         <div class="promise-head">
           <span>キャラ</span>
@@ -605,13 +595,11 @@ textarea{
 
   <div id="promiseScreenshot" style="display:none">
 
-    <button class="sub-btn back-btn" onclick="closePromiseScreenshot()">
+    <button class="sub back" onclick="closePromiseScreenshot()">
       ← 戻る
     </button>
 
-    <div class="section-title">
-      📸 スクショ用
-    </div>
+    <div class="title">📸 スクショ用</div>
 
     <div id="promiseScreenshotContent"></div>
 
@@ -624,17 +612,164 @@ textarea{
 
 <script>
 
-const MAYOI_KEY = "mayoiGoodsData";
-const PROMISE_KEY = "mayoiPromiseData";
+/* =========================
+   データ保存
+========================= */
 
-let mayoiData =
-  JSON.parse(localStorage.getItem(MAYOI_KEY) || "[]");
+const MAYOI_KEY="mayoiGoodsData";
+const PROMISE_KEY="mayoiPromiseData";
 
-let promiseData =
-  JSON.parse(localStorage.getItem(PROMISE_KEY) || "[]");
+let mayoiData=
+  JSON.parse(localStorage.getItem(MAYOI_KEY)||"[]");
 
-let editingMayoiId = null;
-let editingPromiseId = null;
+let promiseData=
+  JSON.parse(localStorage.getItem(PROMISE_KEY)||"[]");
+
+let editingMayoiId=null;
+let editingPromiseId=null;
+
+
+/* =========================
+   あんスタ キャラクター
+========================= */
+
+const units={
+
+  "fine":[
+    ["天祥院英智","英智"],
+    ["日々樹渉","渉"],
+    ["姫宮桃李","桃李"],
+    ["伏見弓弦","弓弦"]
+  ],
+
+  "Trickstar":[
+    ["氷鷹北斗","北斗"],
+    ["明星スバル","スバル"],
+    ["遊木真","真"],
+    ["衣更真緒","真緒"]
+  ],
+
+  "流星隊":[
+    ["守沢千秋","千秋"],
+    ["深海奏汰","奏汰"],
+    ["南雲鉄虎","鉄虎"],
+    ["高峯翠","翠"],
+    ["仙石忍","忍"]
+  ],
+
+  "ALKALOID":[
+    ["天城一彩","一彩"],
+    ["白鳥藍良","藍良"],
+    ["礼瀬マヨイ","マヨイ"],
+    ["風早巽","巽"]
+  ],
+
+  "Eden":[
+    ["乱凪砂","凪砂"],
+    ["巴日和","日和"],
+    ["七種茨","茨"],
+    ["漣ジュン","ジュン"]
+  ],
+
+  "Valkyrie":[
+    ["斎宮宗","宗"],
+    ["影片みか","みか"]
+  ],
+
+  "2wink":[
+    ["葵ひなた","ひなた"],
+    ["葵ゆうた","ゆうた"]
+  ],
+
+  "Crazy:B":[
+    ["天城燐音","燐音"],
+    ["HiMERU","HiMERU"],
+    ["桜河こはく","こはく"],
+    ["椎名ニキ","ニキ"]
+  ],
+
+  "UNDEAD":[
+    ["朔間零","零"],
+    ["羽風薫","薫"],
+    ["大神晃牙","晃牙"],
+    ["乙狩アドニス","アドニス"]
+  ],
+
+  "Ra*bits":[
+    ["真白友也","友也"],
+    ["仁兎なずな","なずな"],
+    ["天満光","光"],
+    ["紫之創","創"]
+  ],
+
+  "紅月":[
+    ["蓮巳敬人","敬人"],
+    ["鬼龍紅郎","紅郎"],
+    ["神崎颯馬","颯馬"]
+  ],
+
+  "Knights":[
+    ["朱桜司","司"],
+    ["月永レオ","レオ"],
+    ["瀬名泉","泉"],
+    ["朔間凛月","凛月"],
+    ["鳴上嵐","嵐"]
+  ],
+
+  "Switch":[
+    ["逆先夏目","夏目"],
+    ["青葉つむぎ","つむぎ"],
+    ["春川宙","宙"]
+  ],
+
+  "MaM":[
+    ["三毛縞斑","斑"]
+  ],
+
+  "Double Face":[
+    ["桜河こはく","こはく"],
+    ["三毛縞斑","斑"]
+  ],
+
+  "Special for Princess!":[
+    ["エス","エス"],
+    ["カンナ","カンナ"],
+    ["ユメ","ユメ"],
+    ["ライカ","ライカ"]
+  ],
+
+  "MELLOW DEAR US":[
+    ["小鹿ジュイス","ジュイス"],
+    ["円果望見","望見"],
+    ["久遠舞珠","舞珠"],
+    ["甘楽チトセ","チトセ"]
+  ]
+
+};
+
+
+/* =========================
+   全キャラを1つにする
+========================= */
+
+const allCharacters=[];
+
+Object.entries(units).forEach(([unit,members])=>{
+
+  members.forEach(([full,short])=>{
+
+    if(!allCharacters.some(x=>x.full===full)){
+
+      allCharacters.push({
+        full:full,
+        short:short
+      });
+
+    }
+
+  });
+
+});
 
 
 /* =========================
@@ -642,198 +777,229 @@ let editingPromiseId = null;
 ========================= */
 
 function saveLocal(){
-  localStorage.setItem(MAYOI_KEY, JSON.stringify(mayoiData));
-  localStorage.setItem(PROMISE_KEY, JSON.stringify(promiseData));
+
+  localStorage.setItem(
+    MAYOI_KEY,
+    JSON.stringify(mayoiData)
+  );
+
+  localStorage.setItem(
+    PROMISE_KEY,
+    JSON.stringify(promiseData)
+  );
+
 }
 
 
 function showScreen(type){
 
-  document.getElementById("mayoiScreen").classList.remove("active");
-  document.getElementById("promiseScreen").classList.remove("active");
+  document
+    .getElementById("mayoiScreen")
+    .classList.remove("active");
 
-  document.getElementById("navMayoi").classList.remove("active");
-  document.getElementById("navPromise").classList.remove("active");
+  document
+    .getElementById("promiseScreen")
+    .classList.remove("active");
 
-  if(type === "mayoi"){
-    document.getElementById("mayoiScreen").classList.add("active");
-    document.getElementById("navMayoi").classList.add("active");
-    renderMayoiList();
+  document
+    .getElementById("navMayoi")
+    .classList.remove("active");
+
+  document
+    .getElementById("navPromise")
+    .classList.remove("active");
+
+
+  if(type==="mayoi"){
+
+    document
+      .getElementById("mayoiScreen")
+      .classList.add("active");
+
+    document
+      .getElementById("navMayoi")
+      .classList.add("active");
+
+    renderMayoi();
+
   }else{
-    document.getElementById("promiseScreen").classList.add("active");
-    document.getElementById("navPromise").classList.add("active");
-    renderPromiseList();
+
+    document
+      .getElementById("promiseScreen")
+      .classList.add("active");
+
+    document
+      .getElementById("navPromise")
+      .classList.add("active");
+
+    renderPromise();
+
   }
 
 }
 
 
 /* =========================
-   迷子
+   迷子 キャラ一覧
 ========================= */
 
-function openMayoiForm(){
+function renderCharacterList(){
 
-  editingMayoiId = null;
-
-  document.getElementById("mayoiHome").style.display="none";
-  document.getElementById("mayoiScreenshot").style.display="none";
-  document.getElementById("mayoiForm").style.display="block";
-
-  document.getElementById("mayoiFormTitle").textContent =
-    "迷子グッズを登録";
-
-  document.getElementById("mayoiType").value="ぱしゃっつ";
-
-  document.getElementById("mayoiImage").value="";
-  document.getElementById("mayoiImagePreview").style.display="none";
-
-  document.getElementById("charNames").value="";
-  document.getElementById("charList").innerHTML="";
-  document.getElementById("charDetail").innerHTML="";
-}
-
-
-function closeMayoiForm(){
-
-  document.getElementById("mayoiForm").style.display="none";
-  document.getElementById("mayoiHome").style.display="block";
-
-  renderMayoiList();
-}
-
-
-function previewMayoiImage(){
-
-  const file =
-    document.getElementById("mayoiImage").files[0];
-
-  if(!file)return;
-
-  const reader = new FileReader();
-
-  reader.onload = function(e){
-
-    const img =
-      document.getElementById("mayoiImagePreview");
-
-    img.src=e.target.result;
-    img.style.display="block";
-
-  };
-
-  reader.readAsDataURL(file);
-}
-
-
-function makeCharList(){
-
-  const names =
-    document.getElementById("charNames")
-      .value
-      .split("\n")
-      .map(x=>x.trim())
-      .filter(Boolean);
-
-  const box =
-    document.getElementById("charList");
+  const box=
+    document.getElementById("characterList");
 
   box.innerHTML="";
 
-  names.forEach((name,i)=>{
 
-    const div=document.createElement("label");
+  Object.entries(units).forEach(([unit,members])=>{
 
-    div.className="char-item";
+    const title=
+      document.createElement("div");
 
-    div.innerHTML=`
-      <input
-        type="checkbox"
-        class="char-check"
-        data-name="${escapeHtml(name)}"
-        onchange="updateCharDetail()"
-      >
-      <span>${escapeHtml(name)}</span>
-    `;
+    title.className="unit";
+    title.textContent=unit;
 
-    box.appendChild(div);
+    box.appendChild(title);
+
+
+    const grid=
+      document.createElement("div");
+
+    grid.className="char-grid";
+
+
+    members.forEach(([full,short])=>{
+
+      const label=
+        document.createElement("label");
+
+      label.className="char";
+
+      label.innerHTML=`
+
+        <input
+          type="checkbox"
+          class="charCheck"
+          data-full="${escapeHtml(full)}"
+          data-short="${escapeHtml(short)}"
+          onchange="updateQuantities()"
+        >
+
+        <span>${escapeHtml(short)}</span>
+
+      `;
+
+      grid.appendChild(label);
+
+    });
+
+
+    box.appendChild(grid);
 
   });
 
 }
 
 
-document.getElementById("charNames")
-  .addEventListener("input",makeCharList);
+function selectAll(){
 
-
-function selectAllChars(){
-
-  document.querySelectorAll(".char-check")
+  document
+    .querySelectorAll(".charCheck")
     .forEach(x=>x.checked=true);
 
-  updateCharDetail();
+  updateQuantities();
+
 }
 
 
-function clearAllChars(){
+function clearAll(){
 
-  document.querySelectorAll(".char-check")
+  document
+    .querySelectorAll(".charCheck")
     .forEach(x=>x.checked=false);
 
-  updateCharDetail();
+  updateQuantities();
+
 }
 
 
-function updateCharDetail(){
+/* =========================
+   数量欄
+========================= */
 
-  const checked =
-    [...document.querySelectorAll(".char-check:checked")]
-      .map(x=>x.dataset.name);
+function updateQuantities(){
 
-  const box =
-    document.getElementById("charDetail");
+  const selected=
+    [...document.querySelectorAll(".charCheck:checked")];
 
-  box.innerHTML="";
+  const box=
+    document.getElementById("quantityArea");
 
-  checked.forEach(name=>{
+  if(selected.length===0){
 
-    const old =
+    box.innerHTML="";
+
+    return;
+
+  }
+
+
+  box.innerHTML=`
+
+    <div class="quantity-title">
+      所持数・再交換分
+    </div>
+
+    <div class="note">
+      ⑩＝再交換分
+    </div>
+
+  `;
+
+
+  selected.forEach(check=>{
+
+    const short=check.dataset.short;
+
+    const old=
       editingMayoiId
-      ? mayoiData.find(x=>x.id===editingMayoiId)
+      ? mayoiData
+        .find(x=>x.id===editingMayoiId)
+        ?.characters
+        ?.find(x=>x.short===short)
       : null;
 
-    const oldChar =
-      old?.characters?.find(x=>x.name===name);
 
-    const qty=oldChar?.qty ?? 1;
-    const retrade=oldChar?.retrade ?? 0;
+    const row=
+      document.createElement("div");
 
-    const row=document.createElement("div");
+    row.className="qty-row";
 
-    row.className="char-row";
 
     row.innerHTML=`
-      <div class="char-row-name">
-        ${escapeHtml(name)}
+
+      <div class="name">
+        ${escapeHtml(short)}
       </div>
 
       <input
         type="number"
         min="0"
-        value="${qty}"
-        data-qty="${escapeHtml(name)}"
+        value="${old?.qty ?? 1}"
+        data-qty="${escapeHtml(short)}"
         placeholder="所持"
       >
 
       <input
         type="number"
         min="0"
-        value="${retrade}"
-        data-retrade="${escapeHtml(name)}"
+        value="${old?.retrade ?? 0}"
+        data-retrade="${escapeHtml(short)}"
         placeholder="再交換"
       >
+
     `;
+
 
     box.appendChild(row);
 
@@ -842,65 +1008,197 @@ function updateCharDetail(){
 }
 
 
-function getSelectedChars(){
+/* =========================
+   迷子 登録
+========================= */
 
-  return [...document.querySelectorAll(".char-check:checked")]
-    .map(check=>{
+function openMayoiForm(){
 
-      const name=check.dataset.name;
+  editingMayoiId=null;
 
-      const qtyInput =
-        document.querySelector(`[data-qty="${cssEscape(name)}"]`);
+  document
+    .getElementById("mayoiHome")
+    .style.display="none";
 
-      const retradeInput =
-        document.querySelector(`[data-retrade="${cssEscape(name)}"]`);
+  document
+    .getElementById("mayoiForm")
+    .style.display="block";
 
-      return {
-        name:name,
-        qty:Number(qtyInput?.value || 0),
-        retrade:Number(retradeInput?.value || 0)
-      };
+  document
+    .getElementById("mayoiScreenshot")
+    .style.display="none";
 
-    });
+
+  document
+    .getElementById("mayoiFormTitle")
+    .textContent="迷子グッズを登録";
+
+
+  document
+    .getElementById("mayoiType")
+    .value="ぱしゃっつ";
+
+
+  document
+    .getElementById("mayoiImage")
+    .value="";
+
+
+  document
+    .getElementById("imagePreview")
+    .style.display="none";
+
+
+  renderCharacterList();
+
+  document
+    .getElementById("quantityArea")
+    .innerHTML="";
 
 }
 
 
+function closeMayoiForm(){
+
+  document
+    .getElementById("mayoiForm")
+    .style.display="none";
+
+  document
+    .getElementById("mayoiHome")
+    .style.display="block";
+
+  renderMayoi();
+
+}
+
+
+function previewImage(){
+
+  const file=
+    document
+      .getElementById("mayoiImage")
+      .files[0];
+
+  if(!file)return;
+
+
+  const reader=
+    new FileReader();
+
+
+  reader.onload=function(e){
+
+    const img=
+      document.getElementById("imagePreview");
+
+    img.src=e.target.result;
+
+    img.style.display="block";
+
+  };
+
+
+  reader.readAsDataURL(file);
+
+}
+
+
+/* =========================
+   迷子 保存
+========================= */
+
 function saveMayoi(){
 
-  const type =
-    document.getElementById("mayoiType").value;
+  const selected=
+    [...document.querySelectorAll(".charCheck:checked")];
 
-  const imagePreview =
-    document.getElementById("mayoiImagePreview");
 
-  const image =
-    imagePreview.style.display !== "none"
-      ? imagePreview.src
-      : (
-          editingMayoiId
-          ? mayoiData.find(x=>x.id===editingMayoiId)?.image || ""
-          : ""
-        );
+  if(selected.length===0){
 
-  const characters=getSelectedChars();
+    alert("持っているキャラを選んでね！");
 
-  if(characters.length===0){
-    alert("持っているキャラを1人以上選んでね！");
     return;
+
   }
 
+
+  const preview=
+    document.getElementById("imagePreview");
+
+
+  const old=
+    editingMayoiId
+    ? mayoiData.find(x=>x.id===editingMayoiId)
+    : null;
+
+
+  const image=
+    preview.style.display!=="none"
+    ? preview.src
+    : old?.image || "";
+
+
+  const characters=
+    selected.map(check=>{
+
+      const short=
+        check.dataset.short;
+
+      const full=
+        check.dataset.full;
+
+
+      const qty=
+        Number(
+          document
+            .querySelector(
+              `[data-qty="${cssEscape(short)}"]`
+            )?.value || 0
+        );
+
+
+      const retrade=
+        Number(
+          document
+            .querySelector(
+              `[data-retrade="${cssEscape(short)}"]`
+            )?.value || 0
+        );
+
+
+      return {
+        full:full,
+        short:short,
+        qty:qty,
+        retrade:retrade
+      };
+
+    });
+
+
   const item={
-    id:editingMayoiId || Date.now().toString(),
-    type:type,
+
+    id:
+      editingMayoiId ||
+      Date.now().toString(),
+
+    type:
+      document.getElementById("mayoiType").value,
+
     image:image,
+
     characters:characters
+
   };
+
 
   if(editingMayoiId){
 
-    const index =
-      mayoiData.findIndex(x=>x.id===editingMayoiId);
+    const index=
+      mayoiData.findIndex(
+        x=>x.id===editingMayoiId
+      );
 
     if(index!==-1){
       mayoiData[index]=item;
@@ -912,63 +1210,84 @@ function saveMayoi(){
 
   }
 
+
   saveLocal();
 
   alert("保存したよ！");
 
   closeMayoiForm();
+
 }
 
 
-function renderMayoiList(){
+/* =========================
+   迷子 一覧
+========================= */
 
-  const box=document.getElementById("mayoiList");
+function renderMayoi(){
+
+  const box=
+    document.getElementById("mayoiList");
 
   box.innerHTML="";
+
 
   if(mayoiData.length===0){
 
     box.innerHTML=
-      `<div class="empty">まだ登録されてないよ</div>`;
+      `<div class="empty">
+        まだ登録されてないよ
+      </div>`;
 
     return;
 
   }
 
+
   mayoiData.forEach(item=>{
 
-    const div=document.createElement("div");
+    const div=
+      document.createElement("div");
 
-    div.className="saved-item";
+    div.className="saved";
 
-    const chars=item.characters
-      .map(c=>`
-        <span class="saved-chip">
-          ${escapeHtml(c.name)}
-          ${c.qty}
-          ${c.retrade ? `⑩${c.retrade}` : ""}
-        </span>
-      `)
-      .join("");
+
+    const chips=
+      item.characters
+        .map(c=>`
+
+          <span class="chip">
+
+            ${escapeHtml(c.short)}
+            ${c.qty}
+
+            ${
+              c.retrade
+              ? `⑩${c.retrade}`
+              : ""
+            }
+
+          </span>
+
+        `)
+        .join("");
+
 
     div.innerHTML=`
 
-      <div class="saved-head">
+      <div class="saved-top">
 
         <div class="saved-type">
           ${escapeHtml(item.type)}
         </div>
 
-        <div class="saved-buttons">
+        <div class="saved-actions">
 
           <button onclick="editMayoi('${item.id}')">
             編集
           </button>
 
-          <button
-            class="danger"
-            onclick="deleteMayoi('${item.id}')"
-          >
+          <button onclick="deleteMayoi('${item.id}')">
             削除
           </button>
 
@@ -976,16 +1295,20 @@ function renderMayoiList(){
 
       </div>
 
+
       ${
         item.image
-        ? `<img src="${item.image}" class="saved-preview">`
+        ? `<img src="${item.image}" class="saved-image">`
         : ""
       }
 
-      <div class="saved-chars">
-        ${chars}
+
+      <div class="chips">
+        ${chips}
       </div>
+
     `;
+
 
     box.appendChild(div);
 
@@ -994,96 +1317,150 @@ function renderMayoiList(){
 }
 
 
+/* =========================
+   迷子 編集
+========================= */
+
 function editMayoi(id){
 
-  const item=mayoiData.find(x=>x.id===id);
+  const item=
+    mayoiData.find(x=>x.id===id);
 
   if(!item)return;
 
+
   editingMayoiId=id;
 
-  document.getElementById("mayoiHome").style.display="none";
-  document.getElementById("mayoiForm").style.display="block";
 
-  document.getElementById("mayoiFormTitle").textContent =
-    "迷子グッズを編集";
+  document
+    .getElementById("mayoiHome")
+    .style.display="none";
 
-  document.getElementById("mayoiType").value=item.type;
+  document
+    .getElementById("mayoiForm")
+    .style.display="block";
+
+
+  document
+    .getElementById("mayoiFormTitle")
+    .textContent="迷子グッズを編集";
+
+
+  document
+    .getElementById("mayoiType")
+    .value=item.type;
+
 
   if(item.image){
 
     const img=
-      document.getElementById("mayoiImagePreview");
+      document.getElementById("imagePreview");
 
     img.src=item.image;
+
     img.style.display="block";
 
   }
 
-  document.getElementById("charNames").value =
-    item.characters.map(x=>x.name).join("\n");
 
-  makeCharList();
+  renderCharacterList();
 
-  document.querySelectorAll(".char-check")
+
+  document
+    .querySelectorAll(".charCheck")
     .forEach(check=>{
 
-      if(item.characters.some(x=>x.name===check.dataset.name)){
+      if(
+        item.characters.some(
+          c=>c.short===check.dataset.short
+        )
+      ){
         check.checked=true;
       }
 
     });
 
-  updateCharDetail();
-}
 
+  updateQuantities();
 
-function deleteMayoi(id){
-
-  if(!confirm("この迷子グッズを削除する？"))return;
-
-  mayoiData=
-    mayoiData.filter(x=>x.id!==id);
-
-  saveLocal();
-
-  renderMayoiList();
 }
 
 
 /* =========================
-   迷子スクショ
+   迷子 削除
+========================= */
+
+function deleteMayoi(id){
+
+  if(
+    !confirm("この迷子グッズを削除する？")
+  )return;
+
+
+  mayoiData=
+    mayoiData.filter(
+      x=>x.id!==id
+    );
+
+
+  saveLocal();
+
+  renderMayoi();
+
+}
+
+
+/* =========================
+   迷子 スクショ
 ========================= */
 
 function showMayoiScreenshot(){
 
-  document.getElementById("mayoiHome").style.display="none";
-  document.getElementById("mayoiForm").style.display="none";
-  document.getElementById("mayoiScreenshot").style.display="block";
+  document
+    .getElementById("mayoiHome")
+    .style.display="none";
+
+  document
+    .getElementById("mayoiForm")
+    .style.display="none";
+
+  document
+    .getElementById("mayoiScreenshot")
+    .style.display="block";
+
 
   const box=
-    document.getElementById("mayoiScreenshotContent");
+    document.getElementById(
+      "mayoiScreenshotContent"
+    );
+
 
   if(mayoiData.length===0){
 
     box.innerHTML=
-      `<div class="empty">まだ登録がないよ</div>`;
+      `<div class="empty">
+        まだ登録がないよ
+      </div>`;
 
     return;
+
   }
+
 
   let html=`
 
-    <div class="screenshot-box">
+    <div class="screenshot">
 
       <div class="ss-title">
         迷子グッズ
       </div>
 
-      <div class="ss-legend">
+      <div class="legend">
         ⑩＝再交換分
       </div>
+
   `;
+
 
   mayoiData.forEach(item=>{
 
@@ -1096,25 +1473,32 @@ function showMayoiScreenshot(){
         </div>
 
         <div class="ss-grid">
+
     `;
+
 
     item.characters.forEach(c=>{
 
       html+=`
 
-        <div class="ss-char">
+        <div class="ss-row">
 
           <span>
-            ${escapeHtml(c.name)}
+            ${escapeHtml(c.short)}
           </span>
 
           <span>
+
             ${c.qty}
+
             ${
               c.retrade
-              ? `<span class="retrade">⑩${c.retrade}</span>`
+              ? `<span class="retrade">
+                   ⑩${c.retrade}
+                 </span>`
               : ""
             }
+
           </span>
 
         </div>
@@ -1123,28 +1507,39 @@ function showMayoiScreenshot(){
 
     });
 
+
     html+=`
 
         </div>
 
       </div>
+
     `;
 
   });
 
+
   html+=`
 
     </div>
+
   `;
 
+
   box.innerHTML=html;
+
 }
 
 
 function closeMayoiScreenshot(){
 
-  document.getElementById("mayoiScreenshot").style.display="none";
-  document.getElementById("mayoiHome").style.display="block";
+  document
+    .getElementById("mayoiScreenshot")
+    .style.display="none";
+
+  document
+    .getElementById("mayoiHome")
+    .style.display="block";
 
 }
 
@@ -1157,92 +1552,183 @@ function openPromiseForm(){
 
   editingPromiseId=null;
 
-  document.getElementById("promiseHome").style.display="none";
-  document.getElementById("promiseScreenshot").style.display="none";
-  document.getElementById("promiseForm").style.display="block";
+  document
+    .getElementById("promiseHome")
+    .style.display="none";
 
-  document.getElementById("promiseFormTitle").textContent =
-    "仮約束を登録";
+  document
+    .getElementById("promiseForm")
+    .style.display="block";
 
-  document.getElementById("promiseType").value="ぱしゃっつ";
-  document.getElementById("promiseChars").value="";
-  document.getElementById("promiseDetail").innerHTML="";
+  renderPromiseCharacters();
+
 }
 
 
 function closePromiseForm(){
 
-  document.getElementById("promiseForm").style.display="none";
-  document.getElementById("promiseHome").style.display="block";
+  document
+    .getElementById("promiseForm")
+    .style.display="none";
 
-  renderPromiseList();
+  document
+    .getElementById("promiseHome")
+    .style.display="block";
+
+  renderPromise();
+
 }
 
 
-document.getElementById("promiseChars")
-  .addEventListener("input",makePromiseDetail);
+/* =========================
+   仮約束 キャラ選択
+========================= */
 
-
-function makePromiseDetail(){
-
-  const names=
-    document.getElementById("promiseChars")
-      .value
-      .split("\n")
-      .map(x=>x.trim())
-      .filter(Boolean);
+function renderPromiseCharacters(){
 
   const box=
-    document.getElementById("promiseDetail");
+    document.getElementById(
+      "promiseCharacterList"
+    );
 
   box.innerHTML="";
 
-  names.forEach(name=>{
+
+  Object.entries(units).forEach(
+    ([unit,members])=>{
+
+      const title=
+        document.createElement("div");
+
+      title.className="unit";
+      title.textContent=unit;
+
+      box.appendChild(title);
+
+
+      const grid=
+        document.createElement("div");
+
+      grid.className="char-grid";
+
+
+      members.forEach(
+        ([full,short])=>{
+
+          const label=
+            document.createElement("label");
+
+          label.className="char";
+
+
+          label.innerHTML=`
+
+            <input
+              type="checkbox"
+              class="promiseCheck"
+              data-full="${escapeHtml(full)}"
+              data-short="${escapeHtml(short)}"
+              onchange="updatePromiseDetail()"
+            >
+
+            <span>
+              ${escapeHtml(short)}
+            </span>
+
+          `;
+
+
+          grid.appendChild(label);
+
+        }
+      );
+
+
+      box.appendChild(grid);
+
+    }
+  );
+
+}
+
+
+/* =========================
+   仮約束 数量
+========================= */
+
+function updatePromiseDetail(){
+
+  const selected=
+    [
+      ...document.querySelectorAll(
+        ".promiseCheck:checked"
+      )
+    ];
+
+
+  const box=
+    document.getElementById(
+      "promiseDetail"
+    );
+
+  box.innerHTML="";
+
+
+  selected.forEach(check=>{
+
+    const short=
+      check.dataset.short;
+
 
     const old=
       editingPromiseId
-      ? promiseData.find(x=>x.id===editingPromiseId)
+      ? promiseData
+        .find(x=>x.id===editingPromiseId)
+        ?.characters
+        ?.find(x=>x.short===short)
       : null;
 
-    const oldChar=
-      old?.characters?.find(x=>x.name===name);
 
-    const qty=oldChar?.qty ?? 0;
-    const promised=oldChar?.promised ?? 0;
-
-    const row=document.createElement("div");
+    const row=
+      document.createElement("div");
 
     row.className="promise-row";
 
+
     row.innerHTML=`
 
-      <div class="char-row-name">
-        ${escapeHtml(name)}
+      <div>
+        ${escapeHtml(short)}
       </div>
 
       <input
         type="number"
         min="0"
-        value="${qty}"
-        data-pqty="${escapeHtml(name)}"
+        value="${old?.qty ?? 0}"
+        data-pqty="${escapeHtml(short)}"
       >
 
       <input
         type="number"
         min="0"
-        value="${promised}"
-        data-ppromise="${escapeHtml(name)}"
-        oninput="updatePromiseRemaining()"
+        value="${old?.promised ?? 0}"
+        data-ppromise="${escapeHtml(short)}"
+        oninput="updateRemaining('${escapeJs(short)}')"
       >
 
       <input
         type="number"
-        value="${Math.max(0,qty-promised)}"
-        data-premain="${escapeHtml(name)}"
+        value="${Math.max(
+          0,
+          (old?.qty ?? 0) -
+          (old?.promised ?? 0)
+        )}"
+        data-premain="${escapeHtml(short)}"
         readonly
       >
 
     `;
+
 
     box.appendChild(row);
 
@@ -1251,87 +1737,135 @@ function makePromiseDetail(){
 }
 
 
-function updatePromiseRemaining(){
+function updateRemaining(short){
 
-  document.querySelectorAll("[data-ppromise]")
-    .forEach(input=>{
+  const qty=
+    Number(
+      document
+        .querySelector(
+          `[data-pqty="${cssEscape(short)}"]`
+        )?.value || 0
+    );
 
-      const name=input.dataset.ppromise;
 
-      const qtyInput=
-        document.querySelector(`[data-pqty="${cssEscape(name)}"]`);
+  const promised=
+    Number(
+      document
+        .querySelector(
+          `[data-ppromise="${cssEscape(short)}"]`
+        )?.value || 0
+    );
 
-      const remainInput=
-        document.querySelector(`[data-premain="${cssEscape(name)}"]`);
 
-      const qty=Number(qtyInput?.value||0);
-      const promised=Number(input.value||0);
+  const remain=
+    document
+      .querySelector(
+        `[data-premain="${cssEscape(short)}"]`
+      );
 
-      if(remainInput){
-        remainInput.value=Math.max(0,qty-promised);
-      }
 
-    });
+  if(remain){
+
+    remain.value=
+      Math.max(
+        0,
+        qty-promised
+      );
+
+  }
 
 }
 
 
+/* =========================
+   仮約束 保存
+========================= */
+
 function savePromise(){
 
-  const type=
-    document.getElementById("promiseType").value;
+  const selected=
+    [
+      ...document.querySelectorAll(
+        ".promiseCheck:checked"
+      )
+    ];
 
-  const names=
-    document.getElementById("promiseChars")
-      .value
-      .split("\n")
-      .map(x=>x.trim())
-      .filter(Boolean);
 
-  if(names.length===0){
+  if(selected.length===0){
 
-    alert("キャラを1人以上入力してね！");
+    alert("キャラを選んでね！");
+
     return;
 
   }
 
-  const characters=names.map(name=>{
 
-    const qty=
-      Number(
-        document.querySelector(
-          `[data-pqty="${cssEscape(name)}"]`
-        )?.value || 0
-      );
+  const characters=
+    selected.map(check=>{
 
-    const promised=
-      Number(
-        document.querySelector(
-          `[data-ppromise="${cssEscape(name)}"]`
-        )?.value || 0
-      );
+      const short=
+        check.dataset.short;
 
-    return {
-      name:name,
-      qty:qty,
-      promised:promised,
-      remaining:Math.max(0,qty-promised)
-    };
+      const full=
+        check.dataset.full;
 
-  });
+
+      const qty=
+        Number(
+          document
+            .querySelector(
+              `[data-pqty="${cssEscape(short)}"]`
+            )?.value || 0
+        );
+
+
+      const promised=
+        Number(
+          document
+            .querySelector(
+              `[data-ppromise="${cssEscape(short)}"]`
+            )?.value || 0
+        );
+
+
+      return{
+
+        full:full,
+        short:short,
+        qty:qty,
+        promised:promised,
+        remaining:Math.max(
+          0,
+          qty-promised
+        )
+
+      };
+
+    });
 
 
   const item={
-    id:editingPromiseId || Date.now().toString(),
-    type:type,
+
+    id:
+      editingPromiseId ||
+      Date.now().toString(),
+
+    type:
+      document.getElementById(
+        "promiseType"
+      ).value,
+
     characters:characters
+
   };
 
 
   if(editingPromiseId){
 
     const index=
-      promiseData.findIndex(x=>x.id===editingPromiseId);
+      promiseData.findIndex(
+        x=>x.id===editingPromiseId
+      );
 
     if(index!==-1){
       promiseData[index]=item;
@@ -1349,20 +1883,30 @@ function savePromise(){
   alert("保存したよ！");
 
   closePromiseForm();
+
 }
 
 
-function renderPromiseList(){
+/* =========================
+   仮約束 一覧
+========================= */
+
+function renderPromise(){
 
   const box=
-    document.getElementById("promiseList");
+    document.getElementById(
+      "promiseList"
+    );
 
   box.innerHTML="";
+
 
   if(promiseData.length===0){
 
     box.innerHTML=
-      `<div class="empty">まだ登録されてないよ</div>`;
+      `<div class="empty">
+        まだ登録されてないよ
+      </div>`;
 
     return;
 
@@ -1371,55 +1915,36 @@ function renderPromiseList(){
 
   promiseData.forEach(item=>{
 
-    const div=document.createElement("div");
+    const div=
+      document.createElement("div");
 
-    div.className="saved-item";
+    div.className="saved";
 
-    let html=`
 
-      <div class="saved-head">
-
-        <div class="saved-type">
-          ${escapeHtml(item.type)}
-        </div>
-
-        <div class="saved-buttons">
-
-          <button onclick="editPromise('${item.id}')">
-            編集
-          </button>
-
-          <button
-            class="danger"
-            onclick="deletePromise('${item.id}')"
-          >
-            削除
-          </button>
-
-        </div>
-
-      </div>
-
-      <div style="margin-top:10px">
-    `;
+    let rows="";
 
 
     item.characters.forEach(c=>{
 
-      html+=`
+      rows+=`
 
         <div style="
           display:flex;
           justify-content:space-between;
           padding:6px 0;
           border-bottom:1px dotted #ddd;
+          font-size:13px;
         ">
 
-          <span>${escapeHtml(c.name)}</span>
+          <span>
+            ${escapeHtml(c.short)}
+          </span>
 
           <span>
-            ${c.qty} →
-            ${c.promised} →
+            ${c.qty}
+            →
+            ${c.promised}
+            →
             <b>${c.remaining}</b>
           </span>
 
@@ -1430,9 +1955,34 @@ function renderPromiseList(){
     });
 
 
-    html+=`</div>`;
+    div.innerHTML=`
 
-    div.innerHTML=html;
+      <div class="saved-top">
+
+        <div class="saved-type">
+          ${escapeHtml(item.type)}
+        </div>
+
+        <div class="saved-actions">
+
+          <button onclick="editPromise('${item.id}')">
+            編集
+          </button>
+
+          <button onclick="deletePromise('${item.id}')">
+            削除
+          </button>
+
+        </div>
+
+      </div>
+
+      <div style="margin-top:8px">
+        ${rows}
+      </div>
+
+    `;
+
 
     box.appendChild(div);
 
@@ -1441,60 +1991,117 @@ function renderPromiseList(){
 }
 
 
+/* =========================
+   仮約束 編集
+========================= */
+
 function editPromise(id){
 
   const item=
-    promiseData.find(x=>x.id===id);
+    promiseData.find(
+      x=>x.id===id
+    );
 
   if(!item)return;
 
+
   editingPromiseId=id;
 
-  document.getElementById("promiseHome").style.display="none";
-  document.getElementById("promiseForm").style.display="block";
 
-  document.getElementById("promiseFormTitle").textContent =
-    "仮約束を編集";
+  document
+    .getElementById("promiseHome")
+    .style.display="none";
 
-  document.getElementById("promiseType").value=item.type;
-
-  document.getElementById("promiseChars").value =
-    item.characters.map(x=>x.name).join("\n");
-
-  makePromiseDetail();
-}
+  document
+    .getElementById("promiseForm")
+    .style.display="block";
 
 
-function deletePromise(id){
+  document
+    .getElementById("promiseType")
+    .value=item.type;
 
-  if(!confirm("この仮約束を削除する？"))return;
 
-  promiseData=
-    promiseData.filter(x=>x.id!==id);
+  renderPromiseCharacters();
 
-  saveLocal();
 
-  renderPromiseList();
+  document
+    .querySelectorAll(".promiseCheck")
+    .forEach(check=>{
+
+      if(
+        item.characters.some(
+          c=>c.short===check.dataset.short
+        )
+      ){
+
+        check.checked=true;
+
+      }
+
+    });
+
+
+  updatePromiseDetail();
+
 }
 
 
 /* =========================
-   仮約束スクショ
+   仮約束 削除
+========================= */
+
+function deletePromise(id){
+
+  if(
+    !confirm("この仮約束を削除する？")
+  )return;
+
+
+  promiseData=
+    promiseData.filter(
+      x=>x.id!==id
+    );
+
+
+  saveLocal();
+
+  renderPromise();
+
+}
+
+
+/* =========================
+   仮約束 スクショ
 ========================= */
 
 function showPromiseScreenshot(){
 
-  document.getElementById("promiseHome").style.display="none";
-  document.getElementById("promiseForm").style.display="none";
-  document.getElementById("promiseScreenshot").style.display="block";
+  document
+    .getElementById("promiseHome")
+    .style.display="none";
+
+  document
+    .getElementById("promiseForm")
+    .style.display="none";
+
+  document
+    .getElementById("promiseScreenshot")
+    .style.display="block";
+
 
   const box=
-    document.getElementById("promiseScreenshotContent");
+    document.getElementById(
+      "promiseScreenshotContent"
+    );
+
 
   if(promiseData.length===0){
 
     box.innerHTML=
-      `<div class="empty">まだ登録がないよ</div>`;
+      `<div class="empty">
+        まだ登録がないよ
+      </div>`;
 
     return;
 
@@ -1503,7 +2110,7 @@ function showPromiseScreenshot(){
 
   let html=`
 
-    <div class="screenshot-box">
+    <div class="screenshot">
 
       <div class="ss-title">
         仮約束
@@ -1523,6 +2130,7 @@ function showPromiseScreenshot(){
         </div>
 
         <div class="ss-grid">
+
     `;
 
 
@@ -1530,10 +2138,10 @@ function showPromiseScreenshot(){
 
       html+=`
 
-        <div class="ss-char">
+        <div class="ss-row">
 
           <span>
-            ${escapeHtml(c.name)}
+            ${escapeHtml(c.short)}
           </span>
 
           <span>
@@ -1558,22 +2166,33 @@ function showPromiseScreenshot(){
   });
 
 
-  html+=`</div>`;
+  html+=`
+
+    </div>
+
+  `;
+
 
   box.innerHTML=html;
+
 }
 
 
 function closePromiseScreenshot(){
 
-  document.getElementById("promiseScreenshot").style.display="none";
-  document.getElementById("promiseHome").style.display="block";
+  document
+    .getElementById("promiseScreenshot")
+    .style.display="none";
+
+  document
+    .getElementById("promiseHome")
+    .style.display="block";
 
 }
 
 
 /* =========================
-   XSS / CSS対策
+   安全処理
 ========================= */
 
 function escapeHtml(str){
@@ -1588,13 +2207,29 @@ function escapeHtml(str){
 }
 
 
+function escapeJs(str){
+
+  return String(str)
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
+
+}
+
+
 function cssEscape(str){
 
-  if(window.CSS && CSS.escape){
+  if(
+    window.CSS &&
+    CSS.escape
+  ){
+
     return CSS.escape(str);
+
   }
 
-  return String(str).replace(/["\\]/g,"\\$&");
+  return String(str)
+    .replace(/["\\]/g,"\\$&");
+
 }
 
 
@@ -1602,8 +2237,8 @@ function cssEscape(str){
    初期表示
 ========================= */
 
-renderMayoiList();
-renderPromiseList();
+renderMayoi();
+renderPromise();
 
 </script>
 
