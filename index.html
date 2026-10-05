@@ -16,13 +16,8 @@ body{
   "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
 }
 
-button,input,select{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+button,input,select{font:inherit}
+button{cursor:pointer}
 
 header{
   background:#fff;
@@ -65,13 +60,8 @@ main{
   padding:15px;
 }
 
-.screen{
-  display:none;
-}
-
-.screen.active{
-  display:block;
-}
+.screen{display:none}
+.screen.active{display:block}
 
 .title{
   font-size:19px;
@@ -105,13 +95,9 @@ main{
   color:#555;
 }
 
-.full{
-  width:100%;
-}
+.full{width:100%}
 
-.group{
-  margin-bottom:16px;
-}
+.group{margin-bottom:16px}
 
 label{
   display:block;
@@ -129,9 +115,7 @@ select{
   background:#fff;
 }
 
-input[type="file"]{
-  width:100%;
-}
+input[type="file"]{width:100%}
 
 .preview{
   display:block;
@@ -148,9 +132,7 @@ input[type="file"]{
   margin-bottom:10px;
 }
 
-.char-tools button{
-  flex:1;
-}
+.char-tools button{flex:1}
 
 .unit{
   font-size:13px;
@@ -182,9 +164,7 @@ input[type="file"]{
   border-color:#999;
 }
 
-.char input{
-  width:auto;
-}
+.char input{width:auto}
 
 .quantity-title{
   margin:15px 0 7px;
@@ -206,9 +186,7 @@ input[type="file"]{
   margin-bottom:5px;
 }
 
-.qty-row{
-  margin-bottom:7px;
-}
+.qty-row{margin-bottom:7px}
 
 .qty-row .name{
   font-weight:bold;
@@ -241,9 +219,7 @@ input[type="file"]{
   gap:8px;
 }
 
-.saved-type{
-  font-weight:bold;
-}
+.saved-type{font-weight:bold}
 
 .saved-actions{
   display:flex;
@@ -306,9 +282,7 @@ input[type="file"]{
   margin-bottom:12px;
 }
 
-.ss-section{
-  margin-bottom:15px;
-}
+.ss-section{margin-bottom:15px}
 
 .ss-type{
   font-weight:bold;
@@ -337,11 +311,12 @@ input[type="file"]{
   margin-left:3px;
 }
 
+/* 仮約束 */
 .promise-head,
 .promise-row{
   display:grid;
-  grid-template-columns:1fr 60px 60px 60px 60px;
-  gap:5px;
+  grid-template-columns:1fr 70px 70px 70px;
+  gap:6px;
   align-items:center;
 }
 
@@ -351,9 +326,7 @@ input[type="file"]{
   margin-bottom:5px;
 }
 
-.promise-row{
-  margin-bottom:7px;
-}
+.promise-row{margin-bottom:7px}
 
 .promise-row input{
   width:100%;
@@ -363,19 +336,34 @@ input[type="file"]{
   border-radius:8px;
 }
 
-.promise-row input:last-child{
+.promise-row input[data-premain]{
   background:#f1f1f1;
 }
 
-.back{
-  margin-bottom:12px;
+.purchase-box{
+  background:#f7f7f7;
+  border:1px solid #ddd;
+  border-radius:11px;
+  padding:12px;
 }
+
+.purchase-box label{
+  margin-bottom:7px;
+}
+
+.purchase-box input{
+  text-align:center;
+  font-size:17px;
+  font-weight:bold;
+}
+
+.back{margin-bottom:12px}
 
 @media(max-width:430px){
 
   .promise-head,
   .promise-row{
-    grid-template-columns:1fr 48px 48px 48px 48px;
+    grid-template-columns:1fr 52px 52px 52px;
     gap:4px;
   }
 
@@ -387,7 +375,6 @@ input[type="file"]{
   .promise-head{
     font-size:9px;
   }
-
 }
 </style>
 </head>
@@ -445,7 +432,6 @@ input[type="file"]{
 
   </div>
 
-
   <div id="mayoiForm" style="display:none">
 
     <button
@@ -454,9 +440,7 @@ input[type="file"]{
       ← 戻る
     </button>
 
-    <div
-      class="title"
-      id="mayoiFormTitle">
+    <div class="title" id="mayoiFormTitle">
       迷子グッズを登録
     </div>
 
@@ -478,7 +462,6 @@ input[type="file"]{
 
       </div>
 
-
       <div class="group">
 
         <label>グッズ画像</label>
@@ -487,17 +470,14 @@ input[type="file"]{
           type="file"
           id="mayoiImage"
           accept="image/*"
-          onchange="previewMayoiImage()"
-        >
+          onchange="previewMayoiImage()">
 
         <img
           id="imagePreview"
           class="preview"
-          style="display:none"
-        >
+          style="display:none">
 
       </div>
-
 
       <div class="group">
 
@@ -527,9 +507,7 @@ input[type="file"]{
 
       </div>
 
-
       <div id="quantityArea"></div>
-
 
       <button
         class="primary"
@@ -541,10 +519,7 @@ input[type="file"]{
 
   </div>
 
-
-  <div
-    id="mayoiScreenshot"
-    style="display:none">
+  <div id="mayoiScreenshot" style="display:none">
 
     <button
       class="sub back"
@@ -590,9 +565,7 @@ input[type="file"]{
   </div>
 
 
-  <div
-    id="promiseForm"
-    style="display:none">
+  <div id="promiseForm" style="display:none">
 
     <button
       class="sub back"
@@ -633,14 +606,27 @@ input[type="file"]{
           type="file"
           id="promiseImage"
           accept="image/*"
-          onchange="previewPromiseImage()"
-        >
+          onchange="previewPromiseImage()">
 
         <img
           id="promiseImagePreview"
           class="preview"
-          style="display:none"
-        >
+          style="display:none">
+
+      </div>
+
+
+      <!-- ★ 購入総数を一括入力 -->
+      <div class="group purchase-box">
+
+        <label>購入数</label>
+
+        <input
+          type="number"
+          id="promisePurchaseQty"
+          min="0"
+          value="1"
+          oninput="updateAllPromiseRemaining()">
 
       </div>
 
@@ -679,7 +665,6 @@ input[type="file"]{
         <div class="promise-head">
 
           <span>キャラ</span>
-          <span>所持</span>
           <span>約束</span>
           <span>残り</span>
           <span>再交換</span>
@@ -702,9 +687,7 @@ input[type="file"]{
   </div>
 
 
-  <div
-    id="promiseScreenshot"
-    style="display:none">
+  <div id="promiseScreenshot" style="display:none">
 
     <button
       class="sub back"
@@ -862,30 +845,6 @@ const units={
 
 
 /* =====================================================
-   共通キャラ一覧
-===================================================== */
-
-const allCharacters=[];
-
-Object.entries(units).forEach(([unit,members])=>{
-
-  members.forEach(([full,short])=>{
-
-    if(!allCharacters.some(x=>x.full===full)){
-
-      allCharacters.push({
-        full,
-        short
-      });
-
-    }
-
-  });
-
-});
-
-
-/* =====================================================
    共通
 ===================================================== */
 
@@ -906,45 +865,21 @@ function saveLocal(){
 
 function showScreen(type){
 
-  document
-    .getElementById("mayoiScreen")
-    .classList.remove("active");
-
-  document
-    .getElementById("promiseScreen")
-    .classList.remove("active");
-
-  document
-    .getElementById("navMayoi")
-    .classList.remove("active");
-
-  document
-    .getElementById("navPromise")
-    .classList.remove("active");
-
+  document.getElementById("mayoiScreen").classList.remove("active");
+  document.getElementById("promiseScreen").classList.remove("active");
+  document.getElementById("navMayoi").classList.remove("active");
+  document.getElementById("navPromise").classList.remove("active");
 
   if(type==="mayoi"){
 
-    document
-      .getElementById("mayoiScreen")
-      .classList.add("active");
-
-    document
-      .getElementById("navMayoi")
-      .classList.add("active");
-
+    document.getElementById("mayoiScreen").classList.add("active");
+    document.getElementById("navMayoi").classList.add("active");
     renderMayoi();
 
   }else{
 
-    document
-      .getElementById("promiseScreen")
-      .classList.add("active");
-
-    document
-      .getElementById("navPromise")
-      .classList.add("active");
-
+    document.getElementById("promiseScreen").classList.add("active");
+    document.getElementById("navPromise").classList.add("active");
     renderPromise();
 
   }
@@ -953,7 +888,7 @@ function showScreen(type){
 
 
 /* =====================================================
-   キャラ一覧 共通生成
+   キャラ一覧
 ===================================================== */
 
 function buildCharacterList(boxId,checkClass,onChange){
@@ -962,65 +897,49 @@ function buildCharacterList(boxId,checkClass,onChange){
 
   box.innerHTML="";
 
+  Object.entries(units).forEach(([unit,members])=>{
 
-  Object.entries(units).forEach(
-    ([unit,members])=>{
+    const title=document.createElement("div");
+    title.className="unit";
+    title.textContent=unit;
 
-      const title=
-        document.createElement("div");
+    box.appendChild(title);
 
-      title.className="unit";
-      title.textContent=unit;
+    const grid=document.createElement("div");
+    grid.className="char-grid";
 
-      box.appendChild(title);
+    members.forEach(([full,short])=>{
 
+      const label=document.createElement("label");
+      label.className="char";
 
-      const grid=
-        document.createElement("div");
+      label.innerHTML=`
 
-      grid.className="char-grid";
+        <input
+          type="checkbox"
+          class="${checkClass}"
+          data-full="${escapeHtml(full)}"
+          data-short="${escapeHtml(short)}"
+          onchange="${onChange}"
+        >
 
+        <span>${escapeHtml(short)}</span>
 
-      members.forEach(
-        ([full,short])=>{
+      `;
 
-          const label=
-            document.createElement("label");
+      grid.appendChild(label);
 
-          label.className="char";
+    });
 
+    box.appendChild(grid);
 
-          label.innerHTML=`
-
-            <input
-              type="checkbox"
-              class="${checkClass}"
-              data-full="${escapeHtml(full)}"
-              data-short="${escapeHtml(short)}"
-              onchange="${onChange}"
-            >
-
-            <span>${escapeHtml(short)}</span>
-
-          `;
-
-
-          grid.appendChild(label);
-
-        }
-      );
-
-
-      box.appendChild(grid);
-
-    }
-  );
+  });
 
 }
 
 
 /* =====================================================
-   迷子 キャラ
+   迷子
 ===================================================== */
 
 function renderCharacterList(){
@@ -1033,22 +952,18 @@ function renderCharacterList(){
 
 }
 
-
 function selectAllMayoi(){
 
-  document
-    .querySelectorAll(".charCheck")
+  document.querySelectorAll(".charCheck")
     .forEach(x=>x.checked=true);
 
   updateQuantities();
 
 }
 
-
 function clearAllMayoi(){
 
-  document
-    .querySelectorAll(".charCheck")
+  document.querySelectorAll(".charCheck")
     .forEach(x=>x.checked=false);
 
   updateQuantities();
@@ -1056,31 +971,20 @@ function clearAllMayoi(){
 }
 
 
-/* =====================================================
-   迷子 数量
-===================================================== */
-
 function updateQuantities(){
 
-  const selected=
-    [...document.querySelectorAll(
-      ".charCheck:checked"
-    )];
+  const selected=[
+    ...document.querySelectorAll(".charCheck:checked")
+  ];
 
-  const box=
-    document.getElementById(
-      "quantityArea"
-    );
-
+  const box=document.getElementById("quantityArea");
 
   if(selected.length===0){
 
     box.innerHTML="";
-
     return;
 
   }
-
 
   box.innerHTML=`
 
@@ -1098,7 +1002,6 @@ function updateQuantities(){
 
   `;
 
-
   selected.forEach(check=>{
 
     const short=check.dataset.short;
@@ -1111,12 +1014,9 @@ function updateQuantities(){
         ?.find(x=>x.short===short)
       : null;
 
-
-    const row=
-      document.createElement("div");
+    const row=document.createElement("div");
 
     row.className="qty-row";
-
 
     row.innerHTML=`
 
@@ -1140,7 +1040,6 @@ function updateQuantities(){
 
     `;
 
-
     box.appendChild(row);
 
   });
@@ -1148,66 +1047,30 @@ function updateQuantities(){
 }
 
 
-/* =====================================================
-   迷子 登録
-===================================================== */
-
 function openMayoiForm(){
 
   editingMayoiId=null;
 
+  document.getElementById("mayoiHome").style.display="none";
+  document.getElementById("mayoiForm").style.display="block";
+  document.getElementById("mayoiScreenshot").style.display="none";
 
-  document
-    .getElementById("mayoiHome")
-    .style.display="none";
-
-  document
-    .getElementById("mayoiForm")
-    .style.display="block";
-
-  document
-    .getElementById("mayoiScreenshot")
-    .style.display="none";
-
-
-  document
-    .getElementById("mayoiFormTitle")
-    .textContent="迷子グッズを登録";
-
-
-  document
-    .getElementById("mayoiType")
-    .value="ぱしゃっつ";
-
-
-  document
-    .getElementById("mayoiImage")
-    .value="";
-
-
-  document
-    .getElementById("imagePreview")
-    .style.display="none";
-
+  document.getElementById("mayoiFormTitle").textContent="迷子グッズを登録";
+  document.getElementById("mayoiType").value="ぱしゃっつ";
+  document.getElementById("mayoiImage").value="";
+  document.getElementById("imagePreview").style.display="none";
 
   renderCharacterList();
 
-  document
-    .getElementById("quantityArea")
-    .innerHTML="";
+  document.getElementById("quantityArea").innerHTML="";
 
 }
 
 
 function closeMayoiForm(){
 
-  document
-    .getElementById("mayoiForm")
-    .style.display="none";
-
-  document
-    .getElementById("mayoiHome")
-    .style.display="block";
+  document.getElementById("mayoiForm").style.display="none";
+  document.getElementById("mayoiHome").style.display="block";
 
   renderMayoi();
 
@@ -1216,135 +1079,89 @@ function closeMayoiForm(){
 
 function previewMayoiImage(){
 
-  const file=
-    document
-      .getElementById("mayoiImage")
-      .files[0];
+  const file=document.getElementById("mayoiImage").files[0];
 
   if(!file)return;
 
-
-  const reader=
-    new FileReader();
-
+  const reader=new FileReader();
 
   reader.onload=function(e){
 
-    const img=
-      document.getElementById("imagePreview");
+    const img=document.getElementById("imagePreview");
 
     img.src=e.target.result;
-
     img.style.display="block";
 
   };
-
 
   reader.readAsDataURL(file);
 
 }
 
 
-/* =====================================================
-   迷子 保存
-===================================================== */
-
 function saveMayoi(){
 
-  const selected=
-    [...document.querySelectorAll(
-      ".charCheck:checked"
-    )];
-
+  const selected=[
+    ...document.querySelectorAll(".charCheck:checked")
+  ];
 
   if(selected.length===0){
 
     alert("持っているキャラを選んでね！");
-
     return;
 
   }
 
-
-  const preview=
-    document.getElementById("imagePreview");
-
+  const preview=document.getElementById("imagePreview");
 
   const old=
     editingMayoiId
-    ? mayoiData.find(
-        x=>x.id===editingMayoiId
-      )
+    ? mayoiData.find(x=>x.id===editingMayoiId)
     : null;
-
 
   const image=
     preview.style.display!=="none"
     ? preview.src
     : old?.image || "";
 
+  const characters=selected.map(check=>{
 
-  const characters=
-    selected.map(check=>{
+    const short=check.dataset.short;
+    const full=check.dataset.full;
 
-      const short=check.dataset.short;
-      const full=check.dataset.full;
+    const qty=Number(
+      document.querySelector(
+        `[data-qty="${cssEscape(short)}"]`
+      )?.value || 0
+    );
 
+    const retrade=Number(
+      document.querySelector(
+        `[data-retrade="${cssEscape(short)}"]`
+      )?.value || 0
+    );
 
-      const qty=
-        Number(
-          document.querySelector(
-            `[data-qty="${cssEscape(short)}"]`
-          )?.value || 0
-        );
+    return{
+      full,
+      short,
+      qty,
+      retrade
+    };
 
-
-      const retrade=
-        Number(
-          document.querySelector(
-            `[data-retrade="${cssEscape(short)}"]`
-          )?.value || 0
-        );
-
-
-      return{
-        full,
-        short,
-        qty,
-        retrade
-      };
-
-    });
-
+  });
 
   const item={
-
-    id:
-      editingMayoiId ||
-      Date.now().toString(),
-
-    type:
-      document.getElementById(
-        "mayoiType"
-      ).value,
-
+    id:editingMayoiId || Date.now().toString(),
+    type:document.getElementById("mayoiType").value,
     image,
-
     characters
-
   };
-
 
   if(editingMayoiId){
 
-    const index=
-      mayoiData.findIndex(
-        x=>x.id===editingMayoiId
-      );
+    const index=mayoiData.findIndex(x=>x.id===editingMayoiId);
 
-    if(index!==-1){
-      mayoiData[index]=item;
-    }
+    if(index!==-1)mayoiData[index]=item;
 
   }else{
 
@@ -1352,29 +1169,19 @@ function saveMayoi(){
 
   }
 
-
   saveLocal();
 
   alert("保存したよ！");
-
   closeMayoiForm();
 
 }
 
 
-/* =====================================================
-   迷子 一覧
-===================================================== */
-
 function renderMayoi(){
 
-  const box=
-    document.getElementById(
-      "mayoiList"
-    );
+  const box=document.getElementById("mayoiList");
 
   box.innerHTML="";
-
 
   if(mayoiData.length===0){
 
@@ -1388,35 +1195,28 @@ function renderMayoi(){
 
   }
 
-
   mayoiData.forEach(item=>{
 
-    const div=
-      document.createElement("div");
+    const div=document.createElement("div");
 
     div.className="saved";
 
+    const chips=item.characters.map(c=>`
 
-    const chips=
-      item.characters
-        .map(c=>`
+      <span class="chip">
 
-          <span class="chip">
+        ${escapeHtml(c.short)}
+        ${c.qty}
 
-            ${escapeHtml(c.short)}
-            ${c.qty}
+        ${
+          c.retrade
+          ? `⑩${c.retrade}`
+          : ""
+        }
 
-            ${
-              c.retrade
-              ? `⑩${c.retrade}`
-              : ""
-            }
+      </span>
 
-          </span>
-
-        `)
-        .join("");
-
+    `).join("");
 
     div.innerHTML=`
 
@@ -1428,13 +1228,11 @@ function renderMayoi(){
 
         <div class="saved-actions">
 
-          <button
-            onclick="editMayoi('${item.id}')">
+          <button onclick="editMayoi('${item.id}')">
             編集
           </button>
 
-          <button
-            onclick="deleteMayoi('${item.id}')">
+          <button onclick="deleteMayoi('${item.id}')">
             削除
           </button>
 
@@ -1442,23 +1240,17 @@ function renderMayoi(){
 
       </div>
 
-
       ${
         item.image
-        ? `<img
-             src="${item.image}"
-             class="saved-image">
-           `
+        ? `<img src="${item.image}" class="saved-image">`
         : ""
       }
-
 
       <div class="chips">
         ${chips}
       </div>
 
     `;
-
 
     box.appendChild(div);
 
@@ -1467,50 +1259,22 @@ function renderMayoi(){
 }
 
 
-/* =====================================================
-   迷子 編集
-===================================================== */
-
 function editMayoi(id){
 
-  const item=
-    mayoiData.find(x=>x.id===id);
+  const item=mayoiData.find(x=>x.id===id);
 
   if(!item)return;
 
-
   editingMayoiId=id;
 
+  document.getElementById("mayoiHome").style.display="none";
+  document.getElementById("mayoiForm").style.display="block";
 
-  document
-    .getElementById("mayoiHome")
-    .style.display="none";
+  document.getElementById("mayoiFormTitle").textContent="迷子グッズを編集";
+  document.getElementById("mayoiType").value=item.type;
+  document.getElementById("mayoiImage").value="";
 
-  document
-    .getElementById("mayoiForm")
-    .style.display="block";
-
-
-  document
-    .getElementById("mayoiFormTitle")
-    .textContent="迷子グッズを編集";
-
-
-  document
-    .getElementById("mayoiType")
-    .value=item.type;
-
-
-  document
-    .getElementById("mayoiImage")
-    .value="";
-
-
-  const img=
-    document.getElementById(
-      "imagePreview"
-    );
-
+  const img=document.getElementById("imagePreview");
 
   if(item.image){
 
@@ -1523,82 +1287,46 @@ function editMayoi(id){
 
   }
 
-
   renderCharacterList();
 
+  document.querySelectorAll(".charCheck").forEach(check=>{
 
-  document
-    .querySelectorAll(".charCheck")
-    .forEach(check=>{
+    if(
+      item.characters.some(
+        c=>c.short===check.dataset.short
+      )
+    ){
 
-      if(
-        item.characters.some(
-          c=>c.short===check.dataset.short
-        )
-      ){
+      check.checked=true;
 
-        check.checked=true;
+    }
 
-      }
-
-    });
-
+  });
 
   updateQuantities();
 
 }
 
 
-/* =====================================================
-   迷子 削除
-===================================================== */
-
 function deleteMayoi(id){
 
-  if(
-    !confirm(
-      "この迷子グッズを削除する？"
-    )
-  )return;
+  if(!confirm("この迷子グッズを削除する？"))return;
 
-
-  mayoiData=
-    mayoiData.filter(
-      x=>x.id!==id
-    );
-
+  mayoiData=mayoiData.filter(x=>x.id!==id);
 
   saveLocal();
-
   renderMayoi();
 
 }
 
 
-/* =====================================================
-   迷子 スクショ
-===================================================== */
-
 function showMayoiScreenshot(){
 
-  document
-    .getElementById("mayoiHome")
-    .style.display="none";
+  document.getElementById("mayoiHome").style.display="none";
+  document.getElementById("mayoiForm").style.display="none";
+  document.getElementById("mayoiScreenshot").style.display="block";
 
-  document
-    .getElementById("mayoiForm")
-    .style.display="none";
-
-  document
-    .getElementById("mayoiScreenshot")
-    .style.display="block";
-
-
-  const box=
-    document.getElementById(
-      "mayoiScreenshotContent"
-    );
-
+  const box=document.getElementById("mayoiScreenshotContent");
 
   if(mayoiData.length===0){
 
@@ -1611,7 +1339,6 @@ function showMayoiScreenshot(){
     return;
 
   }
-
 
   let html=`
 
@@ -1627,7 +1354,6 @@ function showMayoiScreenshot(){
 
   `;
 
-
   mayoiData.forEach(item=>{
 
     html+=`
@@ -1641,7 +1367,6 @@ function showMayoiScreenshot(){
         <div class="ss-grid">
 
     `;
-
 
     item.characters.forEach(c=>{
 
@@ -1659,9 +1384,7 @@ function showMayoiScreenshot(){
 
             ${
               c.retrade
-              ? `<span class="retrade">
-                   ⑩${c.retrade}
-                 </span>`
+              ? `<span class="retrade">⑩${c.retrade}</span>`
               : ""
             }
 
@@ -1673,7 +1396,6 @@ function showMayoiScreenshot(){
 
     });
 
-
     html+=`
 
         </div>
@@ -1684,13 +1406,7 @@ function showMayoiScreenshot(){
 
   });
 
-
-  html+=`
-
-    </div>
-
-  `;
-
+  html+=`</div>`;
 
   box.innerHTML=html;
 
@@ -1699,19 +1415,14 @@ function showMayoiScreenshot(){
 
 function closeMayoiScreenshot(){
 
-  document
-    .getElementById("mayoiScreenshot")
-    .style.display="none";
-
-  document
-    .getElementById("mayoiHome")
-    .style.display="block";
+  document.getElementById("mayoiScreenshot").style.display="none";
+  document.getElementById("mayoiHome").style.display="block";
 
 }
 
 
 /* =====================================================
-   仮約束 キャラ一覧
+   仮約束
 ===================================================== */
 
 function renderPromiseCharacters(){
@@ -1727,8 +1438,7 @@ function renderPromiseCharacters(){
 
 function selectAllPromise(){
 
-  document
-    .querySelectorAll(".promiseCheck")
+  document.querySelectorAll(".promiseCheck")
     .forEach(x=>x.checked=true);
 
   updatePromiseDetail();
@@ -1738,8 +1448,7 @@ function selectAllPromise(){
 
 function clearAllPromise(){
 
-  document
-    .querySelectorAll(".promiseCheck")
+  document.querySelectorAll(".promiseCheck")
     .forEach(x=>x.checked=false);
 
   updatePromiseDetail();
@@ -1747,103 +1456,54 @@ function clearAllPromise(){
 }
 
 
-/* =====================================================
-   仮約束 登録画面
-===================================================== */
-
 function openPromiseForm(){
 
   editingPromiseId=null;
 
+  document.getElementById("promiseHome").style.display="none";
+  document.getElementById("promiseForm").style.display="block";
+  document.getElementById("promiseScreenshot").style.display="none";
 
-  document
-    .getElementById("promiseHome")
-    .style.display="none";
+  document.getElementById("promiseFormTitle").textContent="仮約束を登録";
+  document.getElementById("promiseType").value="ぱしゃっつ";
+  document.getElementById("promiseImage").value="";
+  document.getElementById("promiseImagePreview").style.display="none";
 
-  document
-    .getElementById("promiseForm")
-    .style.display="block";
-
-  document
-    .getElementById("promiseScreenshot")
-    .style.display="none";
-
-
-  document
-    .getElementById("promiseFormTitle")
-    .textContent="仮約束を登録";
-
-
-  document
-    .getElementById("promiseType")
-    .value="ぱしゃっつ";
-
-
-  document
-    .getElementById("promiseImage")
-    .value="";
-
-
-  document
-    .getElementById("promiseImagePreview")
-    .style.display="none";
-
+  document.getElementById("promisePurchaseQty").value=1;
 
   renderPromiseCharacters();
 
-  document
-    .getElementById("promiseDetail")
-    .innerHTML="";
+  document.getElementById("promiseDetail").innerHTML="";
 
 }
 
 
 function closePromiseForm(){
 
-  document
-    .getElementById("promiseForm")
-    .style.display="none";
-
-  document
-    .getElementById("promiseHome")
-    .style.display="block";
+  document.getElementById("promiseForm").style.display="none";
+  document.getElementById("promiseHome").style.display="block";
 
   renderPromise();
 
 }
 
 
-/* =====================================================
-   仮約束 画像
-===================================================== */
-
 function previewPromiseImage(){
 
-  const file=
-    document
-      .getElementById("promiseImage")
-      .files[0];
+  const file=document.getElementById("promiseImage").files[0];
 
   if(!file)return;
 
-
-  const reader=
-    new FileReader();
-
+  const reader=new FileReader();
 
   reader.onload=function(e){
 
-    const img=
-      document.getElementById(
-        "promiseImagePreview"
-      );
+    const img=document.getElementById("promiseImagePreview");
 
     img.src=e.target.result;
-
     img.style.display="block";
 
   };
-
 
   reader.readAsDataURL(file);
 
@@ -1854,26 +1514,28 @@ function previewPromiseImage(){
    仮約束 数量
 ===================================================== */
 
+function getPromisePurchaseQty(){
+
+  return Number(
+    document.getElementById("promisePurchaseQty")?.value || 0
+  );
+
+}
+
+
 function updatePromiseDetail(){
 
-  const selected=
-    [...document.querySelectorAll(
-      ".promiseCheck:checked"
-    )];
+  const selected=[
+    ...document.querySelectorAll(".promiseCheck:checked")
+  ];
 
-
-  const box=
-    document.getElementById(
-      "promiseDetail"
-    );
+  const box=document.getElementById("promiseDetail");
 
   box.innerHTML="";
-
 
   selected.forEach(check=>{
 
     const short=check.dataset.short;
-
 
     const old=
       editingPromiseId
@@ -1883,26 +1545,15 @@ function updatePromiseDetail(){
         ?.find(x=>x.short===short)
       : null;
 
-
-    const row=
-      document.createElement("div");
+    const row=document.createElement("div");
 
     row.className="promise-row";
-
 
     row.innerHTML=`
 
       <div>
         ${escapeHtml(short)}
       </div>
-
-      <input
-        type="number"
-        min="0"
-        value="${old?.qty ?? 1}"
-        data-pqty="${escapeHtml(short)}"
-        oninput="updatePromiseRemaining('${escapeJs(short)}')"
-      >
 
       <input
         type="number"
@@ -1916,7 +1567,7 @@ function updatePromiseDetail(){
         type="number"
         value="${Math.max(
           0,
-          (old?.qty ?? 1) -
+          getPromisePurchaseQty() -
           (old?.promised ?? 0)
         )}"
         data-premain="${escapeHtml(short)}"
@@ -1932,7 +1583,6 @@ function updatePromiseDetail(){
 
     `;
 
-
     box.appendChild(row);
 
   });
@@ -1942,37 +1592,41 @@ function updatePromiseDetail(){
 
 function updatePromiseRemaining(short){
 
-  const qty=
-    Number(
-      document.querySelector(
-        `[data-pqty="${cssEscape(short)}"]`
-      )?.value || 0
-    );
+  const purchaseQty=getPromisePurchaseQty();
 
-
-  const promised=
-    Number(
-      document.querySelector(
-        `[data-ppromise="${cssEscape(short)}"]`
-      )?.value || 0
-    );
-
-
-  const remain=
+  const promised=Number(
     document.querySelector(
-      `[data-premain="${cssEscape(short)}"]`
-    );
+      `[data-ppromise="${cssEscape(short)}"]`
+    )?.value || 0
+  );
 
+  const remain=document.querySelector(
+    `[data-premain="${cssEscape(short)}"]`
+  );
 
   if(remain){
 
-    remain.value=
-      Math.max(
-        0,
-        qty-promised
-      );
+    remain.value=Math.max(
+      0,
+      purchaseQty-promised
+    );
 
   }
+
+}
+
+
+function updateAllPromiseRemaining(){
+
+  document
+    .querySelectorAll(".promiseCheck:checked")
+    .forEach(check=>{
+
+      updatePromiseRemaining(
+        check.dataset.short
+      );
+
+    });
 
 }
 
@@ -1983,20 +1637,25 @@ function updatePromiseRemaining(short){
 
 function savePromise(){
 
-  const selected=
-    [...document.querySelectorAll(
-      ".promiseCheck:checked"
-    )];
-
+  const selected=[
+    ...document.querySelectorAll(".promiseCheck:checked")
+  ];
 
   if(selected.length===0){
 
     alert("持っているキャラを選んでね！");
-
     return;
 
   }
 
+  const purchaseQty=getPromisePurchaseQty();
+
+  if(purchaseQty<0){
+
+    alert("購入数を確認してね！");
+    return;
+
+  }
 
   const old=
     editingPromiseId
@@ -2005,66 +1664,45 @@ function savePromise(){
       )
     : null;
 
-
-  const preview=
-    document.getElementById(
-      "promiseImagePreview"
-    );
-
+  const preview=document.getElementById("promiseImagePreview");
 
   const image=
     preview.style.display!=="none"
     ? preview.src
     : old?.image || "";
 
+  const characters=selected.map(check=>{
 
-  const characters=
-    selected.map(check=>{
+    const short=check.dataset.short;
+    const full=check.dataset.full;
 
-      const short=check.dataset.short;
-      const full=check.dataset.full;
+    const promised=Number(
+      document.querySelector(
+        `[data-ppromise="${cssEscape(short)}"]`
+      )?.value || 0
+    );
 
+    const retrade=Number(
+      document.querySelector(
+        `[data-pretrade="${cssEscape(short)}"]`
+      )?.value || 0
+    );
 
-      const qty=
-        Number(
-          document.querySelector(
-            `[data-pqty="${cssEscape(short)}"]`
-          )?.value || 0
-        );
+    return{
 
+      full,
+      short,
+      qty:purchaseQty,
+      promised,
+      remaining:Math.max(
+        0,
+        purchaseQty-promised
+      ),
+      retrade
 
-      const promised=
-        Number(
-          document.querySelector(
-            `[data-ppromise="${cssEscape(short)}"]`
-          )?.value || 0
-        );
+    };
 
-
-      const retrade=
-        Number(
-          document.querySelector(
-            `[data-pretrade="${cssEscape(short)}"]`
-          )?.value || 0
-        );
-
-
-      return{
-
-        full,
-        short,
-        qty,
-        promised,
-        remaining:Math.max(
-          0,
-          qty-promised
-        ),
-        retrade
-
-      };
-
-    });
-
+  });
 
   const item={
 
@@ -2079,10 +1717,11 @@ function savePromise(){
 
     image,
 
+    purchaseQty,
+
     characters
 
   };
-
 
   if(editingPromiseId){
 
@@ -2092,9 +1731,7 @@ function savePromise(){
       );
 
     if(index!==-1){
-
       promiseData[index]=item;
-
     }
 
   }else{
@@ -2103,11 +1740,9 @@ function savePromise(){
 
   }
 
-
   saveLocal();
 
   alert("保存したよ！");
-
   closePromiseForm();
 
 }
@@ -2119,13 +1754,9 @@ function savePromise(){
 
 function renderPromise(){
 
-  const box=
-    document.getElementById(
-      "promiseList"
-    );
+  const box=document.getElementById("promiseList");
 
   box.innerHTML="";
-
 
   if(promiseData.length===0){
 
@@ -2139,27 +1770,34 @@ function renderPromise(){
 
   }
 
-
   promiseData.forEach(item=>{
 
-    const div=
-      document.createElement("div");
+    const div=document.createElement("div");
 
     div.className="saved";
 
+    /*
+      新しいデータは purchaseQty を使用。
+      古いデータが残っていても最初のキャラのqtyを
+      購入数として読み込む。
+    */
+    const purchaseQty=
+      Number(
+        item.purchaseQty ??
+        item.characters?.[0]?.qty ??
+        0
+      );
 
     let rows="";
 
-
     item.characters.forEach(c=>{
 
-      const remaining=
-        Math.max(
-          0,
-          Number(c.qty||0) -
-          Number(c.promised||0)
-        );
+      const promised=Number(c.promised||0);
 
+      const remaining=Math.max(
+        0,
+        purchaseQty-promised
+      );
 
       rows+=`
 
@@ -2180,13 +1818,11 @@ function renderPromise(){
             </span>
 
             <span>
-              所持 ${c.qty}
-              ／約束 ${c.promised}
+              約束 ${promised}
               ／残り <b>${remaining}</b>
             </span>
 
           </div>
-
 
           ${
             c.retrade
@@ -2207,7 +1843,6 @@ function renderPromise(){
       `;
 
     });
-
 
     div.innerHTML=`
 
@@ -2233,7 +1868,6 @@ function renderPromise(){
 
       </div>
 
-
       ${
         item.image
         ? `
@@ -2244,13 +1878,20 @@ function renderPromise(){
         : ""
       }
 
+      <div style="
+        margin-top:8px;
+        font-size:12px;
+        color:#777;
+        font-weight:bold;
+      ">
+        購入数 ${purchaseQty}
+      </div>
 
-      <div style="margin-top:8px">
+      <div style="margin-top:4px">
         ${rows}
       </div>
 
     `;
-
 
     box.appendChild(div);
 
@@ -2272,39 +1913,26 @@ function editPromise(id){
 
   if(!item)return;
 
-
   editingPromiseId=id;
 
+  document.getElementById("promiseHome").style.display="none";
+  document.getElementById("promiseForm").style.display="block";
 
-  document
-    .getElementById("promiseHome")
-    .style.display="none";
+  document.getElementById("promiseFormTitle").textContent="仮約束を編集";
 
-  document
-    .getElementById("promiseForm")
-    .style.display="block";
+  document.getElementById("promiseType").value=item.type;
+  document.getElementById("promiseImage").value="";
 
-
-  document
-    .getElementById("promiseFormTitle")
-    .textContent="仮約束を編集";
-
-
-  document
-    .getElementById("promiseType")
-    .value=item.type;
-
-
-  document
-    .getElementById("promiseImage")
-    .value="";
-
-
-  const img=
-    document.getElementById(
-      "promiseImagePreview"
+  const purchaseQty=
+    Number(
+      item.purchaseQty ??
+      item.characters?.[0]?.qty ??
+      0
     );
 
+  document.getElementById("promisePurchaseQty").value=purchaseQty;
+
+  const img=document.getElementById("promiseImagePreview");
 
   if(item.image){
 
@@ -2317,12 +1945,9 @@ function editPromise(id){
 
   }
 
-
   renderPromiseCharacters();
 
-
-  document
-    .querySelectorAll(".promiseCheck")
+  document.querySelectorAll(".promiseCheck")
     .forEach(check=>{
 
       if(
@@ -2337,7 +1962,6 @@ function editPromise(id){
 
     });
 
-
   updatePromiseDetail();
 
 }
@@ -2349,21 +1973,14 @@ function editPromise(id){
 
 function deletePromise(id){
 
-  if(
-    !confirm(
-      "この仮約束を削除する？"
-    )
-  )return;
-
+  if(!confirm("この仮約束を削除する？"))return;
 
   promiseData=
     promiseData.filter(
       x=>x.id!==id
     );
 
-
   saveLocal();
-
   renderPromise();
 
 }
@@ -2375,24 +1992,14 @@ function deletePromise(id){
 
 function showPromiseScreenshot(){
 
-  document
-    .getElementById("promiseHome")
-    .style.display="none";
-
-  document
-    .getElementById("promiseForm")
-    .style.display="none";
-
-  document
-    .getElementById("promiseScreenshot")
-    .style.display="block";
-
+  document.getElementById("promiseHome").style.display="none";
+  document.getElementById("promiseForm").style.display="none";
+  document.getElementById("promiseScreenshot").style.display="block";
 
   const box=
     document.getElementById(
       "promiseScreenshotContent"
     );
-
 
   if(promiseData.length===0){
 
@@ -2405,7 +2012,6 @@ function showPromiseScreenshot(){
     return;
 
   }
-
 
   let html=`
 
@@ -2421,7 +2027,6 @@ function showPromiseScreenshot(){
 
   `;
 
-
   promiseData.forEach(item=>{
 
     html+=`
@@ -2436,16 +2041,21 @@ function showPromiseScreenshot(){
 
     `;
 
+    const purchaseQty=
+      Number(
+        item.purchaseQty ??
+        item.characters?.[0]?.qty ??
+        0
+      );
 
     item.characters.forEach(c=>{
 
       const remaining=
         Math.max(
           0,
-          Number(c.qty||0) -
+          purchaseQty-
           Number(c.promised||0)
         );
-
 
       html+=`
 
@@ -2477,7 +2087,6 @@ function showPromiseScreenshot(){
 
     });
 
-
     html+=`
 
         </div>
@@ -2488,13 +2097,7 @@ function showPromiseScreenshot(){
 
   });
 
-
-  html+=`
-
-    </div>
-
-  `;
-
+  html+=`</div>`;
 
   box.innerHTML=html;
 
@@ -2503,13 +2106,8 @@ function showPromiseScreenshot(){
 
 function closePromiseScreenshot(){
 
-  document
-    .getElementById("promiseScreenshot")
-    .style.display="none";
-
-  document
-    .getElementById("promiseHome")
-    .style.display="block";
+  document.getElementById("promiseScreenshot").style.display="none";
+  document.getElementById("promiseHome").style.display="block";
 
 }
 
