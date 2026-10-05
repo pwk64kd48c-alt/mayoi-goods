@@ -192,11 +192,21 @@ input[type="file"]{
   font-weight:bold;
 }
 
+.qty-head,
 .qty-row{
   display:grid;
   grid-template-columns:1fr 75px 75px;
   gap:6px;
   align-items:center;
+}
+
+.qty-head{
+  color:#888;
+  font-size:10px;
+  margin-bottom:5px;
+}
+
+.qty-row{
   margin-bottom:7px;
 }
 
@@ -330,7 +340,7 @@ input[type="file"]{
 .promise-head,
 .promise-row{
   display:grid;
-  grid-template-columns:1fr 65px 65px 65px;
+  grid-template-columns:1fr 60px 60px 60px 60px;
   gap:5px;
   align-items:center;
 }
@@ -360,6 +370,25 @@ input[type="file"]{
 .back{
   margin-bottom:12px;
 }
+
+@media(max-width:430px){
+
+  .promise-head,
+  .promise-row{
+    grid-template-columns:1fr 48px 48px 48px 48px;
+    gap:4px;
+  }
+
+  .promise-row input{
+    padding:7px 1px;
+    font-size:12px;
+  }
+
+  .promise-head{
+    font-size:9px;
+  }
+
+}
 </style>
 </head>
 
@@ -370,20 +399,27 @@ input[type="file"]{
 </header>
 
 <div class="nav">
-  <button id="navMayoi" class="active" onclick="showScreen('mayoi')">
+
+  <button
+    id="navMayoi"
+    class="active"
+    onclick="showScreen('mayoi')">
     🧸 迷子
   </button>
 
-  <button id="navPromise" onclick="showScreen('promise')">
+  <button
+    id="navPromise"
+    onclick="showScreen('promise')">
     🤝 仮約束
   </button>
+
 </div>
 
 <main>
 
-<!-- =========================
+<!-- =====================================================
      迷子
-========================= -->
+===================================================== -->
 
 <section id="mayoiScreen" class="screen active">
 
@@ -391,13 +427,17 @@ input[type="file"]{
 
     <div class="title">🧸 迷子</div>
 
-    <button class="primary" onclick="openMayoiForm()">
+    <button
+      class="primary"
+      onclick="openMayoiForm()">
       ＋ 迷子グッズを登録
     </button>
 
     <div style="height:10px"></div>
 
-    <button class="sub full" onclick="showMayoiScreenshot()">
+    <button
+      class="sub full"
+      onclick="showMayoiScreenshot()">
       📸 スクショ用を見る
     </button>
 
@@ -408,11 +448,15 @@ input[type="file"]{
 
   <div id="mayoiForm" style="display:none">
 
-    <button class="sub back" onclick="closeMayoiForm()">
+    <button
+      class="sub back"
+      onclick="closeMayoiForm()">
       ← 戻る
     </button>
 
-    <div class="title" id="mayoiFormTitle">
+    <div
+      class="title"
+      id="mayoiFormTitle">
       迷子グッズを登録
     </div>
 
@@ -443,7 +487,7 @@ input[type="file"]{
           type="file"
           id="mayoiImage"
           accept="image/*"
-          onchange="previewImage()"
+          onchange="previewMayoiImage()"
         >
 
         <img
@@ -465,11 +509,15 @@ input[type="file"]{
 
         <div class="char-tools">
 
-          <button class="sub" onclick="selectAll()">
+          <button
+            class="sub"
+            onclick="selectAllMayoi()">
             ☑ 全員選択
           </button>
 
-          <button class="sub" onclick="clearAll()">
+          <button
+            class="sub"
+            onclick="clearAllMayoi()">
             □ 全解除
           </button>
 
@@ -483,7 +531,9 @@ input[type="file"]{
       <div id="quantityArea"></div>
 
 
-      <button class="primary" onclick="saveMayoi()">
+      <button
+        class="primary"
+        onclick="saveMayoi()">
         保存する
       </button>
 
@@ -492,9 +542,13 @@ input[type="file"]{
   </div>
 
 
-  <div id="mayoiScreenshot" style="display:none">
+  <div
+    id="mayoiScreenshot"
+    style="display:none">
 
-    <button class="sub back" onclick="closeMayoiScreenshot()">
+    <button
+      class="sub back"
+      onclick="closeMayoiScreenshot()">
       ← 戻る
     </button>
 
@@ -507,9 +561,9 @@ input[type="file"]{
 </section>
 
 
-<!-- =========================
+<!-- =====================================================
      仮約束
-========================= -->
+===================================================== -->
 
 <section id="promiseScreen" class="screen">
 
@@ -517,13 +571,17 @@ input[type="file"]{
 
     <div class="title">🤝 仮約束</div>
 
-    <button class="primary" onclick="openPromiseForm()">
+    <button
+      class="primary"
+      onclick="openPromiseForm()">
       ＋ 仮約束を登録
     </button>
 
     <div style="height:10px"></div>
 
-    <button class="sub full" onclick="showPromiseScreenshot()">
+    <button
+      class="sub full"
+      onclick="showPromiseScreenshot()">
       📸 スクショ用を見る
     </button>
 
@@ -532,13 +590,19 @@ input[type="file"]{
   </div>
 
 
-  <div id="promiseForm" style="display:none">
+  <div
+    id="promiseForm"
+    style="display:none">
 
-    <button class="sub back" onclick="closePromiseForm()">
+    <button
+      class="sub back"
+      onclick="closePromiseForm()">
       ← 戻る
     </button>
 
-    <div class="title">
+    <div
+      class="title"
+      id="promiseFormTitle">
       仮約束を登録
     </div>
 
@@ -563,7 +627,47 @@ input[type="file"]{
 
       <div class="group">
 
+        <label>グッズ画像</label>
+
+        <input
+          type="file"
+          id="promiseImage"
+          accept="image/*"
+          onchange="previewPromiseImage()"
+        >
+
+        <img
+          id="promiseImagePreview"
+          class="preview"
+          style="display:none"
+        >
+
+      </div>
+
+
+      <div class="group">
+
         <label>キャラ</label>
+
+        <div class="note">
+          画像にいるキャラを選択してね。全員選択もできるよ！
+        </div>
+
+        <div class="char-tools">
+
+          <button
+            class="sub"
+            onclick="selectAllPromise()">
+            ☑ 全員選択
+          </button>
+
+          <button
+            class="sub"
+            onclick="clearAllPromise()">
+            □ 全解除
+          </button>
+
+        </div>
 
         <div id="promiseCharacterList"></div>
 
@@ -573,10 +677,13 @@ input[type="file"]{
       <div class="group">
 
         <div class="promise-head">
+
           <span>キャラ</span>
           <span>所持</span>
           <span>約束</span>
           <span>残り</span>
+          <span>再交換</span>
+
         </div>
 
         <div id="promiseDetail"></div>
@@ -584,7 +691,9 @@ input[type="file"]{
       </div>
 
 
-      <button class="primary" onclick="savePromise()">
+      <button
+        class="primary"
+        onclick="savePromise()">
         保存する
       </button>
 
@@ -593,9 +702,13 @@ input[type="file"]{
   </div>
 
 
-  <div id="promiseScreenshot" style="display:none">
+  <div
+    id="promiseScreenshot"
+    style="display:none">
 
-    <button class="sub back" onclick="closePromiseScreenshot()">
+    <button
+      class="sub back"
+      onclick="closePromiseScreenshot()">
       ← 戻る
     </button>
 
@@ -612,9 +725,9 @@ input[type="file"]{
 
 <script>
 
-/* =========================
-   データ保存
-========================= */
+/* =====================================================
+   データ
+===================================================== */
 
 const MAYOI_KEY="mayoiGoodsData";
 const PROMISE_KEY="mayoiPromiseData";
@@ -629,9 +742,9 @@ let editingMayoiId=null;
 let editingPromiseId=null;
 
 
-/* =========================
+/* =====================================================
    あんスタ キャラクター
-========================= */
+===================================================== */
 
 const units={
 
@@ -748,9 +861,9 @@ const units={
 };
 
 
-/* =========================
-   全キャラを1つにする
-========================= */
+/* =====================================================
+   共通キャラ一覧
+===================================================== */
 
 const allCharacters=[];
 
@@ -761,8 +874,8 @@ Object.entries(units).forEach(([unit,members])=>{
     if(!allCharacters.some(x=>x.full===full)){
 
       allCharacters.push({
-        full:full,
-        short:short
+        full,
+        short
       });
 
     }
@@ -772,9 +885,9 @@ Object.entries(units).forEach(([unit,members])=>{
 });
 
 
-/* =========================
+/* =====================================================
    共通
-========================= */
+===================================================== */
 
 function saveLocal(){
 
@@ -839,69 +952,89 @@ function showScreen(type){
 }
 
 
-/* =========================
-   迷子 キャラ一覧
-========================= */
+/* =====================================================
+   キャラ一覧 共通生成
+===================================================== */
 
-function renderCharacterList(){
+function buildCharacterList(boxId,checkClass,onChange){
 
-  const box=
-    document.getElementById("characterList");
+  const box=document.getElementById(boxId);
 
   box.innerHTML="";
 
 
-  Object.entries(units).forEach(([unit,members])=>{
+  Object.entries(units).forEach(
+    ([unit,members])=>{
 
-    const title=
-      document.createElement("div");
+      const title=
+        document.createElement("div");
 
-    title.className="unit";
-    title.textContent=unit;
+      title.className="unit";
+      title.textContent=unit;
 
-    box.appendChild(title);
-
-
-    const grid=
-      document.createElement("div");
-
-    grid.className="char-grid";
+      box.appendChild(title);
 
 
-    members.forEach(([full,short])=>{
+      const grid=
+        document.createElement("div");
 
-      const label=
-        document.createElement("label");
-
-      label.className="char";
-
-      label.innerHTML=`
-
-        <input
-          type="checkbox"
-          class="charCheck"
-          data-full="${escapeHtml(full)}"
-          data-short="${escapeHtml(short)}"
-          onchange="updateQuantities()"
-        >
-
-        <span>${escapeHtml(short)}</span>
-
-      `;
-
-      grid.appendChild(label);
-
-    });
+      grid.className="char-grid";
 
 
-    box.appendChild(grid);
+      members.forEach(
+        ([full,short])=>{
 
-  });
+          const label=
+            document.createElement("label");
+
+          label.className="char";
+
+
+          label.innerHTML=`
+
+            <input
+              type="checkbox"
+              class="${checkClass}"
+              data-full="${escapeHtml(full)}"
+              data-short="${escapeHtml(short)}"
+              onchange="${onChange}"
+            >
+
+            <span>${escapeHtml(short)}</span>
+
+          `;
+
+
+          grid.appendChild(label);
+
+        }
+      );
+
+
+      box.appendChild(grid);
+
+    }
+  );
 
 }
 
 
-function selectAll(){
+/* =====================================================
+   迷子 キャラ
+===================================================== */
+
+function renderCharacterList(){
+
+  buildCharacterList(
+    "characterList",
+    "charCheck",
+    "updateQuantities()"
+  );
+
+}
+
+
+function selectAllMayoi(){
 
   document
     .querySelectorAll(".charCheck")
@@ -912,7 +1045,7 @@ function selectAll(){
 }
 
 
-function clearAll(){
+function clearAllMayoi(){
 
   document
     .querySelectorAll(".charCheck")
@@ -923,17 +1056,22 @@ function clearAll(){
 }
 
 
-/* =========================
-   数量欄
-========================= */
+/* =====================================================
+   迷子 数量
+===================================================== */
 
 function updateQuantities(){
 
   const selected=
-    [...document.querySelectorAll(".charCheck:checked")];
+    [...document.querySelectorAll(
+      ".charCheck:checked"
+    )];
 
   const box=
-    document.getElementById("quantityArea");
+    document.getElementById(
+      "quantityArea"
+    );
+
 
   if(selected.length===0){
 
@@ -950,8 +1088,12 @@ function updateQuantities(){
       所持数・再交換分
     </div>
 
-    <div class="note">
-      ⑩＝再交換分
+    <div class="qty-head">
+
+      <span>キャラ</span>
+      <span>所持</span>
+      <span>再交換</span>
+
     </div>
 
   `;
@@ -987,7 +1129,6 @@ function updateQuantities(){
         min="0"
         value="${old?.qty ?? 1}"
         data-qty="${escapeHtml(short)}"
-        placeholder="所持"
       >
 
       <input
@@ -995,7 +1136,6 @@ function updateQuantities(){
         min="0"
         value="${old?.retrade ?? 0}"
         data-retrade="${escapeHtml(short)}"
-        placeholder="再交換"
       >
 
     `;
@@ -1008,13 +1148,14 @@ function updateQuantities(){
 }
 
 
-/* =========================
+/* =====================================================
    迷子 登録
-========================= */
+===================================================== */
 
 function openMayoiForm(){
 
   editingMayoiId=null;
+
 
   document
     .getElementById("mayoiHome")
@@ -1073,7 +1214,7 @@ function closeMayoiForm(){
 }
 
 
-function previewImage(){
+function previewMayoiImage(){
 
   const file=
     document
@@ -1104,14 +1245,16 @@ function previewImage(){
 }
 
 
-/* =========================
+/* =====================================================
    迷子 保存
-========================= */
+===================================================== */
 
 function saveMayoi(){
 
   const selected=
-    [...document.querySelectorAll(".charCheck:checked")];
+    [...document.querySelectorAll(
+      ".charCheck:checked"
+    )];
 
 
   if(selected.length===0){
@@ -1129,7 +1272,9 @@ function saveMayoi(){
 
   const old=
     editingMayoiId
-    ? mayoiData.find(x=>x.id===editingMayoiId)
+    ? mayoiData.find(
+        x=>x.id===editingMayoiId
+      )
     : null;
 
 
@@ -1142,36 +1287,31 @@ function saveMayoi(){
   const characters=
     selected.map(check=>{
 
-      const short=
-        check.dataset.short;
-
-      const full=
-        check.dataset.full;
+      const short=check.dataset.short;
+      const full=check.dataset.full;
 
 
       const qty=
         Number(
-          document
-            .querySelector(
-              `[data-qty="${cssEscape(short)}"]`
-            )?.value || 0
+          document.querySelector(
+            `[data-qty="${cssEscape(short)}"]`
+          )?.value || 0
         );
 
 
       const retrade=
         Number(
-          document
-            .querySelector(
-              `[data-retrade="${cssEscape(short)}"]`
-            )?.value || 0
+          document.querySelector(
+            `[data-retrade="${cssEscape(short)}"]`
+          )?.value || 0
         );
 
 
-      return {
-        full:full,
-        short:short,
-        qty:qty,
-        retrade:retrade
+      return{
+        full,
+        short,
+        qty,
+        retrade
       };
 
     });
@@ -1184,11 +1324,13 @@ function saveMayoi(){
       Date.now().toString(),
 
     type:
-      document.getElementById("mayoiType").value,
+      document.getElementById(
+        "mayoiType"
+      ).value,
 
-    image:image,
+    image,
 
-    characters:characters
+    characters
 
   };
 
@@ -1220,24 +1362,27 @@ function saveMayoi(){
 }
 
 
-/* =========================
+/* =====================================================
    迷子 一覧
-========================= */
+===================================================== */
 
 function renderMayoi(){
 
   const box=
-    document.getElementById("mayoiList");
+    document.getElementById(
+      "mayoiList"
+    );
 
   box.innerHTML="";
 
 
   if(mayoiData.length===0){
 
-    box.innerHTML=
-      `<div class="empty">
+    box.innerHTML=`
+      <div class="empty">
         まだ登録されてないよ
-      </div>`;
+      </div>
+    `;
 
     return;
 
@@ -1283,11 +1428,13 @@ function renderMayoi(){
 
         <div class="saved-actions">
 
-          <button onclick="editMayoi('${item.id}')">
+          <button
+            onclick="editMayoi('${item.id}')">
             編集
           </button>
 
-          <button onclick="deleteMayoi('${item.id}')">
+          <button
+            onclick="deleteMayoi('${item.id}')">
             削除
           </button>
 
@@ -1298,7 +1445,10 @@ function renderMayoi(){
 
       ${
         item.image
-        ? `<img src="${item.image}" class="saved-image">`
+        ? `<img
+             src="${item.image}"
+             class="saved-image">
+           `
         : ""
       }
 
@@ -1317,9 +1467,9 @@ function renderMayoi(){
 }
 
 
-/* =========================
+/* =====================================================
    迷子 編集
-========================= */
+===================================================== */
 
 function editMayoi(id){
 
@@ -1351,14 +1501,25 @@ function editMayoi(id){
     .value=item.type;
 
 
+  document
+    .getElementById("mayoiImage")
+    .value="";
+
+
+  const img=
+    document.getElementById(
+      "imagePreview"
+    );
+
+
   if(item.image){
 
-    const img=
-      document.getElementById("imagePreview");
-
     img.src=item.image;
-
     img.style.display="block";
+
+  }else{
+
+    img.style.display="none";
 
   }
 
@@ -1375,7 +1536,9 @@ function editMayoi(id){
           c=>c.short===check.dataset.short
         )
       ){
+
         check.checked=true;
+
       }
 
     });
@@ -1386,14 +1549,16 @@ function editMayoi(id){
 }
 
 
-/* =========================
+/* =====================================================
    迷子 削除
-========================= */
+===================================================== */
 
 function deleteMayoi(id){
 
   if(
-    !confirm("この迷子グッズを削除する？")
+    !confirm(
+      "この迷子グッズを削除する？"
+    )
   )return;
 
 
@@ -1410,9 +1575,9 @@ function deleteMayoi(id){
 }
 
 
-/* =========================
+/* =====================================================
    迷子 スクショ
-========================= */
+===================================================== */
 
 function showMayoiScreenshot(){
 
@@ -1437,10 +1602,11 @@ function showMayoiScreenshot(){
 
   if(mayoiData.length===0){
 
-    box.innerHTML=
-      `<div class="empty">
+    box.innerHTML=`
+      <div class="empty">
         まだ登録がないよ
-      </div>`;
+      </div>
+    `;
 
     return;
 
@@ -1544,13 +1710,51 @@ function closeMayoiScreenshot(){
 }
 
 
-/* =========================
-   仮約束
-========================= */
+/* =====================================================
+   仮約束 キャラ一覧
+===================================================== */
+
+function renderPromiseCharacters(){
+
+  buildCharacterList(
+    "promiseCharacterList",
+    "promiseCheck",
+    "updatePromiseDetail()"
+  );
+
+}
+
+
+function selectAllPromise(){
+
+  document
+    .querySelectorAll(".promiseCheck")
+    .forEach(x=>x.checked=true);
+
+  updatePromiseDetail();
+
+}
+
+
+function clearAllPromise(){
+
+  document
+    .querySelectorAll(".promiseCheck")
+    .forEach(x=>x.checked=false);
+
+  updatePromiseDetail();
+
+}
+
+
+/* =====================================================
+   仮約束 登録画面
+===================================================== */
 
 function openPromiseForm(){
 
   editingPromiseId=null;
+
 
   document
     .getElementById("promiseHome")
@@ -1560,7 +1764,36 @@ function openPromiseForm(){
     .getElementById("promiseForm")
     .style.display="block";
 
+  document
+    .getElementById("promiseScreenshot")
+    .style.display="none";
+
+
+  document
+    .getElementById("promiseFormTitle")
+    .textContent="仮約束を登録";
+
+
+  document
+    .getElementById("promiseType")
+    .value="ぱしゃっつ";
+
+
+  document
+    .getElementById("promiseImage")
+    .value="";
+
+
+  document
+    .getElementById("promiseImagePreview")
+    .style.display="none";
+
+
   renderPromiseCharacters();
+
+  document
+    .getElementById("promiseDetail")
+    .innerHTML="";
 
 }
 
@@ -1580,90 +1813,53 @@ function closePromiseForm(){
 }
 
 
-/* =========================
-   仮約束 キャラ選択
-========================= */
+/* =====================================================
+   仮約束 画像
+===================================================== */
 
-function renderPromiseCharacters(){
+function previewPromiseImage(){
 
-  const box=
-    document.getElementById(
-      "promiseCharacterList"
-    );
+  const file=
+    document
+      .getElementById("promiseImage")
+      .files[0];
 
-  box.innerHTML="";
-
-
-  Object.entries(units).forEach(
-    ([unit,members])=>{
-
-      const title=
-        document.createElement("div");
-
-      title.className="unit";
-      title.textContent=unit;
-
-      box.appendChild(title);
+  if(!file)return;
 
 
-      const grid=
-        document.createElement("div");
-
-      grid.className="char-grid";
+  const reader=
+    new FileReader();
 
 
-      members.forEach(
-        ([full,short])=>{
+  reader.onload=function(e){
 
-          const label=
-            document.createElement("label");
-
-          label.className="char";
-
-
-          label.innerHTML=`
-
-            <input
-              type="checkbox"
-              class="promiseCheck"
-              data-full="${escapeHtml(full)}"
-              data-short="${escapeHtml(short)}"
-              onchange="updatePromiseDetail()"
-            >
-
-            <span>
-              ${escapeHtml(short)}
-            </span>
-
-          `;
-
-
-          grid.appendChild(label);
-
-        }
+    const img=
+      document.getElementById(
+        "promiseImagePreview"
       );
 
+    img.src=e.target.result;
 
-      box.appendChild(grid);
+    img.style.display="block";
 
-    }
-  );
+  };
+
+
+  reader.readAsDataURL(file);
 
 }
 
 
-/* =========================
+/* =====================================================
    仮約束 数量
-========================= */
+===================================================== */
 
 function updatePromiseDetail(){
 
   const selected=
-    [
-      ...document.querySelectorAll(
-        ".promiseCheck:checked"
-      )
-    ];
+    [...document.querySelectorAll(
+      ".promiseCheck:checked"
+    )];
 
 
   const box=
@@ -1676,8 +1872,7 @@ function updatePromiseDetail(){
 
   selected.forEach(check=>{
 
-    const short=
-      check.dataset.short;
+    const short=check.dataset.short;
 
 
     const old=
@@ -1704,8 +1899,9 @@ function updatePromiseDetail(){
       <input
         type="number"
         min="0"
-        value="${old?.qty ?? 0}"
+        value="${old?.qty ?? 1}"
         data-pqty="${escapeHtml(short)}"
+        oninput="updatePromiseRemaining('${escapeJs(short)}')"
       >
 
       <input
@@ -1713,18 +1909,25 @@ function updatePromiseDetail(){
         min="0"
         value="${old?.promised ?? 0}"
         data-ppromise="${escapeHtml(short)}"
-        oninput="updateRemaining('${escapeJs(short)}')"
+        oninput="updatePromiseRemaining('${escapeJs(short)}')"
       >
 
       <input
         type="number"
         value="${Math.max(
           0,
-          (old?.qty ?? 0) -
+          (old?.qty ?? 1) -
           (old?.promised ?? 0)
         )}"
         data-premain="${escapeHtml(short)}"
         readonly
+      >
+
+      <input
+        type="number"
+        min="0"
+        value="${old?.retrade ?? 0}"
+        data-pretrade="${escapeHtml(short)}"
       >
 
     `;
@@ -1737,31 +1940,28 @@ function updatePromiseDetail(){
 }
 
 
-function updateRemaining(short){
+function updatePromiseRemaining(short){
 
   const qty=
     Number(
-      document
-        .querySelector(
-          `[data-pqty="${cssEscape(short)}"]`
-        )?.value || 0
+      document.querySelector(
+        `[data-pqty="${cssEscape(short)}"]`
+      )?.value || 0
     );
 
 
   const promised=
     Number(
-      document
-        .querySelector(
-          `[data-ppromise="${cssEscape(short)}"]`
-        )?.value || 0
+      document.querySelector(
+        `[data-ppromise="${cssEscape(short)}"]`
+      )?.value || 0
     );
 
 
   const remain=
-    document
-      .querySelector(
-        `[data-premain="${cssEscape(short)}"]`
-      );
+    document.querySelector(
+      `[data-premain="${cssEscape(short)}"]`
+    );
 
 
   if(remain){
@@ -1777,67 +1977,89 @@ function updateRemaining(short){
 }
 
 
-/* =========================
+/* =====================================================
    仮約束 保存
-========================= */
+===================================================== */
 
 function savePromise(){
 
   const selected=
-    [
-      ...document.querySelectorAll(
-        ".promiseCheck:checked"
-      )
-    ];
+    [...document.querySelectorAll(
+      ".promiseCheck:checked"
+    )];
 
 
   if(selected.length===0){
 
-    alert("キャラを選んでね！");
+    alert("持っているキャラを選んでね！");
 
     return;
 
   }
 
 
+  const old=
+    editingPromiseId
+    ? promiseData.find(
+        x=>x.id===editingPromiseId
+      )
+    : null;
+
+
+  const preview=
+    document.getElementById(
+      "promiseImagePreview"
+    );
+
+
+  const image=
+    preview.style.display!=="none"
+    ? preview.src
+    : old?.image || "";
+
+
   const characters=
     selected.map(check=>{
 
-      const short=
-        check.dataset.short;
-
-      const full=
-        check.dataset.full;
+      const short=check.dataset.short;
+      const full=check.dataset.full;
 
 
       const qty=
         Number(
-          document
-            .querySelector(
-              `[data-pqty="${cssEscape(short)}"]`
-            )?.value || 0
+          document.querySelector(
+            `[data-pqty="${cssEscape(short)}"]`
+          )?.value || 0
         );
 
 
       const promised=
         Number(
-          document
-            .querySelector(
-              `[data-ppromise="${cssEscape(short)}"]`
-            )?.value || 0
+          document.querySelector(
+            `[data-ppromise="${cssEscape(short)}"]`
+          )?.value || 0
+        );
+
+
+      const retrade=
+        Number(
+          document.querySelector(
+            `[data-pretrade="${cssEscape(short)}"]`
+          )?.value || 0
         );
 
 
       return{
 
-        full:full,
-        short:short,
-        qty:qty,
-        promised:promised,
+        full,
+        short,
+        qty,
+        promised,
         remaining:Math.max(
           0,
           qty-promised
-        )
+        ),
+        retrade
 
       };
 
@@ -1855,7 +2077,9 @@ function savePromise(){
         "promiseType"
       ).value,
 
-    characters:characters
+    image,
+
+    characters
 
   };
 
@@ -1868,7 +2092,9 @@ function savePromise(){
       );
 
     if(index!==-1){
+
       promiseData[index]=item;
+
     }
 
   }else{
@@ -1887,9 +2113,9 @@ function savePromise(){
 }
 
 
-/* =========================
+/* =====================================================
    仮約束 一覧
-========================= */
+===================================================== */
 
 function renderPromise(){
 
@@ -1903,10 +2129,11 @@ function renderPromise(){
 
   if(promiseData.length===0){
 
-    box.innerHTML=
-      `<div class="empty">
+    box.innerHTML=`
+      <div class="empty">
         まだ登録されてないよ
-      </div>`;
+      </div>
+    `;
 
     return;
 
@@ -1926,27 +2153,54 @@ function renderPromise(){
 
     item.characters.forEach(c=>{
 
+      const remaining=
+        Math.max(
+          0,
+          Number(c.qty||0) -
+          Number(c.promised||0)
+        );
+
+
       rows+=`
 
         <div style="
-          display:flex;
-          justify-content:space-between;
-          padding:6px 0;
+          padding:7px 0;
           border-bottom:1px dotted #ddd;
           font-size:13px;
         ">
 
-          <span>
-            ${escapeHtml(c.short)}
-          </span>
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+          ">
 
-          <span>
-            ${c.qty}
-            →
-            ${c.promised}
-            →
-            <b>${c.remaining}</b>
-          </span>
+            <span>
+              <b>${escapeHtml(c.short)}</b>
+            </span>
+
+            <span>
+              所持 ${c.qty}
+              ／約束 ${c.promised}
+              ／残り <b>${remaining}</b>
+            </span>
+
+          </div>
+
+
+          ${
+            c.retrade
+            ? `
+              <div style="
+                color:#888;
+                font-size:11px;
+                margin-top:3px;
+              ">
+                ⑩ 再交換分 ${c.retrade}
+              </div>
+            `
+            : ""
+          }
 
         </div>
 
@@ -1965,17 +2219,31 @@ function renderPromise(){
 
         <div class="saved-actions">
 
-          <button onclick="editPromise('${item.id}')">
+          <button
+            onclick="editPromise('${item.id}')">
             編集
           </button>
 
-          <button onclick="deletePromise('${item.id}')">
+          <button
+            onclick="deletePromise('${item.id}')">
             削除
           </button>
 
         </div>
 
       </div>
+
+
+      ${
+        item.image
+        ? `
+          <img
+            src="${item.image}"
+            class="saved-image">
+        `
+        : ""
+      }
+
 
       <div style="margin-top:8px">
         ${rows}
@@ -1991,9 +2259,9 @@ function renderPromise(){
 }
 
 
-/* =========================
+/* =====================================================
    仮約束 編集
-========================= */
+===================================================== */
 
 function editPromise(id){
 
@@ -2018,8 +2286,36 @@ function editPromise(id){
 
 
   document
+    .getElementById("promiseFormTitle")
+    .textContent="仮約束を編集";
+
+
+  document
     .getElementById("promiseType")
     .value=item.type;
+
+
+  document
+    .getElementById("promiseImage")
+    .value="";
+
+
+  const img=
+    document.getElementById(
+      "promiseImagePreview"
+    );
+
+
+  if(item.image){
+
+    img.src=item.image;
+    img.style.display="block";
+
+  }else{
+
+    img.style.display="none";
+
+  }
 
 
   renderPromiseCharacters();
@@ -2047,14 +2343,16 @@ function editPromise(id){
 }
 
 
-/* =========================
+/* =====================================================
    仮約束 削除
-========================= */
+===================================================== */
 
 function deletePromise(id){
 
   if(
-    !confirm("この仮約束を削除する？")
+    !confirm(
+      "この仮約束を削除する？"
+    )
   )return;
 
 
@@ -2071,9 +2369,9 @@ function deletePromise(id){
 }
 
 
-/* =========================
+/* =====================================================
    仮約束 スクショ
-========================= */
+===================================================== */
 
 function showPromiseScreenshot(){
 
@@ -2098,10 +2396,11 @@ function showPromiseScreenshot(){
 
   if(promiseData.length===0){
 
-    box.innerHTML=
-      `<div class="empty">
+    box.innerHTML=`
+      <div class="empty">
         まだ登録がないよ
-      </div>`;
+      </div>
+    `;
 
     return;
 
@@ -2114,6 +2413,10 @@ function showPromiseScreenshot(){
 
       <div class="ss-title">
         仮約束
+      </div>
+
+      <div class="legend">
+        ⑩＝再交換分
       </div>
 
   `;
@@ -2136,6 +2439,14 @@ function showPromiseScreenshot(){
 
     item.characters.forEach(c=>{
 
+      const remaining=
+        Math.max(
+          0,
+          Number(c.qty||0) -
+          Number(c.promised||0)
+        );
+
+
       html+=`
 
         <div class="ss-row">
@@ -2145,7 +2456,19 @@ function showPromiseScreenshot(){
           </span>
 
           <span>
-            残り ${c.remaining}
+
+            残り ${remaining}
+
+            ${
+              c.retrade
+              ? `
+                <span class="retrade">
+                  ⑩${c.retrade}
+                </span>
+              `
+              : ""
+            }
+
           </span>
 
         </div>
@@ -2191,9 +2514,9 @@ function closePromiseScreenshot(){
 }
 
 
-/* =========================
+/* =====================================================
    安全処理
-========================= */
+===================================================== */
 
 function escapeHtml(str){
 
@@ -2233,9 +2556,9 @@ function cssEscape(str){
 }
 
 
-/* =========================
+/* =====================================================
    初期表示
-========================= */
+===================================================== */
 
 renderMayoi();
 renderPromise();
