@@ -2,9 +2,8 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>迷子グッズメーカー</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>迷子グッズ</title>
 
 <style>
 *{
@@ -13,389 +12,345 @@
 
 body{
   margin:0;
-  background:#f6f6f6;
-  color:#333;
+  background:#f7f7f7;
+  color:#444;
   font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",
     "Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
 }
 
-header{
-  background:#fff;
-  padding:18px 16px;
-  border-bottom:1px solid #ddd;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-
-header h1{
-  margin:0 0 6px;
-  font-size:20px;
-}
-
-header p{
-  margin:0;
-  color:#777;
-  font-size:13px;
-}
-
-main{
-  max-width:1200px;
-  margin:auto;
-  padding:16px;
-}
-
 button,
 input,
-select{
+select,
+textarea{
   font:inherit;
 }
 
 button{
-  border:1px solid #ccc;
-  background:#fff;
-  border-radius:8px;
-  padding:8px 12px;
   cursor:pointer;
 }
 
-button:hover{
-  background:#f0f0f0;
+header{
+  background:#fff;
+  padding:20px 16px 14px;
+  text-align:center;
+  border-bottom:1px solid #ddd;
+}
+
+header h1{
+  margin:0;
+  font-size:22px;
+  letter-spacing:.08em;
+}
+
+.top-nav{
+  display:flex;
+  gap:10px;
+  padding:14px;
+  background:#fff;
+}
+
+.top-nav button{
+  flex:1;
+  border:0;
+  border-radius:12px;
+  padding:13px 5px;
+  background:#e8e8e8;
+  color:#555;
+  font-weight:bold;
+}
+
+.top-nav button.active{
+  background:#777;
+  color:#fff;
+}
+
+main{
+  max-width:700px;
+  margin:0 auto;
+  padding:15px;
+}
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+}
+
+.section-title{
+  font-size:18px;
+  font-weight:bold;
+  margin:8px 0 14px;
+}
+
+.card{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:15px;
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea{
+  width:100%;
+  border:1px solid #ccc;
+  border-radius:9px;
+  padding:10px;
+  background:#fff;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.form-group{
+  margin-bottom:15px;
 }
 
 .primary{
-  background:#333;
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:13px;
+  background:#666;
   color:#fff;
-  border-color:#333;
+  font-weight:bold;
 }
 
-.primary:hover{
-  background:#222;
+.sub-btn{
+  border:0;
+  border-radius:9px;
+  padding:9px 12px;
+  background:#eee;
+  color:#555;
 }
 
 .danger{
-  color:#d33;
+  background:#eee;
+  color:#c55;
 }
 
-.panel{
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:12px;
-  padding:14px;
-  margin-bottom:16px;
+.image-preview{
+  max-width:100%;
+  max-height:260px;
+  display:block;
+  margin:10px auto 0;
+  border-radius:8px;
+  object-fit:contain;
 }
 
-.panel h2{
-  margin:0 0 12px;
-  font-size:16px;
-}
-
-.row{
+.char-actions{
   display:flex;
   gap:8px;
-  flex-wrap:wrap;
-  align-items:center;
+  margin-bottom:10px;
 }
 
-.file-label{
-  display:inline-block;
-  padding:9px 13px;
-  background:#333;
-  color:#fff;
-  border-radius:8px;
-  cursor:pointer;
+.char-actions button{
+  flex:1;
 }
 
-.file-label input{
-  display:none;
+.char-list{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
 }
 
-.status{
-  font-size:13px;
-  color:#666;
-  margin-top:10px;
-}
-
-#sourceArea{
-  display:none;
-}
-
-.source-wrap{
-  position:relative;
-  max-width:100%;
-  overflow:auto;
-  background:#eee;
-  border-radius:8px;
-  padding:10px;
-}
-
-#sourceCanvas{
-  display:block;
-  max-width:100%;
-  height:auto;
-  background:#fff;
-}
-
-#detectOverlay{
-  position:absolute;
-  left:10px;
-  top:10px;
-  pointer-events:none;
-}
-
-.detect-box{
-  position:absolute;
-  border:2px solid #35a853;
-  background:rgba(52,168,83,.08);
-  border-radius:4px;
-}
-
-.detect-number{
-  position:absolute;
-  left:-2px;
-  top:-22px;
-  background:#35a853;
-  color:#fff;
-  font-size:11px;
-  padding:2px 6px;
-  border-radius:4px 4px 4px 0;
-}
-
-#previewPanel{
-  display:none;
-}
-
-.preview-scroll{
-  width:100%;
-  overflow:auto;
-  background:#eee;
-  padding:10px;
-  border-radius:10px;
-}
-
-#goodsCanvas{
-  position:relative;
-  background:#fff;
-  margin:0 auto;
-  overflow:hidden;
-}
-
-.goods{
-  position:absolute;
-  overflow:visible;
-}
-
-.goods-image-wrap{
-  position:relative;
-  width:100%;
-}
-
-.goods-image{
-  display:block;
-  width:100%;
-  height:auto;
-  user-select:none;
-  -webkit-user-drag:none;
-  cursor:pointer;
-  transition:opacity .2s;
-}
-
-.goods.done .goods-image{
-  opacity:.28;
-}
-
-.star{
-  position:absolute;
-  right:3px;
-  top:3px;
-  width:30px;
-  height:30px;
-  padding:0;
-  border:0;
-  background:rgba(255,255,255,.9);
-  border-radius:50%;
-  font-size:21px;
-  line-height:30px;
-  z-index:5;
-}
-
-.delete-item{
-  position:absolute;
-  left:3px;
-  top:3px;
-  width:26px;
-  height:26px;
-  padding:0;
-  border:0;
-  background:rgba(255,255,255,.95);
-  color:#d33;
-  border-radius:50%;
-  z-index:5;
-  font-size:16px;
-}
-
-.goods-info{
-  width:100%;
-  background:#fff;
-  border:1px solid #eee;
-  border-radius:0 0 5px 5px;
-  padding:5px;
-  overflow:hidden;
-}
-
-.quantity-row{
+.char-item{
+  border:1px solid #ddd;
+  border-radius:9px;
+  padding:9px;
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:3px;
+  gap:7px;
+  background:#fafafa;
 }
 
-.quantity-mark{
-  font-size:13px;
+.char-item input{
+  width:auto;
 }
 
-.quantity-input{
-  width:42px;
-  border:0;
-  border-bottom:1px solid #aaa;
+.char-item.selected{
+  background:#eee;
+  border-color:#999;
+}
+
+.char-detail{
+  margin-top:12px;
+  border-top:1px solid #eee;
+  padding-top:12px;
+}
+
+.char-row{
+  display:grid;
+  grid-template-columns:1fr 75px 75px;
+  gap:6px;
+  align-items:center;
+  margin-bottom:7px;
+}
+
+.char-row-name{
+  font-weight:bold;
+  font-size:14px;
+}
+
+.char-row input{
+  padding:8px 5px;
   text-align:center;
-  padding:2px;
-  background:transparent;
-}
-
-.goods-name,
-.goods-memo{
-  width:100%;
-  border:0;
-  border-bottom:1px solid #ddd;
-  padding:3px 2px;
-  font-size:11px;
-  outline:none;
-  background:transparent;
-}
-
-.goods-memo{
-  color:#777;
-}
-
-.edit-tools{
-  display:flex;
-  justify-content:center;
-  gap:5px;
-  margin-top:3px;
-}
-
-.star-color{
-  font-size:10px;
-  padding:2px;
-  max-width:100%;
 }
 
 .legend{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:10px;
-}
-
-.legend-item{
-  display:flex;
-  align-items:center;
-  gap:5px;
-  font-size:12px;
-}
-
-.legend-star{
-  font-size:18px;
-}
-
-.legend-editor{
-  display:grid;
-  gap:7px;
-}
-
-.legend-line{
-  display:flex;
-  gap:7px;
-  align-items:center;
-}
-
-.legend-line input[type="text"]{
-  flex:1;
-  min-width:0;
-  border:1px solid #ddd;
-  border-radius:6px;
-  padding:6px;
-}
-
-.color-input{
-  width:42px;
-  height:32px;
-  padding:1px;
-}
-
-.small{
   font-size:12px;
   color:#777;
+  margin-bottom:10px;
 }
 
-#emptyMessage{
-  text-align:center;
-  padding:40px 10px;
-  color:#999;
-}
-
-.screenshot-mode header,
-.screenshot-mode .editor-only,
-.screenshot-mode #sourceArea,
-.screenshot-mode #settingsPanel,
-.screenshot-mode #previewControls{
-  display:none !important;
-}
-
-.screenshot-mode main{
-  padding:10px;
-  max-width:none;
-}
-
-.screenshot-mode .panel{
-  border:0;
-  padding:0;
-  margin:0;
-}
-
-.screenshot-mode .preview-scroll{
-  padding:0;
+.saved-item{
   background:#fff;
-  overflow:visible;
+  border:1px solid #ddd;
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:12px;
 }
 
-.screenshot-mode .delete-item,
-.screenshot-mode .edit-tools{
-  display:none !important;
+.saved-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
 }
 
-.screenshot-mode .goods-info{
+.saved-type{
+  font-weight:bold;
+}
+
+.saved-buttons{
+  display:flex;
+  gap:5px;
+}
+
+.saved-buttons button{
   border:0;
+  border-radius:8px;
+  padding:6px 9px;
+  font-size:12px;
+  background:#eee;
 }
 
-.screenshot-mode input{
-  pointer-events:none;
-  border:0;
+.saved-preview{
+  max-width:100%;
+  max-height:150px;
+  display:block;
+  margin:10px auto;
+  border-radius:7px;
 }
 
-@media(max-width:600px){
-  header h1{
-    font-size:18px;
-  }
+.saved-chars{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
 
-  main{
-    padding:10px;
-  }
+.saved-chip{
+  background:#f0f0f0;
+  border-radius:20px;
+  padding:4px 8px;
+  font-size:12px;
+}
 
-  .panel{
-    padding:10px;
-  }
+.screenshot-box{
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:12px;
+  padding:15px;
+}
+
+.ss-title{
+  text-align:center;
+  font-size:17px;
+  font-weight:bold;
+  margin-bottom:5px;
+}
+
+.ss-legend{
+  text-align:center;
+  font-size:11px;
+  color:#777;
+  margin-bottom:12px;
+}
+
+.ss-section{
+  margin-bottom:15px;
+}
+
+.ss-type{
+  font-weight:bold;
+  font-size:14px;
+  border-bottom:1px solid #ddd;
+  padding-bottom:4px;
+  margin-bottom:6px;
+}
+
+.ss-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:4px 15px;
+}
+
+.ss-char{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:1px dotted #ddd;
+  padding:4px 0;
+  font-size:13px;
+}
+
+.retrade{
+  margin-left:3px;
+  font-size:11px;
+}
+
+.promise-row{
+  display:grid;
+  grid-template-columns:1fr 75px 75px 75px;
+  gap:5px;
+  align-items:center;
+  margin-bottom:7px;
+}
+
+.promise-row input{
+  padding:8px 4px;
+  text-align:center;
+}
+
+.promise-head{
+  display:grid;
+  grid-template-columns:1fr 75px 75px 75px;
+  gap:5px;
+  font-size:11px;
+  color:#888;
+  margin-bottom:5px;
+}
+
+.empty{
+  text-align:center;
+  color:#999;
+  padding:30px 10px;
+}
+
+.back-btn{
+  margin-bottom:12px;
 }
 </style>
 </head>
@@ -403,1978 +358,1252 @@ button:hover{
 <body>
 
 <header>
-  <h1>迷子グッズメーカー</h1>
-  <p>画像からグッズを自動で切り分けます</p>
+  <h1>迷子グッズ</h1>
 </header>
+
+<div class="top-nav">
+  <button id="navMayoi" class="active" onclick="showScreen('mayoi')">🧸 迷子</button>
+  <button id="navPromise" onclick="showScreen('promise')">🤝 仮約束</button>
+</div>
 
 <main>
 
-  <!-- アップロード -->
-  <section class="panel editor-only">
-    <h2>① 画像を選ぶ</h2>
+<!-- =========================
+     迷子
+========================= -->
 
-    <div class="row">
-      <label class="file-label">
-        画像をアップロード
-        <input type="file" id="imageInput" accept="image/*">
-      </label>
+<section id="mayoiScreen" class="screen active">
 
-      <button id="detectBtn" class="primary" disabled>
-        グッズを自動検出
-      </button>
+  <div id="mayoiHome">
+
+    <div class="section-title">🧸 迷子</div>
+
+    <button class="primary" onclick="openMayoiForm()">
+      ＋ 迷子グッズを登録
+    </button>
+
+    <div style="height:12px"></div>
+
+    <button class="sub-btn" style="width:100%" onclick="showMayoiScreenshot()">
+      📸 スクショ用を見る
+    </button>
+
+    <div style="height:15px"></div>
+
+    <div id="mayoiList"></div>
+
+  </div>
+
+
+  <div id="mayoiForm" style="display:none">
+
+    <button class="sub-btn back-btn" onclick="closeMayoiForm()">
+      ← 戻る
+    </button>
+
+    <div class="section-title" id="mayoiFormTitle">
+      迷子グッズを登録
     </div>
 
-    <div id="status" class="status">
-      画像を選択してください
-    </div>
-  </section>
+    <div class="card">
 
+      <div class="form-group">
+        <label>グッズ種類</label>
 
-  <!-- 自動検出結果 -->
-  <section id="sourceArea" class="panel editor-only">
-
-    <h2>② 自動検出結果</h2>
-
-    <div class="row">
-      <button id="redetectBtn" class="primary">
-        もう一度自動検出
-      </button>
-
-      <button id="addAllBtn">
-        検出したものを全部採用
-      </button>
-
-      <button id="clearSelectedBtn" class="danger">
-        採用を全部解除
-      </button>
-    </div>
-
-    <p class="small">
-      緑の枠が自動検出されたグッズです。不要なものは下の一覧から削除できます。
-    </p>
-
-    <div class="source-wrap">
-      <canvas id="sourceCanvas"></canvas>
-      <div id="detectOverlay"></div>
-    </div>
-
-  </section>
-
-
-  <!-- プレビュー -->
-  <section id="previewPanel" class="panel">
-
-    <div id="previewControls" class="editor-only">
-
-      <h2>③ 完成イメージ</h2>
-
-      <div class="row">
-        <button id="screenshotBtn" class="primary">
-          スクショ用表示
-        </button>
-
-        <button id="resetBtn" class="danger">
-          全部リセット
-        </button>
+        <select id="mayoiType">
+          <option>ぱしゃっつ</option>
+          <option>缶バッジ</option>
+          <option>アクスタ</option>
+          <option>チェキ</option>
+          <option>カード</option>
+          <option>ぬいぐるみ</option>
+          <option>その他</option>
+        </select>
       </div>
 
-      <p class="small">
-        グッズ画像をタップすると決定済み表示になります。
-        ⭐をタップすると色が変わります。
-      </p>
 
-    </div>
+      <div class="form-group">
 
-    <div class="preview-scroll">
-      <div id="goodsCanvas">
-        <div id="emptyMessage">
-          グッズを検出するとここに表示されます
+        <label>グッズ画像</label>
+
+        <input
+          type="file"
+          id="mayoiImage"
+          accept="image/*"
+          onchange="previewMayoiImage()"
+        >
+
+        <img
+          id="mayoiImagePreview"
+          class="image-preview"
+          style="display:none"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>キャラ名</label>
+
+        <div class="legend">
+          1行に1人ずつ入力してね
         </div>
-      </div>
-    </div>
 
-    <div id="legend" class="legend"></div>
+        <textarea
+          id="charNames"
+          placeholder="レオ&#10;泉&#10;凛月&#10;司&#10;嵐"
+        ></textarea>
 
-  </section>
-
-
-  <!-- 設定 -->
-  <section id="settingsPanel" class="panel editor-only">
-
-    <h2>表示設定</h2>
-
-    <div class="row">
-      <label>
-        グッズ下の空白
-        <input
-          id="blankHeight"
-          type="number"
-          min="30"
-          max="150"
-          value="65"
-          style="width:70px"
-        >
-        px
-      </label>
-    </div>
-
-    <hr>
-
-    <h2>⭐ 星の説明</h2>
-
-    <div class="legend-editor">
-
-      <div class="legend-line">
-        <input
-          class="color-input"
-          type="color"
-          id="legendColor0"
-          value="#FFD43B"
-        >
-
-        <span>⭐</span>
-
-        <input
-          type="text"
-          id="legendText0"
-          value="交換優先"
-        >
       </div>
 
 
-      <div class="legend-line">
-        <input
-          class="color-input"
-          type="color"
-          id="legendColor1"
-          value="#FF8FB3"
-        >
+      <div class="form-group">
 
-        <span>⭐</span>
+        <label>持っているキャラ</label>
 
-        <input
-          type="text"
-          id="legendText1"
-          value="抱き合わせ希望"
-        >
+        <div class="char-actions">
+          <button class="sub-btn" onclick="selectAllChars()">
+            ☑ 全員選択
+          </button>
+
+          <button class="sub-btn" onclick="clearAllChars()">
+            □ 全解除
+          </button>
+        </div>
+
+        <div id="charList" class="char-list"></div>
+
       </div>
 
 
-      <div class="legend-line">
-        <input
-          class="color-input"
-          type="color"
-          id="legendColor2"
-          value="#9AA0A6"
-        >
+      <div id="charDetail" class="char-detail"></div>
 
-        <span>⭐</span>
 
-        <input
-          type="text"
-          id="legendText2"
-          value="通常"
-        >
-      </div>
+      <button class="primary" onclick="saveMayoi()">
+        保存する
+      </button>
 
     </div>
 
-  </section>
+  </div>
+
+
+  <div id="mayoiScreenshot" style="display:none">
+
+    <button class="sub-btn back-btn" onclick="closeMayoiScreenshot()">
+      ← 戻る
+    </button>
+
+    <div class="section-title">
+      📸 スクショ用
+    </div>
+
+    <div id="mayoiScreenshotContent"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     仮約束
+========================= -->
+
+<section id="promiseScreen" class="screen">
+
+  <div id="promiseHome">
+
+    <div class="section-title">🤝 仮約束</div>
+
+    <button class="primary" onclick="openPromiseForm()">
+      ＋ 仮約束を登録
+    </button>
+
+    <div style="height:12px"></div>
+
+    <button class="sub-btn" style="width:100%" onclick="showPromiseScreenshot()">
+      📸 スクショ用を見る
+    </button>
+
+    <div style="height:15px"></div>
+
+    <div id="promiseList"></div>
+
+  </div>
+
+
+  <div id="promiseForm" style="display:none">
+
+    <button class="sub-btn back-btn" onclick="closePromiseForm()">
+      ← 戻る
+    </button>
+
+    <div class="section-title" id="promiseFormTitle">
+      仮約束を登録
+    </div>
+
+    <div class="card">
+
+      <div class="form-group">
+
+        <label>グッズ種類</label>
+
+        <select id="promiseType">
+          <option>ぱしゃっつ</option>
+          <option>缶バッジ</option>
+          <option>アクスタ</option>
+          <option>チェキ</option>
+          <option>カード</option>
+          <option>ぬいぐるみ</option>
+          <option>その他</option>
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>キャラ名</label>
+
+        <textarea
+          id="promiseChars"
+          placeholder="レオ&#10;泉&#10;凛月"
+        ></textarea>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>数量</label>
+
+        <div class="legend">
+          所持数 → 仮約束数 → 残り
+        </div>
+
+        <div class="promise-head">
+          <span>キャラ</span>
+          <span>所持</span>
+          <span>約束</span>
+          <span>残り</span>
+        </div>
+
+        <div id="promiseDetail"></div>
+
+      </div>
+
+
+      <button class="primary" onclick="savePromise()">
+        保存する
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div id="promiseScreenshot" style="display:none">
+
+    <button class="sub-btn back-btn" onclick="closePromiseScreenshot()">
+      ← 戻る
+    </button>
+
+    <div class="section-title">
+      📸 スクショ用
+    </div>
+
+    <div id="promiseScreenshotContent"></div>
+
+  </div>
+
+</section>
 
 </main>
 
 
 <script>
 
-const imageInput = document.getElementById("imageInput");
-const detectBtn = document.getElementById("detectBtn");
-const redetectBtn = document.getElementById("redetectBtn");
-const addAllBtn = document.getElementById("addAllBtn");
-const clearSelectedBtn = document.getElementById("clearSelectedBtn");
+const MAYOI_KEY = "mayoiGoodsData";
+const PROMISE_KEY = "mayoiPromiseData";
 
-const sourceArea = document.getElementById("sourceArea");
-const sourceCanvas = document.getElementById("sourceCanvas");
-const sourceCtx = sourceCanvas.getContext("2d");
+let mayoiData =
+  JSON.parse(localStorage.getItem(MAYOI_KEY) || "[]");
 
-const detectOverlay = document.getElementById("detectOverlay");
+let promiseData =
+  JSON.parse(localStorage.getItem(PROMISE_KEY) || "[]");
 
-const previewPanel = document.getElementById("previewPanel");
-const goodsCanvas = document.getElementById("goodsCanvas");
-const emptyMessage = document.getElementById("emptyMessage");
-
-const statusEl = document.getElementById("status");
-
-const blankHeightInput = document.getElementById("blankHeight");
-
-const screenshotBtn = document.getElementById("screenshotBtn");
-const resetBtn = document.getElementById("resetBtn");
-
-let originalImage = null;
-
-let sourceWidth = 0;
-let sourceHeight = 0;
-
-let detectedItems = [];
-let items = [];
-
-let itemId = 1;
-
-let screenshotMode = false;
-
-const starColors = [
-  "#FFD43B",
-  "#FF8FB3",
-  "#9AA0A6",
-  "#7CC7FF",
-  "#B98CFF"
-];
+let editingMayoiId = null;
+let editingPromiseId = null;
 
 
 /* =========================
-   画像読み込み
+   共通
 ========================= */
 
-imageInput.addEventListener("change", function(){
+function saveLocal(){
+  localStorage.setItem(MAYOI_KEY, JSON.stringify(mayoiData));
+  localStorage.setItem(PROMISE_KEY, JSON.stringify(promiseData));
+}
 
-  const file = this.files[0];
 
-  if(!file) return;
+function showScreen(type){
+
+  document.getElementById("mayoiScreen").classList.remove("active");
+  document.getElementById("promiseScreen").classList.remove("active");
+
+  document.getElementById("navMayoi").classList.remove("active");
+  document.getElementById("navPromise").classList.remove("active");
+
+  if(type === "mayoi"){
+    document.getElementById("mayoiScreen").classList.add("active");
+    document.getElementById("navMayoi").classList.add("active");
+    renderMayoiList();
+  }else{
+    document.getElementById("promiseScreen").classList.add("active");
+    document.getElementById("navPromise").classList.add("active");
+    renderPromiseList();
+  }
+
+}
+
+
+/* =========================
+   迷子
+========================= */
+
+function openMayoiForm(){
+
+  editingMayoiId = null;
+
+  document.getElementById("mayoiHome").style.display="none";
+  document.getElementById("mayoiScreenshot").style.display="none";
+  document.getElementById("mayoiForm").style.display="block";
+
+  document.getElementById("mayoiFormTitle").textContent =
+    "迷子グッズを登録";
+
+  document.getElementById("mayoiType").value="ぱしゃっつ";
+
+  document.getElementById("mayoiImage").value="";
+  document.getElementById("mayoiImagePreview").style.display="none";
+
+  document.getElementById("charNames").value="";
+  document.getElementById("charList").innerHTML="";
+  document.getElementById("charDetail").innerHTML="";
+}
+
+
+function closeMayoiForm(){
+
+  document.getElementById("mayoiForm").style.display="none";
+  document.getElementById("mayoiHome").style.display="block";
+
+  renderMayoiList();
+}
+
+
+function previewMayoiImage(){
+
+  const file =
+    document.getElementById("mayoiImage").files[0];
+
+  if(!file)return;
 
   const reader = new FileReader();
 
   reader.onload = function(e){
 
-    const img = new Image();
+    const img =
+      document.getElementById("mayoiImagePreview");
 
-    img.onload = function(){
-
-      originalImage = img;
-
-      sourceWidth = img.naturalWidth;
-      sourceHeight = img.naturalHeight;
-
-      sourceCanvas.width = sourceWidth;
-      sourceCanvas.height = sourceHeight;
-
-      sourceCtx.clearRect(
-        0,
-        0,
-        sourceWidth,
-        sourceHeight
-      );
-
-      sourceCtx.drawImage(
-        img,
-        0,
-        0
-      );
-
-      sourceArea.style.display = "block";
-
-      detectBtn.disabled = false;
-
-      statusEl.textContent =
-        "画像を読み込みました。自動検出を押してください。";
-
-      detectItems();
-
-    };
-
-    img.src = e.target.result;
+    img.src=e.target.result;
+    img.style.display="block";
 
   };
 
   reader.readAsDataURL(file);
+}
 
-});
 
+function makeCharList(){
 
-detectBtn.addEventListener("click", detectItems);
-redetectBtn.addEventListener("click", detectItems);
+  const names =
+    document.getElementById("charNames")
+      .value
+      .split("\n")
+      .map(x=>x.trim())
+      .filter(Boolean);
 
+  const box =
+    document.getElementById("charList");
 
-/* =========================
-   自動検出
-========================= */
+  box.innerHTML="";
 
-function detectItems(){
+  names.forEach((name,i)=>{
 
-  if(!originalImage) return;
+    const div=document.createElement("label");
 
-  statusEl.textContent = "グッズを自動検出中…";
+    div.className="char-item";
 
-  detectedItems = [];
+    div.innerHTML=`
+      <input
+        type="checkbox"
+        class="char-check"
+        data-name="${escapeHtml(name)}"
+        onchange="updateCharDetail()"
+      >
+      <span>${escapeHtml(name)}</span>
+    `;
 
-  const scale = Math.min(
-    1,
-    1100 / sourceWidth
-  );
+    box.appendChild(div);
 
-  const w = Math.max(
-    1,
-    Math.round(sourceWidth * scale)
-  );
+  });
 
-  const h = Math.max(
-    1,
-    Math.round(sourceHeight * scale)
-  );
+}
 
 
-  const tempCanvas = document.createElement("canvas");
+document.getElementById("charNames")
+  .addEventListener("input",makeCharList);
 
-  tempCanvas.width = w;
-  tempCanvas.height = h;
 
-  const ctx = tempCanvas.getContext("2d");
+function selectAllChars(){
 
-  ctx.drawImage(
-    originalImage,
-    0,
-    0,
-    w,
-    h
-  );
+  document.querySelectorAll(".char-check")
+    .forEach(x=>x.checked=true);
 
+  updateCharDetail();
+}
 
-  const imageData = ctx.getImageData(
-    0,
-    0,
-    w,
-    h
-  );
 
-  const data = imageData.data;
+function clearAllChars(){
 
-  const mask = new Uint8Array(w * h);
+  document.querySelectorAll(".char-check")
+    .forEach(x=>x.checked=false);
 
+  updateCharDetail();
+}
 
-  /*
-    白背景ではなく、
 
-    ・暗い色
-    ・色のついた部分
-    ・薄い枠線
+function updateCharDetail(){
 
-    を検出
-  */
+  const checked =
+    [...document.querySelectorAll(".char-check:checked")]
+      .map(x=>x.dataset.name);
 
-  for(let y=0; y<h; y++){
+  const box =
+    document.getElementById("charDetail");
 
-    for(let x=0; x<w; x++){
+  box.innerHTML="";
 
-      const i = (y*w+x)*4;
+  checked.forEach(name=>{
 
-      const r = data[i];
-      const g = data[i+1];
-      const b = data[i+2];
+    const old =
+      editingMayoiId
+      ? mayoiData.find(x=>x.id===editingMayoiId)
+      : null;
 
-      const max = Math.max(r,g,b);
-      const min = Math.min(r,g,b);
+    const oldChar =
+      old?.characters?.find(x=>x.name===name);
 
-      const brightness =
-        (r+g+b)/3;
+    const qty=oldChar?.qty ?? 1;
+    const retrade=oldChar?.retrade ?? 0;
 
-      const saturation =
-        max-min;
+    const row=document.createElement("div");
 
-      if(
-        brightness < 244 ||
-        saturation > 18
-      ){
-        mask[y*w+x] = 1;
-      }
+    row.className="char-row";
 
-    }
+    row.innerHTML=`
+      <div class="char-row-name">
+        ${escapeHtml(name)}
+      </div>
 
-  }
+      <input
+        type="number"
+        min="0"
+        value="${qty}"
+        data-qty="${escapeHtml(name)}"
+        placeholder="所持"
+      >
 
+      <input
+        type="number"
+        min="0"
+        value="${retrade}"
+        data-retrade="${escapeHtml(name)}"
+        placeholder="再交換"
+      >
+    `;
 
-  /*
-    少し膨張させる。
+    box.appendChild(row);
 
-    カード内の画像・文字・枠を
-    ひとつにつなげやすくする。
-  */
+  });
 
-  const dilated = dilateMask(
-    mask,
-    w,
-    h,
-    4
-  );
+}
 
 
-  /*
-    連結成分を探す
-  */
+function getSelectedChars(){
 
-  const visited = new Uint8Array(
-    w*h
-  );
+  return [...document.querySelectorAll(".char-check:checked")]
+    .map(check=>{
 
-  const components = [];
+      const name=check.dataset.name;
 
+      const qtyInput =
+        document.querySelector(`[data-qty="${cssEscape(name)}"]`);
 
-  for(let y=0; y<h; y++){
-
-    for(let x=0; x<w; x++){
-
-      const index = y*w+x;
-
-      if(
-        !dilated[index] ||
-        visited[index]
-      ){
-        continue;
-      }
-
-
-      const queue = [index];
-
-      visited[index] = 1;
-
-      let minX = x;
-      let maxX = x;
-      let minY = y;
-      let maxY = y;
-
-      let count = 0;
-
-
-      while(queue.length){
-
-        const current = queue.pop();
-
-        const cy =
-          Math.floor(current/w);
-
-        const cx =
-          current - cy*w;
-
-        count++;
-
-
-        minX = Math.min(minX,cx);
-        maxX = Math.max(maxX,cx);
-
-        minY = Math.min(minY,cy);
-        maxY = Math.max(maxY,cy);
-
-
-        const neighbors = [
-
-          current-1,
-          current+1,
-          current-w,
-          current+w
-
-        ];
-
-
-        for(const n of neighbors){
-
-          if(
-            n < 0 ||
-            n >= w*h ||
-            visited[n] ||
-            !dilated[n]
-          ){
-            continue;
-          }
-
-          /*
-            左右端をまたぐのを防ぐ
-          */
-
-          if(
-            Math.abs(
-              (n%w)-(current%w)
-            ) > 1
-          ){
-            continue;
-          }
-
-          visited[n] = 1;
-
-          queue.push(n);
-
-        }
-
-      }
-
-
-      const bw = maxX-minX+1;
-      const bh = maxY-minY+1;
-      const area = bw*bh;
-
-      /*
-        小さすぎるノイズを除外
-      */
-
-      if(
-        area > w*h*0.00025 &&
-        bw > 25 &&
-        bh > 35
-      ){
-
-        components.push({
-          x:minX,
-          y:minY,
-          w:bw,
-          h:bh,
-          area,
-          pixels:count
-        });
-
-      }
-
-    }
-
-  }
-
-
-  /*
-    カード候補を整理
-  */
-
-  let candidates =
-    mergeNearbyComponents(
-      components,
-      w,
-      h
-    );
-
-
-  /*
-    大きすぎる領域は除外。
-    今回のようなカード画像なら
-    だいたい縦長になる。
-  */
-
-  candidates =
-    candidates.filter(c => {
-
-      const ratio =
-        c.w/c.h;
-
-      const areaRatio =
-        (c.w*c.h)/(w*h);
-
-      if(areaRatio > 0.18){
-        return false;
-      }
-
-      if(c.w < 35 || c.h < 45){
-        return false;
-      }
-
-      if(ratio > 2.2){
-        return false;
-      }
-
-      return true;
-
-    });
-
-
-  /*
-    重複した候補を整理
-  */
-
-  candidates =
-    removeNestedBoxes(
-      candidates
-    );
-
-
-  /*
-    元画像サイズに戻す
-  */
-
-  const sx =
-    sourceWidth/w;
-
-  const sy =
-    sourceHeight/h;
-
-
-  detectedItems =
-    candidates.map(c => {
-
-      const padX =
-        Math.max(
-          5,
-          Math.round(c.w*0.06)
-        );
-
-      const padY =
-        Math.max(
-          5,
-          Math.round(c.h*0.04)
-        );
-
-
-      let x =
-        Math.max(
-          0,
-          c.x-padX
-        );
-
-      let y =
-        Math.max(
-          0,
-          c.y-padY
-        );
-
-      let right =
-        Math.min(
-          w,
-          c.x+c.w+padX
-        );
-
-      let bottom =
-        Math.min(
-          h,
-          c.y+c.h+padY
-        );
-
+      const retradeInput =
+        document.querySelector(`[data-retrade="${cssEscape(name)}"]`);
 
       return {
-
-        x:Math.round(x*sx),
-        y:Math.round(y*sy),
-
-        w:Math.round(
-          (right-x)*sx
-        ),
-
-        h:Math.round(
-          (bottom-y)*sy
-        )
-
+        name:name,
+        qty:Number(qtyInput?.value || 0),
+        retrade:Number(retradeInput?.value || 0)
       };
 
     });
 
-
-  /*
-    大きい順ではなく
-    上→下、左→右
-  */
-
-  detectedItems.sort((a,b)=>{
-
-    const tolerance =
-      Math.min(a.h,b.h)*0.45;
-
-    if(
-      Math.abs(a.y-b.y) < tolerance
-    ){
-      return a.x-b.x;
-    }
-
-    return a.y-b.y;
-
-  });
-
-
-  drawDetectionOverlay();
-
-  statusEl.textContent =
-    `自動検出：${detectedItems.length}個`;
-
 }
 
 
-/* =========================
-   マスク膨張
-========================= */
+function saveMayoi(){
 
-function dilateMask(
-  mask,
-  w,
-  h,
-  radius
-){
+  const type =
+    document.getElementById("mayoiType").value;
 
-  const output =
-    new Uint8Array(w*h);
+  const imagePreview =
+    document.getElementById("mayoiImagePreview");
 
-  for(let y=0; y<h; y++){
+  const image =
+    imagePreview.style.display !== "none"
+      ? imagePreview.src
+      : (
+          editingMayoiId
+          ? mayoiData.find(x=>x.id===editingMayoiId)?.image || ""
+          : ""
+        );
 
-    for(let x=0; x<w; x++){
+  const characters=getSelectedChars();
 
-      let found = false;
-
-      for(
-        let dy=-radius;
-        dy<=radius && !found;
-        dy++
-      ){
-
-        const yy=y+dy;
-
-        if(
-          yy<0 ||
-          yy>=h
-        ){
-          continue;
-        }
-
-        for(
-          let dx=-radius;
-          dx<=radius;
-          dx++
-        ){
-
-          const xx=x+dx;
-
-          if(
-            xx<0 ||
-            xx>=w
-          ){
-            continue;
-          }
-
-          if(
-            mask[yy*w+xx]
-          ){
-
-            found=true;
-            break;
-
-          }
-
-        }
-
-      }
-
-      if(found){
-        output[y*w+x]=1;
-      }
-
-    }
-
+  if(characters.length===0){
+    alert("持っているキャラを1人以上選んでね！");
+    return;
   }
 
-  return output;
-
-}
-
-
-/* =========================
-   近い成分を結合
-========================= */
-
-function mergeNearbyComponents(
-  components,
-  w,
-  h
-){
-
-  const result =
-    components.map(c=>({...c}));
-
-  let changed = true;
-
-
-  while(changed){
-
-    changed=false;
-
-    outer:
-
-    for(let i=0;i<result.length;i++){
-
-      for(let j=i+1;j<result.length;j++){
-
-        const a=result[i];
-        const b=result[j];
-
-
-        const ax2=a.x+a.w;
-        const ay2=a.y+a.h;
-
-        const bx2=b.x+b.w;
-        const by2=b.y+b.h;
-
-
-        const gapX =
-          Math.max(
-            0,
-            Math.max(
-              a.x-bx2,
-              b.x-ax2
-            )
-          );
-
-        const gapY =
-          Math.max(
-            0,
-            Math.max(
-              a.y-by2,
-              b.y-ay2
-            )
-          );
-
-
-        /*
-          同じカード内部の
-          画像・文字・枠をまとめる。
-
-          ただしカード同士は
-          離れているので結合しない。
-        */
-
-        const nearX =
-          gapX < Math.max(
-            8,
-            Math.min(a.w,b.w)*0.12
-          );
-
-        const nearY =
-          gapY < Math.max(
-            8,
-            Math.min(a.h,b.h)*0.12
-          );
-
-
-        const overlapX =
-          Math.min(ax2,bx2)-
-          Math.max(a.x,b.x);
-
-        const overlapY =
-          Math.min(ay2,by2)-
-          Math.max(a.y,b.y);
-
-
-        const sameRegion =
-          (
-            nearX &&
-            overlapY > 0
-          ) ||
-          (
-            nearY &&
-            overlapX > 0
-          );
-
-
-        if(sameRegion){
-
-          const nx =
-            Math.min(a.x,b.x);
-
-          const ny =
-            Math.min(a.y,b.y);
-
-          const nr =
-            Math.max(ax2,bx2);
-
-          const nb =
-            Math.max(ay2,by2);
-
-
-          result[i]={
-            x:nx,
-            y:ny,
-            w:nr-nx,
-            h:nb-ny,
-            area:(nr-nx)*(nb-ny),
-            pixels:a.pixels+b.pixels
-          };
-
-          result.splice(j,1);
-
-          changed=true;
-
-          break outer;
-
-        }
-
-      }
-
-    }
-
-  }
-
-
-  return result;
-
-}
-
-
-/* =========================
-   内包された箱を削除
-========================= */
-
-function removeNestedBoxes(
-  boxes
-){
-
-  return boxes.filter(
-    (box,i)=>{
-
-      for(let j=0;j<boxes.length;j++){
-
-        if(i===j) continue;
-
-        const other=boxes[j];
-
-        const inside =
-          box.x >= other.x &&
-          box.y >= other.y &&
-          box.x+box.w <=
-            other.x+other.w &&
-          box.y+box.h <=
-            other.y+other.h;
-
-
-        if(
-          inside &&
-          other.w*other.h >
-            box.w*box.h*1.25
-        ){
-
-          return false;
-
-        }
-
-      }
-
-      return true;
-
-    }
-  );
-
-}
-
-
-/* =========================
-   検出結果表示
-========================= */
-
-function drawDetectionOverlay(){
-
-  detectOverlay.innerHTML="";
-
-  const displayedWidth =
-    sourceCanvas.clientWidth ||
-    sourceCanvas.width;
-
-  const displayedHeight =
-    sourceCanvas.clientHeight ||
-    sourceCanvas.height;
-
-
-  const scaleX =
-    displayedWidth/sourceWidth;
-
-  const scaleY =
-    displayedHeight/sourceHeight;
-
-
-  detectOverlay.style.width =
-    displayedWidth+"px";
-
-  detectOverlay.style.height =
-    displayedHeight+"px";
-
-
-  detectedItems.forEach(
-    (item,index)=>{
-
-      const box =
-        document.createElement("div");
-
-      box.className="detect-box";
-
-      box.style.left =
-        item.x*scaleX+"px";
-
-      box.style.top =
-        item.y*scaleY+"px";
-
-      box.style.width =
-        item.w*scaleX+"px";
-
-      box.style.height =
-        item.h*scaleY+"px";
-
-
-      const number =
-        document.createElement("div");
-
-      number.className=
-        "detect-number";
-
-      number.textContent =
-        index+1;
-
-
-      box.appendChild(number);
-
-      detectOverlay.appendChild(box);
-
-    }
-  );
-
-}
-
-
-/* =========================
-   全部採用
-========================= */
-
-addAllBtn.addEventListener(
-  "click",
-  function(){
-
-    if(!detectedItems.length){
-      return;
-    }
-
-
-    items=[];
-
-    detectedItems.forEach(
-      (rect)=>{
-
-        const dataUrl =
-          cropImage(rect);
-
-
-        items.push({
-
-          id:itemId++,
-
-          x:rect.x,
-          y:rect.y,
-          w:rect.w,
-          h:rect.h,
-
-          dataUrl:dataUrl,
-
-          quantity:1,
-          name:"",
-          memo:"",
-
-          starIndex:0,
-
-          done:false
-
-        });
-
-      }
-    );
-
-
-    renderGoods();
-
-    previewPanel.style.display =
-      "block";
-
-    statusEl.textContent =
-      `${items.length}個採用しました！`;
-
-  }
-);
-
-
-/* =========================
-   採用を全部解除
-========================= */
-
-clearSelectedBtn.addEventListener(
-  "click",
-  function(){
-
-    items=[];
-
-    renderGoods();
-
-    statusEl.textContent =
-      "採用を解除しました";
-
-  }
-);
-
-
-/* =========================
-   画像切り抜き
-========================= */
-
-function cropImage(rect){
-
-  const canvas =
-    document.createElement("canvas");
-
-  canvas.width =
-    Math.max(1,rect.w);
-
-  canvas.height =
-    Math.max(1,rect.h);
-
-  const ctx =
-    canvas.getContext("2d");
-
-
-  ctx.drawImage(
-
-    originalImage,
-
-    rect.x,
-    rect.y,
-    rect.w,
-    rect.h,
-
-    0,
-    0,
-    rect.w,
-    rect.h
-
-  );
-
-
-  return canvas.toDataURL(
-    "image/png"
-  );
-
-}
-
-
-/* =========================
-   行を自動判定
-========================= */
-
-function makeRows(){
-
-  const sorted =
-    [...items].sort(
-      (a,b)=>a.y-b.y
-    );
-
-
-  const rows=[];
-
-
-  sorted.forEach(item=>{
-
-    const centerY =
-      item.y+item.h/2;
-
-
-    let target=null;
-
-
-    for(const row of rows){
-
-      const tolerance =
-        Math.max(
-          item.h,
-          row.maxH
-        )*0.55;
-
-
-      if(
-        Math.abs(
-          centerY-row.centerY
-        ) < tolerance
-      ){
-
-        target=row;
-        break;
-
-      }
-
-    }
-
-
-    if(!target){
-
-      target={
-        items:[],
-        centerY:centerY,
-        maxH:item.h,
-        minY:item.y,
-        layoutY:0
-      };
-
-      rows.push(target);
-
-    }
-
-
-    target.items.push(item);
-
-    target.maxH =
-      Math.max(
-        target.maxH,
-        item.h
-      );
-
-    target.minY =
-      Math.min(
-        target.minY,
-        item.y
-      );
-
-
-    target.centerY =
-      target.items.reduce(
-        (sum,x)=>
-          sum+x.y+x.h/2,
-        0
-      )/
-      target.items.length;
-
-  });
-
-
-  rows.sort(
-    (a,b)=>a.minY-b.minY
-  );
-
-
-  const blankHeight =
-    Number(
-      blankHeightInput.value
-    ) || 65;
-
-
-  const rowGap=12;
-
-
-  let currentY =
-    rows.length ?
-      rows[0].minY :
-      0;
-
-
-  rows.forEach(row=>{
-
-    row.layoutY=currentY;
-
-    currentY +=
-      row.maxH+
-      blankHeight+
-      rowGap;
-
-  });
-
-
-  return {
-    rows,
-    height:currentY+10
+  const item={
+    id:editingMayoiId || Date.now().toString(),
+    type:type,
+    image:image,
+    characters:characters
   };
 
+  if(editingMayoiId){
+
+    const index =
+      mayoiData.findIndex(x=>x.id===editingMayoiId);
+
+    if(index!==-1){
+      mayoiData[index]=item;
+    }
+
+  }else{
+
+    mayoiData.push(item);
+
+  }
+
+  saveLocal();
+
+  alert("保存したよ！");
+
+  closeMayoiForm();
 }
 
 
-/* =========================
-   グッズ表示
-========================= */
+function renderMayoiList(){
 
-function renderGoods(){
+  const box=document.getElementById("mayoiList");
 
-  goodsCanvas.innerHTML="";
+  box.innerHTML="";
 
+  if(mayoiData.length===0){
 
-  if(!items.length){
-
-    goodsCanvas.appendChild(
-      emptyMessage
-    );
-
-    goodsCanvas.style.height=
-      "200px";
+    box.innerHTML=
+      `<div class="empty">まだ登録されてないよ</div>`;
 
     return;
 
   }
 
+  mayoiData.forEach(item=>{
 
-  const layout =
-    makeRows();
+    const div=document.createElement("div");
 
+    div.className="saved-item";
 
-  const layoutHeight =
-    layout.height;
+    const chars=item.characters
+      .map(c=>`
+        <span class="saved-chip">
+          ${escapeHtml(c.name)}
+          ${c.qty}
+          ${c.retrade ? `⑩${c.retrade}` : ""}
+        </span>
+      `)
+      .join("");
 
+    div.innerHTML=`
 
-  goodsCanvas.style.height =
-    layoutHeight+"px";
+      <div class="saved-head">
 
+        <div class="saved-type">
+          ${escapeHtml(item.type)}
+        </div>
 
-  const blankHeight =
-    Number(
-      blankHeightInput.value
-    ) || 65;
+        <div class="saved-buttons">
 
+          <button onclick="editMayoi('${item.id}')">
+            編集
+          </button>
 
-  layout.rows.forEach(
-    row=>{
+          <button
+            class="danger"
+            onclick="deleteMayoi('${item.id}')"
+          >
+            削除
+          </button>
 
-      row.items
-        .sort((a,b)=>a.x-b.x)
-        .forEach(item=>{
+        </div>
 
-          const goods =
-            document.createElement("div");
+      </div>
 
-          goods.className="goods";
+      ${
+        item.image
+        ? `<img src="${item.image}" class="saved-preview">`
+        : ""
+      }
 
+      <div class="saved-chars">
+        ${chars}
+      </div>
+    `;
 
-          goods.style.left =
-            (
-              item.x/sourceWidth*100
-            )+"%";
+    box.appendChild(div);
 
+  });
 
-          goods.style.top =
-            (
-              row.layoutY/layoutHeight*100
-            )+"%";
+}
 
 
-          goods.style.width =
-            (
-              item.w/sourceWidth*100
-            )+"%";
+function editMayoi(id){
 
+  const item=mayoiData.find(x=>x.id===id);
 
-          if(item.done){
-            goods.classList.add(
-              "done"
-            );
-          }
+  if(!item)return;
 
+  editingMayoiId=id;
 
-          /* 画像 */
+  document.getElementById("mayoiHome").style.display="none";
+  document.getElementById("mayoiForm").style.display="block";
 
-          const imageWrap =
-            document.createElement("div");
+  document.getElementById("mayoiFormTitle").textContent =
+    "迷子グッズを編集";
 
-          imageWrap.className=
-            "goods-image-wrap";
+  document.getElementById("mayoiType").value=item.type;
 
+  if(item.image){
 
-          const img =
-            document.createElement("img");
+    const img=
+      document.getElementById("mayoiImagePreview");
 
-          img.className="goods-image";
+    img.src=item.image;
+    img.style.display="block";
 
-          img.src=item.dataUrl;
+  }
 
-          img.alt=
-            item.name ||
-            "グッズ";
+  document.getElementById("charNames").value =
+    item.characters.map(x=>x.name).join("\n");
 
+  makeCharList();
 
-          img.addEventListener(
-            "click",
-            function(){
+  document.querySelectorAll(".char-check")
+    .forEach(check=>{
 
-              item.done =
-                !item.done;
-
-              goods.classList.toggle(
-                "done",
-                item.done
-              );
-
-            }
-          );
-
-
-          imageWrap.appendChild(img);
-
-
-          /* 星 */
-
-          const star =
-            document.createElement("button");
-
-          star.className="star";
-
-          star.textContent="★";
-
-          star.style.color =
-            starColors[
-              item.starIndex
-            ];
-
-
-          star.addEventListener(
-            "click",
-            function(e){
-
-              e.stopPropagation();
-
-              item.starIndex =
-                (
-                  item.starIndex+1
-                )%
-                starColors.length;
-
-
-              star.style.color =
-                starColors[
-                  item.starIndex
-                ];
-
-              updateLegend();
-
-            }
-          );
-
-
-          imageWrap.appendChild(star);
-
-
-          /* 削除 */
-
-          const deleteBtn =
-            document.createElement("button");
-
-          deleteBtn.className=
-            "delete-item";
-
-          deleteBtn.textContent="×";
-
-
-          deleteBtn.addEventListener(
-            "click",
-            function(e){
-
-              e.stopPropagation();
-
-              items =
-                items.filter(
-                  x=>x.id!==item.id
-                );
-
-              renderGoods();
-
-            }
-          );
-
-
-          imageWrap.appendChild(
-            deleteBtn
-          );
-
-
-          goods.appendChild(
-            imageWrap
-          );
-
-
-          /* 情報欄 */
-
-          const info =
-            document.createElement("div");
-
-          info.className=
-            "goods-info";
-
-
-          info.style.height =
-            blankHeight+"px";
-
-
-          /* 個数 */
-
-          const quantityRow =
-            document.createElement("div");
-
-          quantityRow.className=
-            "quantity-row";
-
-
-          const left =
-            document.createElement("span");
-
-          left.className=
-            "quantity-mark";
-
-          left.textContent="（";
-
-
-          const quantity =
-            document.createElement("input");
-
-          quantity.className=
-            "quantity-input";
-
-          quantity.type="number";
-
-          quantity.min="0";
-
-          quantity.value=
-            item.quantity;
-
-
-          quantity.addEventListener(
-            "input",
-            function(){
-
-              item.quantity =
-                Number(
-                  quantity.value
-                ) || 0;
-
-            }
-          );
-
-
-          const right =
-            document.createElement("span");
-
-          right.className=
-            "quantity-mark";
-
-          right.textContent="）";
-
-
-          quantityRow.appendChild(left);
-          quantityRow.appendChild(quantity);
-          quantityRow.appendChild(right);
-
-
-          info.appendChild(
-            quantityRow
-          );
-
-
-          /* 名前 */
-
-          const name =
-            document.createElement("input");
-
-          name.className=
-            "goods-name";
-
-          name.placeholder=
-            "グッズ名";
-
-          name.value=
-            item.name;
-
-
-          name.addEventListener(
-            "input",
-            function(){
-
-              item.name =
-                name.value;
-
-            }
-          );
-
-
-          info.appendChild(name);
-
-
-          /* メモ */
-
-          const memo =
-            document.createElement("input");
-
-          memo.className=
-            "goods-memo";
-
-          memo.placeholder=
-            "メモ";
-
-          memo.value=
-            item.memo;
-
-
-          memo.addEventListener(
-            "input",
-            function(){
-
-              item.memo =
-                memo.value;
-
-            }
-          );
-
-
-          info.appendChild(memo);
-
-
-          /* 星色変更 */
-
-          const tools =
-            document.createElement("div");
-
-          tools.className=
-            "edit-tools";
-
-
-          const select =
-            document.createElement("select");
-
-          select.className=
-            "star-color";
-
-
-          starColors.forEach(
-            (color,index)=>{
-
-              const option =
-                document.createElement(
-                  "option"
-                );
-
-              option.value=index;
-
-              option.textContent =
-                "★ "+
-                (
-                  index+1
-                );
-
-              option.style.color=
-                color;
-
-              select.appendChild(
-                option
-              );
-
-            }
-          );
-
-
-          select.value =
-            item.starIndex;
-
-
-          select.addEventListener(
-            "change",
-            function(){
-
-              item.starIndex =
-                Number(
-                  select.value
-                );
-
-              star.style.color =
-                starColors[
-                  item.starIndex
-                ];
-
-              updateLegend();
-
-            }
-          );
-
-
-          tools.appendChild(
-            select
-          );
-
-
-          info.appendChild(
-            tools
-          );
-
-
-          goods.appendChild(
-            info
-          );
-
-
-          goodsCanvas.appendChild(
-            goods
-          );
-
-        });
+      if(item.characters.some(x=>x.name===check.dataset.name)){
+        check.checked=true;
+      }
 
     });
 
+  updateCharDetail();
+}
 
-  updatePreviewSize();
 
-  updateLegend();
+function deleteMayoi(id){
+
+  if(!confirm("この迷子グッズを削除する？"))return;
+
+  mayoiData=
+    mayoiData.filter(x=>x.id!==id);
+
+  saveLocal();
+
+  renderMayoiList();
+}
+
+
+/* =========================
+   迷子スクショ
+========================= */
+
+function showMayoiScreenshot(){
+
+  document.getElementById("mayoiHome").style.display="none";
+  document.getElementById("mayoiForm").style.display="none";
+  document.getElementById("mayoiScreenshot").style.display="block";
+
+  const box=
+    document.getElementById("mayoiScreenshotContent");
+
+  if(mayoiData.length===0){
+
+    box.innerHTML=
+      `<div class="empty">まだ登録がないよ</div>`;
+
+    return;
+  }
+
+  let html=`
+
+    <div class="screenshot-box">
+
+      <div class="ss-title">
+        迷子グッズ
+      </div>
+
+      <div class="ss-legend">
+        ⑩＝再交換分
+      </div>
+  `;
+
+  mayoiData.forEach(item=>{
+
+    html+=`
+
+      <div class="ss-section">
+
+        <div class="ss-type">
+          ${escapeHtml(item.type)}
+        </div>
+
+        <div class="ss-grid">
+    `;
+
+    item.characters.forEach(c=>{
+
+      html+=`
+
+        <div class="ss-char">
+
+          <span>
+            ${escapeHtml(c.name)}
+          </span>
+
+          <span>
+            ${c.qty}
+            ${
+              c.retrade
+              ? `<span class="retrade">⑩${c.retrade}</span>`
+              : ""
+            }
+          </span>
+
+        </div>
+
+      `;
+
+    });
+
+    html+=`
+
+        </div>
+
+      </div>
+    `;
+
+  });
+
+  html+=`
+
+    </div>
+  `;
+
+  box.innerHTML=html;
+}
+
+
+function closeMayoiScreenshot(){
+
+  document.getElementById("mayoiScreenshot").style.display="none";
+  document.getElementById("mayoiHome").style.display="block";
 
 }
 
 
 /* =========================
-   プレビューサイズ
+   仮約束
 ========================= */
 
-function updatePreviewSize(){
+function openPromiseForm(){
 
-  if(!items.length){
-    return;
-  }
+  editingPromiseId=null;
 
+  document.getElementById("promiseHome").style.display="none";
+  document.getElementById("promiseScreenshot").style.display="none";
+  document.getElementById("promiseForm").style.display="block";
 
-  const layout =
-    makeRows();
+  document.getElementById("promiseFormTitle").textContent =
+    "仮約束を登録";
 
-
-  const naturalWidth =
-    sourceWidth;
-
-
-  const availableWidth =
-    goodsCanvas.parentElement
-      .clientWidth;
+  document.getElementById("promiseType").value="ぱしゃっつ";
+  document.getElementById("promiseChars").value="";
+  document.getElementById("promiseDetail").innerHTML="";
+}
 
 
-  const scale =
-    Math.min(
-      1,
-      availableWidth/naturalWidth
-    );
+function closePromiseForm(){
+
+  document.getElementById("promiseForm").style.display="none";
+  document.getElementById("promiseHome").style.display="block";
+
+  renderPromiseList();
+}
 
 
-  goodsCanvas.style.width =
-    naturalWidth*scale+"px";
+document.getElementById("promiseChars")
+  .addEventListener("input",makePromiseDetail);
 
 
-  goodsCanvas.style.height =
-    layout.height*scale+"px";
+function makePromiseDetail(){
+
+  const names=
+    document.getElementById("promiseChars")
+      .value
+      .split("\n")
+      .map(x=>x.trim())
+      .filter(Boolean);
+
+  const box=
+    document.getElementById("promiseDetail");
+
+  box.innerHTML="";
+
+  names.forEach(name=>{
+
+    const old=
+      editingPromiseId
+      ? promiseData.find(x=>x.id===editingPromiseId)
+      : null;
+
+    const oldChar=
+      old?.characters?.find(x=>x.name===name);
+
+    const qty=oldChar?.qty ?? 0;
+    const promised=oldChar?.promised ?? 0;
+
+    const row=document.createElement("div");
+
+    row.className="promise-row";
+
+    row.innerHTML=`
+
+      <div class="char-row-name">
+        ${escapeHtml(name)}
+      </div>
+
+      <input
+        type="number"
+        min="0"
+        value="${qty}"
+        data-pqty="${escapeHtml(name)}"
+      >
+
+      <input
+        type="number"
+        min="0"
+        value="${promised}"
+        data-ppromise="${escapeHtml(name)}"
+        oninput="updatePromiseRemaining()"
+      >
+
+      <input
+        type="number"
+        value="${Math.max(0,qty-promised)}"
+        data-premain="${escapeHtml(name)}"
+        readonly
+      >
+
+    `;
+
+    box.appendChild(row);
+
+  });
+
+}
 
 
-  document
-    .querySelectorAll(
-      ".goods-info"
-    )
-    .forEach(info=>{
+function updatePromiseRemaining(){
 
-      const blankHeight =
-        Number(
-          blankHeightInput.value
-        ) || 65;
+  document.querySelectorAll("[data-ppromise]")
+    .forEach(input=>{
 
-      info.style.height =
-        blankHeight*scale+"px";
+      const name=input.dataset.ppromise;
+
+      const qtyInput=
+        document.querySelector(`[data-pqty="${cssEscape(name)}"]`);
+
+      const remainInput=
+        document.querySelector(`[data-premain="${cssEscape(name)}"]`);
+
+      const qty=Number(qtyInput?.value||0);
+      const promised=Number(input.value||0);
+
+      if(remainInput){
+        remainInput.value=Math.max(0,qty-promised);
+      }
 
     });
 
 }
 
 
-/* =========================
-   星の説明
-========================= */
+function savePromise(){
 
-function updateLegend(){
+  const type=
+    document.getElementById("promiseType").value;
 
-  const legend =
-    document.getElementById(
-      "legend"
-    );
+  const names=
+    document.getElementById("promiseChars")
+      .value
+      .split("\n")
+      .map(x=>x.trim())
+      .filter(Boolean);
 
-  legend.innerHTML="";
+  if(names.length===0){
 
-
-  for(let i=0;i<3;i++){
-
-    const color =
-      document.getElementById(
-        "legendColor"+i
-      ).value;
-
-    const text =
-      document.getElementById(
-        "legendText"+i
-      ).value;
-
-
-    const div =
-      document.createElement("div");
-
-    div.className=
-      "legend-item";
-
-
-    const star =
-      document.createElement("span");
-
-    star.className=
-      "legend-star";
-
-    star.textContent="★";
-
-    star.style.color=color;
-
-
-    const label =
-      document.createElement("span");
-
-    label.textContent=text;
-
-
-    div.appendChild(star);
-    div.appendChild(label);
-
-    legend.appendChild(div);
+    alert("キャラを1人以上入力してね！");
+    return;
 
   }
 
-}
+  const characters=names.map(name=>{
 
-
-/* =========================
-   設定変更
-========================= */
-
-blankHeightInput.addEventListener(
-  "input",
-  function(){
-
-    renderGoods();
-
-  }
-);
-
-
-for(let i=0;i<3;i++){
-
-  document
-    .getElementById(
-      "legendColor"+i
-    )
-    .addEventListener(
-      "input",
-      updateLegend
-    );
-
-
-  document
-    .getElementById(
-      "legendText"+i
-    )
-    .addEventListener(
-      "input",
-      updateLegend
-    );
-
-}
-
-
-/* =========================
-   スクショモード
-========================= */
-
-screenshotBtn.addEventListener(
-  "click",
-  function(){
-
-    screenshotMode=true;
-
-    document.body.classList.add(
-      "screenshot-mode"
-    );
-
-    updatePreviewSize();
-
-  }
-);
-
-
-document.body.addEventListener(
-  "click",
-  function(e){
-
-    if(
-      screenshotMode &&
-      !e.target.closest(".goods")
-    ){
-
-      screenshotMode=false;
-
-      document.body.classList.remove(
-        "screenshot-mode"
+    const qty=
+      Number(
+        document.querySelector(
+          `[data-pqty="${cssEscape(name)}"]`
+        )?.value || 0
       );
 
-      updatePreviewSize();
+    const promised=
+      Number(
+        document.querySelector(
+          `[data-ppromise="${cssEscape(name)}"]`
+        )?.value || 0
+      );
 
+    return {
+      name:name,
+      qty:qty,
+      promised:promised,
+      remaining:Math.max(0,qty-promised)
+    };
+
+  });
+
+
+  const item={
+    id:editingPromiseId || Date.now().toString(),
+    type:type,
+    characters:characters
+  };
+
+
+  if(editingPromiseId){
+
+    const index=
+      promiseData.findIndex(x=>x.id===editingPromiseId);
+
+    if(index!==-1){
+      promiseData[index]=item;
     }
 
+  }else{
+
+    promiseData.push(item);
+
   }
-);
+
+
+  saveLocal();
+
+  alert("保存したよ！");
+
+  closePromiseForm();
+}
+
+
+function renderPromiseList(){
+
+  const box=
+    document.getElementById("promiseList");
+
+  box.innerHTML="";
+
+  if(promiseData.length===0){
+
+    box.innerHTML=
+      `<div class="empty">まだ登録されてないよ</div>`;
+
+    return;
+
+  }
+
+
+  promiseData.forEach(item=>{
+
+    const div=document.createElement("div");
+
+    div.className="saved-item";
+
+    let html=`
+
+      <div class="saved-head">
+
+        <div class="saved-type">
+          ${escapeHtml(item.type)}
+        </div>
+
+        <div class="saved-buttons">
+
+          <button onclick="editPromise('${item.id}')">
+            編集
+          </button>
+
+          <button
+            class="danger"
+            onclick="deletePromise('${item.id}')"
+          >
+            削除
+          </button>
+
+        </div>
+
+      </div>
+
+      <div style="margin-top:10px">
+    `;
+
+
+    item.characters.forEach(c=>{
+
+      html+=`
+
+        <div style="
+          display:flex;
+          justify-content:space-between;
+          padding:6px 0;
+          border-bottom:1px dotted #ddd;
+        ">
+
+          <span>${escapeHtml(c.name)}</span>
+
+          <span>
+            ${c.qty} →
+            ${c.promised} →
+            <b>${c.remaining}</b>
+          </span>
+
+        </div>
+
+      `;
+
+    });
+
+
+    html+=`</div>`;
+
+    div.innerHTML=html;
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+function editPromise(id){
+
+  const item=
+    promiseData.find(x=>x.id===id);
+
+  if(!item)return;
+
+  editingPromiseId=id;
+
+  document.getElementById("promiseHome").style.display="none";
+  document.getElementById("promiseForm").style.display="block";
+
+  document.getElementById("promiseFormTitle").textContent =
+    "仮約束を編集";
+
+  document.getElementById("promiseType").value=item.type;
+
+  document.getElementById("promiseChars").value =
+    item.characters.map(x=>x.name).join("\n");
+
+  makePromiseDetail();
+}
+
+
+function deletePromise(id){
+
+  if(!confirm("この仮約束を削除する？"))return;
+
+  promiseData=
+    promiseData.filter(x=>x.id!==id);
+
+  saveLocal();
+
+  renderPromiseList();
+}
 
 
 /* =========================
-   リセット
+   仮約束スクショ
 ========================= */
 
-resetBtn.addEventListener(
-  "click",
-  function(){
+function showPromiseScreenshot(){
 
-    if(
-      !confirm(
-        "全部リセットしますか？"
-      )
-    ){
-      return;
-    }
+  document.getElementById("promiseHome").style.display="none";
+  document.getElementById("promiseForm").style.display="none";
+  document.getElementById("promiseScreenshot").style.display="block";
 
+  const box=
+    document.getElementById("promiseScreenshotContent");
 
-    originalImage=null;
+  if(promiseData.length===0){
 
-    detectedItems=[];
+    box.innerHTML=
+      `<div class="empty">まだ登録がないよ</div>`;
 
-    items=[];
-
-    itemId=1;
-
-    imageInput.value="";
-
-    sourceArea.style.display=
-      "none";
-
-    previewPanel.style.display=
-      "none";
-
-    detectBtn.disabled=true;
-
-    statusEl.textContent=
-      "画像を選択してください";
-
-    sourceCtx.clearRect(
-      0,
-      0,
-      sourceCanvas.width,
-      sourceCanvas.height
-    );
-
-    detectOverlay.innerHTML="";
-
-    renderGoods();
+    return;
 
   }
-);
+
+
+  let html=`
+
+    <div class="screenshot-box">
+
+      <div class="ss-title">
+        仮約束
+      </div>
+
+  `;
+
+
+  promiseData.forEach(item=>{
+
+    html+=`
+
+      <div class="ss-section">
+
+        <div class="ss-type">
+          ${escapeHtml(item.type)}
+        </div>
+
+        <div class="ss-grid">
+    `;
+
+
+    item.characters.forEach(c=>{
+
+      html+=`
+
+        <div class="ss-char">
+
+          <span>
+            ${escapeHtml(c.name)}
+          </span>
+
+          <span>
+            残り ${c.remaining}
+          </span>
+
+        </div>
+
+      `;
+
+    });
+
+
+    html+=`
+
+        </div>
+
+      </div>
+
+    `;
+
+  });
+
+
+  html+=`</div>`;
+
+  box.innerHTML=html;
+}
+
+
+function closePromiseScreenshot(){
+
+  document.getElementById("promiseScreenshot").style.display="none";
+  document.getElementById("promiseHome").style.display="block";
+
+}
 
 
 /* =========================
-   画面サイズ変更
+   XSS / CSS対策
 ========================= */
 
-window.addEventListener(
-  "resize",
-  function(){
+function escapeHtml(str){
 
-    drawDetectionOverlay();
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
-    updatePreviewSize();
+}
 
+
+function cssEscape(str){
+
+  if(window.CSS && CSS.escape){
+    return CSS.escape(str);
   }
-);
+
+  return String(str).replace(/["\\]/g,"\\$&");
+}
 
 
-/* 初期表示 */
+/* =========================
+   初期表示
+========================= */
 
-updateLegend();
+renderMayoiList();
+renderPromiseList();
 
 </script>
 
