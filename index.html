@@ -29,7 +29,7 @@ input[type="file"]{width:100%}
 .preview{display:block;max-width:100%;max-height:260px;margin:10px auto 0;border-radius:8px;object-fit:contain}
 .char-tools{display:flex;gap:7px;margin-bottom:10px}
 .char-tools button{flex:1}
-.unit{font-size:13px;font-weight:bold;margin:14px 0 7px;padding-bottom:5px;border-bottom:1px solid #ddd}
+.unit{margin:14px 0 7px;padding-bottom:5px;border-bottom:1px solid #ddd;font-size:13px;font-weight:bold}
 .char-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
 .char{display:flex;align-items:center;gap:7px;padding:9px;border:1px solid #ddd;border-radius:9px;background:#fafafa;font-size:13px}
 .char.selected{background:#eee;border-color:#999}
@@ -50,21 +50,19 @@ input[type="file"]{width:100%}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
 .chip{background:#eee;border-radius:20px;padding:4px 8px;font-size:11px}
 .empty{text-align:center;color:#999;padding:30px 10px}
-.screenshot{background:#fff;border:1px solid #ddd;border-radius:12px;padding:15px}
-.ss-title{text-align:center;font-weight:bold;font-size:17px;margin-bottom:4px}
-.legend{text-align:center;color:#777;font-size:11px;margin-bottom:12px}
-.ss-section{margin-bottom:15px}
-.ss-type{font-weight:bold;font-size:13px;border-bottom:1px solid #ddd;padding-bottom:4px;margin-bottom:5px}
-.ss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px 8px}
-.ss-grid.cols4{grid-template-columns:repeat(4,1fr);gap:2px 7px}
-.ss-grid.cols3{grid-template-columns:repeat(3,1fr);gap:3px 8px}
-
-/* 写真を大きく、スクショの横幅は維持 */
-.ss-image{display:block;width:100%;height:240px;object-fit:contain;margin:8px auto 12px;border-radius:6px}
-
-.ss-row{display:flex;justify-content:space-between;gap:3px;min-width:0;border-bottom:1px dotted #ddd;padding:3px 0;font-size:11px}
-.ss-row span{min-width:0}
-.retrade{font-size:10px;margin-left:3px}
+.screenshot{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px}
+.ss-title{text-align:center;font-weight:bold;font-size:17px;margin-bottom:10px}
+.ss-section{margin-bottom:14px}
+.ss-type{font-weight:bold;font-size:13px;border-bottom:1px solid #ddd;padding-bottom:4px;margin-bottom:3px}
+.ss-legend{color:#777;font-size:10px;margin:3px 0 6px}
+.ss-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px 7px}
+.ss-grid.cols4,.ss-grid.cols3{grid-template-columns:repeat(4,minmax(0,1fr));gap:2px 7px}
+/* スクショの画像まわりの余白を抑え、縦長になりすぎないようにする */
+.ss-image{display:block;width:100%;height:150px;object-fit:contain;margin:4px auto 7px;border-radius:6px}
+.ss-row{display:flex;justify-content:space-between;align-items:baseline;gap:2px;min-width:0;border-bottom:1px dotted #ddd;padding:3px 0;font-size:11px}
+.ss-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ss-quantity{flex-shrink:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.retrade{font-size:10px;margin-left:3px;color:#777}
 .promise-head,.promise-row{display:grid;grid-template-columns:1fr 70px 70px 70px;gap:6px;align-items:center}
 .promise-head{color:#888;font-size:10px;margin-bottom:5px}
 .promise-row{margin-bottom:7px}
@@ -78,9 +76,10 @@ input[type="file"]{width:100%}
 .promise-head,.promise-row{grid-template-columns:1fr 52px 52px 52px;gap:4px}
 .promise-row input{padding:7px 1px;font-size:12px}
 .promise-head{font-size:9px}
-.ss-grid.cols4{grid-template-columns:repeat(4,1fr);gap:2px 5px}
-.ss-grid.cols3{grid-template-columns:repeat(3,1fr);gap:2px 6px}
+.ss-grid,.ss-grid.cols4,.ss-grid.cols3{grid-template-columns:repeat(4,minmax(0,1fr));gap:2px 5px}
 .ss-row{font-size:10px}
+.ss-quantity{font-size:10px}
+.ss-image{height:130px}
 }
 </style>
 </head>
@@ -398,25 +397,52 @@ function renderMayoiList(){
  <div class="saved-actions"><button onclick="editMayoi('${item.id}')">編集</button>
  <button onclick="deleteMayoi('${item.id}')">削除</button></div></div>
  ${item.image?`<img src="${item.image}" class="saved-image">`:""}
- <div class="chips">${(item.characters||[]).map(c=>`<span class="chip">${escapeHtml(c.short)} ${Number(c.qty)||0}${Number(c.retrade)?` ⑩${Number(c.retrade)}`:""}</span>`).join("")}</div></div>`).join("");
+ <div class="chips">${(item.characters||[]).map(c=>`<span class="chip">${escapeHtml(c.short)} ${Number(c.qty)||0}${Number(c.retrade)?` ★${Number(c.retrade)}`:""}</span>`).join("")}</div></div>`).join("");
 }
+
+/* スクショ表示 */
 function getScreenshotGridClass(type){
- return ["ぱしゃっつ","チェキ","カード"].includes(type)?"cols4":"cols3";
+ return "cols4";
 }
 function makeScreenshot(data,title,isPromise){
  if(!data.length)return '<div class="empty">まだ登録がないよ</div>';
- return `<div class="screenshot"><div class="ss-title">${title}</div>
- <div class="legend">⑩＝再交換分</div>`+
- data.map(item=>{
+
+ const sections=data.map(item=>{
   const purchase=Number(item.purchaseQty??item.characters?.[0]?.qty??0);
-  return `<div class="ss-section"><div class="ss-type">${escapeHtml(item.type)}</div>
-  ${item.image?`<img src="${item.image}" class="ss-image">`:""}
-  <div class="ss-grid ${getScreenshotGridClass(item.type)}">`+
-  (item.characters||[]).map(c=>{
-   const qty=isPromise?Math.max(0,purchase-Number(c.promised||0)):Number(c.qty)||0;
-   return `<div class="ss-row"><span>${escapeHtml(c.short)}</span><span>${qty}${Number(c.retrade)?`<span class="retrade">⑩${Number(c.retrade)}</span>`:""}</span></div>`;
-  }).join("")+`</div></div>`;
- }).join("")+"</div>";
+
+  /* 表示用の数量を計算。保存済みデータは変更しない */
+  const visibleCharacters=(item.characters||[]).map(c=>{
+   const qty=isPromise
+    ?Math.max(0,purchase-Number(c.promised||0))
+    :Math.max(0,Number(c.qty)||0);
+
+   return {...c,displayQty:qty};
+  }).filter(c=>c.displayQty>0);
+
+  /* 表示するキャラがいないグッズは非表示 */
+  if(!visibleCharacters.length)return "";
+
+  return `<div class="ss-section">
+   <div class="ss-type">${escapeHtml(item.type)}</div>
+   <div class="ss-legend">★ 再交換分</div>
+   ${item.image?`<img src="${item.image}" class="ss-image">`:""}
+   <div class="ss-grid cols4">
+   ${visibleCharacters.map(c=>{
+    const retrade=Math.max(0,Number(c.retrade)||0);
+    return `<div class="ss-row">
+      <span class="ss-name">${escapeHtml(c.short)}</span>
+      <span class="ss-quantity">${c.displayQty}${retrade>0?`<span class="retrade">★${retrade}</span>`:""}</span>
+    </div>`;
+   }).join("")}
+   </div>
+  </div>`;
+ }).join("");
+
+ if(!sections.trim()){
+  return '<div class="empty">表示できるグッズがないよ（数量0のキャラは非表示）</div>';
+ }
+
+ return `<div class="screenshot"><div class="ss-title">${escapeHtml(title)}</div>${sections}</div>`;
 }
 function showMayoiScreenshot(){
  document.getElementById("mayoiHome").style.display="none";
@@ -455,6 +481,7 @@ function updatePromiseDetail(existing=[]){
  if(!selected.length){area.innerHTML="";return;}
  const oldMap={};existing.forEach(c=>oldMap[c.full]=c);
  const purchase=Math.max(0,Number(document.getElementById("promisePurchaseQty").value)||0);
+
  area.innerHTML=selected.map(c=>{
   const old=oldMap[c.full]||{};
   const promised=Number(old.promised)||0;
@@ -474,23 +501,47 @@ function updateAllPromiseRemaining(){
 async function savePromise(){
  const selected=getSelectedCharacters("promiseCharacterList");
  if(!selected.length){alert("キャラを1人以上選択してね！");return;}
+
  const purchaseQty=Math.max(0,Number(document.getElementById("promisePurchaseQty").value)||0);
  const rows=[...document.querySelectorAll("#promiseDetail .promise-row")];
+
  const characters=selected.map((c,i)=>{
   const promised=Math.max(0,Number(rows[i]?.querySelector("[data-promised]")?.value)||0);
-  return {...c,qty:purchaseQty,promised,remaining:Math.max(0,purchaseQty-promised),retrade:Math.max(0,Number(rows[i]?.querySelector("[data-retrade]")?.value)||0)};
+  return {
+   ...c,
+   qty:purchaseQty,
+   promised,
+   remaining:Math.max(0,purchaseQty-promised),
+   retrade:Math.max(0,Number(rows[i]?.querySelector("[data-retrade]")?.value)||0)
+  };
  });
+
  const old=promiseData.find(x=>x.id===editingPromiseId);
  let image=old?.image||"";
  const file=document.getElementById("promiseImage").files[0];
  if(file)image=await compressImage(await fileToDataUrl(file));
- const item={id:editingPromiseId||uid(),type:document.getElementById("promiseType").value,image,purchaseQty,characters};
+
+ const item={
+  id:editingPromiseId||uid(),
+  type:document.getElementById("promiseType").value,
+  image,
+  purchaseQty,
+  characters
+ };
+
  const index=promiseData.findIndex(x=>x.id===item.id);
- if(index>=0)promiseData[index]=item;else promiseData.push(item);
- saveLocal();editingPromiseId=null;alert("保存したよ！");closePromiseForm();
+ if(index>=0)promiseData[index]=item;
+ else promiseData.push(item);
+
+ saveLocal();
+ editingPromiseId=null;
+ alert("保存したよ！");
+ closePromiseForm();
 }
 function editPromise(id){
- const item=promiseData.find(x=>x.id===id);if(!item)return;
+ const item=promiseData.find(x=>x.id===id);
+ if(!item)return;
+
  editingPromiseId=id;
  document.getElementById("promiseHome").style.display="none";
  document.getElementById("promiseForm").style.display="block";
@@ -499,24 +550,40 @@ function editPromise(id){
  document.getElementById("promiseType").value=item.type;
  document.getElementById("promisePurchaseQty").value=Number(item.purchaseQty??item.characters?.[0]?.qty??0);
  document.getElementById("promiseImage").value="";
+
  const p=document.getElementById("promiseImagePreview");
- p.src=item.image||"";p.style.display=item.image?"block":"none";
+ p.src=item.image||"";
+ p.style.display=item.image?"block":"none";
+
  renderCharacterList("promiseCharacterList",(item.characters||[]).map(c=>c.full));
  updatePromiseDetail(item.characters||[]);
 }
 function deletePromise(id){
  if(!confirm("この仮約束を削除する？"))return;
- promiseData=promiseData.filter(x=>x.id!==id);saveLocal();renderPromiseList();
+ promiseData=promiseData.filter(x=>x.id!==id);
+ saveLocal();
+ renderPromiseList();
 }
 function renderPromiseList(){
  const box=document.getElementById("promiseList");
- if(!promiseData.length){box.innerHTML='<div class="empty">まだ登録がないよ</div>';return;}
+ if(!promiseData.length){
+  box.innerHTML='<div class="empty">まだ登録がないよ</div>';
+  return;
+ }
+
  box.innerHTML=promiseData.map(item=>{
   const purchase=Number(item.purchaseQty??item.characters?.[0]?.qty??0);
-  return `<div class="saved"><div class="saved-top"><div class="saved-type">${escapeHtml(item.type)} <span style="font-size:11px;color:#888">×${purchase}</span></div>
-  <div class="saved-actions"><button onclick="editPromise('${item.id}')">編集</button><button onclick="deletePromise('${item.id}')">削除</button></div></div>
-  ${item.image?`<img src="${item.image}" class="saved-image">`:""}
-  <div class="chips">${(item.characters||[]).map(c=>`<span class="chip">${escapeHtml(c.short)} ${Math.max(0,purchase-Number(c.promised||0))}${Number(c.retrade)?` ⑩${Number(c.retrade)}`:""}</span>`).join("")}</div></div>`;
+  return `<div class="saved">
+   <div class="saved-top">
+    <div class="saved-type">${escapeHtml(item.type)} <span style="font-size:11px;color:#888">×${purchase}</span></div>
+    <div class="saved-actions">
+     <button onclick="editPromise('${item.id}')">編集</button>
+     <button onclick="deletePromise('${item.id}')">削除</button>
+    </div>
+   </div>
+   ${item.image?`<img src="${item.image}" class="saved-image">`:""}
+   <div class="chips">${(item.characters||[]).map(c=>`<span class="chip">${escapeHtml(c.short)} ${Math.max(0,purchase-Number(c.promised||0))}${Number(c.retrade)?` ★${Number(c.retrade)}`:""}</span>`).join("")}</div>
+  </div>`;
  }).join("");
 }
 function showPromiseScreenshot(){
