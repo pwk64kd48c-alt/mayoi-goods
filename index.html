@@ -50,19 +50,95 @@ input[type="file"]{width:100%}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
 .chip{background:#eee;border-radius:20px;padding:4px 8px;font-size:11px}
 .empty{text-align:center;color:#999;padding:30px 10px}
-.screenshot{background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px}
-.ss-title{text-align:center;font-weight:bold;font-size:17px;margin-bottom:10px}
-.ss-section{margin-bottom:14px}
-.ss-type{font-weight:bold;font-size:13px;border-bottom:1px solid #ddd;padding-bottom:4px;margin-bottom:3px}
-.ss-legend{color:#777;font-size:10px;margin:3px 0 6px}
-.ss-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px 7px}
-.ss-grid.cols4,.ss-grid.cols3{grid-template-columns:repeat(4,minmax(0,1fr));gap:2px 7px}
-/* スクショの画像まわりの余白を抑え、縦長になりすぎないようにする */
-.ss-image{display:block;width:100%;height:150px;object-fit:contain;margin:4px auto 7px;border-radius:6px}
-.ss-row{display:flex;justify-content:space-between;align-items:baseline;gap:2px;min-width:0;border-bottom:1px dotted #ddd;padding:3px 0;font-size:11px}
-.ss-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ss-quantity{flex-shrink:0;white-space:nowrap;font-variant-numeric:tabular-nums}
-.retrade{font-size:10px;margin-left:3px;color:#777}
+
+/* スクショ */
+.screenshot{
+ background:#fff;
+ border:1px solid #e2e2e2;
+ border-radius:12px;
+ padding:10px;
+}
+.ss-title{
+ text-align:center;
+ font-weight:bold;
+ font-size:17px;
+ margin:0 0 12px;
+ padding-bottom:8px;
+ border-bottom:1px solid #eee;
+}
+.ss-section{margin-bottom:13px}
+.ss-type{
+ font-weight:bold;
+ font-size:13px;
+ border-left:3px solid #888;
+ padding:3px 0 3px 7px;
+ margin-bottom:3px;
+}
+.ss-legend{color:#777;font-size:10px;margin:4px 0 5px}
+
+/* 4列を維持 */
+.ss-grid{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:3px 6px;
+ align-items:start;
+}
+.ss-grid.cols4,.ss-grid.cols3{
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:3px 6px;
+}
+
+/* 画像は大きくなりすぎないように */
+.ss-image{
+ display:block;
+ width:100%;
+ height:125px;
+ object-fit:contain;
+ margin:5px auto 7px;
+ border-radius:6px;
+}
+
+/* 名前と個数を分けて読みやすく */
+.ss-row{
+ display:grid;
+ grid-template-columns:minmax(0,1fr) auto;
+ align-items:baseline;
+ gap:3px;
+ min-width:0;
+ min-height:23px;
+ padding:4px 3px;
+ border-bottom:1px solid #eee;
+ font-size:11px;
+ line-height:1.35;
+}
+
+/* キャラ名 */
+.ss-name{
+ min-width:0;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+ font-weight:500;
+}
+
+/* 個数は右揃えで固定 */
+.ss-quantity{
+ flex-shrink:0;
+ white-space:nowrap;
+ text-align:right;
+ font-size:11px;
+ font-weight:600;
+ font-variant-numeric:tabular-nums;
+}
+
+/* 再交換分 */
+.retrade{
+ font-size:9px;
+ margin-left:2px;
+ color:#777;
+ font-weight:500;
+}
+
 .promise-head,.promise-row{display:grid;grid-template-columns:1fr 70px 70px 70px;gap:6px;align-items:center}
 .promise-head{color:#888;font-size:10px;margin-bottom:5px}
 .promise-row{margin-bottom:7px}
@@ -72,23 +148,41 @@ input[type="file"]{width:100%}
 .purchase-box label{margin-bottom:7px}
 .purchase-box input{text-align:center;font-size:17px;font-weight:bold}
 .back{margin-bottom:12px}
+
 @media(max-width:430px){
-.promise-head,.promise-row{grid-template-columns:1fr 52px 52px 52px;gap:4px}
-.promise-row input{padding:7px 1px;font-size:12px}
-.promise-head{font-size:9px}
-.ss-grid,.ss-grid.cols4,.ss-grid.cols3{grid-template-columns:repeat(4,minmax(0,1fr));gap:2px 5px}
-.ss-row{font-size:10px}
-.ss-quantity{font-size:10px}
-.ss-image{height:130px}
+ main{padding:10px}
+ .promise-head,.promise-row{grid-template-columns:1fr 52px 52px 52px;gap:4px}
+ .promise-row input{padding:7px 1px;font-size:12px}
+ .promise-head{font-size:9px}
+
+ /* スマホでも4列を維持 */
+ .ss-grid,.ss-grid.cols4,.ss-grid.cols3{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:3px 5px;
+ }
+ .ss-row{
+  font-size:10px;
+  min-height:22px;
+  padding:4px 2px;
+  gap:2px;
+ }
+ .ss-name{font-size:10px}
+ .ss-quantity{font-size:10px}
+ .retrade{font-size:9px;margin-left:1px}
+ .ss-image{height:115px}
+ .screenshot{padding:8px}
 }
 </style>
 </head>
 <body>
+
 <header><h1>迷子グッズ</h1></header>
+
 <div class="nav">
 <button id="navMayoi" class="active" onclick="showScreen('mayoi')">🧸 迷子</button>
 <button id="navPromise" onclick="showScreen('promise')">🤝 仮約束</button>
 </div>
+
 <main>
 <section id="mayoiScreen" class="screen active">
 <div id="mayoiHome">
@@ -98,21 +192,25 @@ input[type="file"]{width:100%}
 <button class="sub full" onclick="showMayoiScreenshot()">📸 スクショ用を見る</button>
 <div id="mayoiList"></div>
 </div>
+
 <div id="mayoiForm" style="display:none">
 <button class="sub back" onclick="closeMayoiForm()">← 戻る</button>
 <div class="title" id="mayoiFormTitle">迷子グッズを登録</div>
 <div class="card">
+
 <div class="group">
 <label>グッズ種類</label>
 <select id="mayoiType">
 <option>ぱしゃっつ</option><option>缶バッジ</option><option>アクスタ</option><option>チェキ</option><option>カード</option><option>ぬいぐるみ</option><option>その他</option>
 </select>
 </div>
+
 <div class="group">
 <label>グッズ画像</label>
 <input type="file" id="mayoiImage" accept="image/*" onchange="previewImage('mayoiImage','imagePreview')">
 <img id="imagePreview" class="preview" style="display:none">
 </div>
+
 <div class="group">
 <label>キャラ</label>
 <div class="note">画像にいるキャラを選択してね。全員選択もできるよ！</div>
@@ -122,16 +220,19 @@ input[type="file"]{width:100%}
 </div>
 <div id="characterList"></div>
 </div>
+
 <div id="quantityArea"></div>
 <button class="primary" onclick="saveMayoi()">保存する</button>
 </div>
 </div>
+
 <div id="mayoiScreenshot" style="display:none">
 <button class="sub back" onclick="closeMayoiScreenshot()">← 戻る</button>
 <div class="title">📸 スクショ用</div>
 <div id="mayoiScreenshotContent"></div>
 </div>
 </section>
+
 <section id="promiseScreen" class="screen">
 <div id="promiseHome">
 <div class="title">🤝 仮約束</div>
@@ -140,25 +241,30 @@ input[type="file"]{width:100%}
 <button class="sub full" onclick="showPromiseScreenshot()">📸 スクショ用を見る</button>
 <div id="promiseList"></div>
 </div>
+
 <div id="promiseForm" style="display:none">
 <button class="sub back" onclick="closePromiseForm()">← 戻る</button>
 <div class="title" id="promiseFormTitle">仮約束を登録</div>
 <div class="card">
+
 <div class="group">
 <label>グッズ種類</label>
 <select id="promiseType">
 <option>ぱしゃっつ</option><option>缶バッジ</option><option>アクスタ</option><option>チェキ</option><option>カード</option><option>ぬいぐるみ</option><option>その他</option>
 </select>
 </div>
+
 <div class="group">
 <label>グッズ画像</label>
 <input type="file" id="promiseImage" accept="image/*" onchange="previewImage('promiseImage','promiseImagePreview')">
 <img id="promiseImagePreview" class="preview" style="display:none">
 </div>
+
 <div class="group purchase-box">
 <label>購入数</label>
 <input type="number" id="promisePurchaseQty" min="0" value="1" oninput="updateAllPromiseRemaining()">
 </div>
+
 <div class="group">
 <label>キャラ</label>
 <div class="note">画像にいるキャラを選択してね。全員選択もできるよ！</div>
@@ -168,13 +274,16 @@ input[type="file"]{width:100%}
 </div>
 <div id="promiseCharacterList"></div>
 </div>
+
 <div class="group">
 <div class="promise-head"><span>キャラ</span><span>約束</span><span>残り</span><span>再交換</span></div>
 <div id="promiseDetail"></div>
 </div>
+
 <button class="primary" onclick="savePromise()">保存する</button>
 </div>
 </div>
+
 <div id="promiseScreenshot" style="display:none">
 <button class="sub back" onclick="closePromiseScreenshot()">← 戻る</button>
 <div class="title">📸 スクショ用</div>
@@ -182,6 +291,7 @@ input[type="file"]{width:100%}
 </div>
 </section>
 </main>
+
 <script>
 const MAYOI_KEY="mayoiGoodsData";
 const PROMISE_KEY="mayoiPromiseData";
@@ -215,18 +325,22 @@ function loadData(key){
  try{return JSON.parse(localStorage.getItem(key)||"[]");}
  catch(e){return [];}
 }
+
 function saveLocal(){
  localStorage.setItem(MAYOI_KEY,JSON.stringify(mayoiData));
  localStorage.setItem(PROMISE_KEY,JSON.stringify(promiseData));
 }
+
 function escapeHtml(s){
  return String(s??"").replace(/[&<>"']/g,c=>({
  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
  })[c]);
 }
+
 function uid(){
  return Date.now().toString(36)+Math.random().toString(36).slice(2);
 }
+
 function compressImage(data){
  return new Promise((resolve,reject)=>{
   if(!data){resolve("");return;}
@@ -243,9 +357,11 @@ function compressImage(data){
    canvas.getContext("2d").drawImage(img,0,0,w,h);
    resolve(canvas.toDataURL("image/jpeg",0.75));
   };
-  img.onerror=reject;img.src=data;
+  img.onerror=reject;
+  img.src=data;
  });
 }
+
 function fileToDataUrl(file){
  return new Promise((resolve,reject)=>{
   if(!file){resolve("");return;}
@@ -255,26 +371,33 @@ function fileToDataUrl(file){
   r.readAsDataURL(file);
  });
 }
+
 function previewImage(inputId,previewId){
  const file=document.getElementById(inputId).files[0];
  if(!file)return;
  const r=new FileReader();
  r.onload=e=>{
   const p=document.getElementById(previewId);
-  p.src=e.target.result;p.style.display="block";
+  p.src=e.target.result;
+  p.style.display="block";
  };
  r.readAsDataURL(file);
 }
+
 function showScreen(type){
  const mayoi=type==="mayoi";
  document.getElementById("mayoiScreen").classList.toggle("active",mayoi);
  document.getElementById("promiseScreen").classList.toggle("active",!mayoi);
  document.getElementById("navMayoi").classList.toggle("active",mayoi);
  document.getElementById("navPromise").classList.toggle("active",!mayoi);
- closeMayoiForm();closeMayoiScreenshot();
- closePromiseForm();closePromiseScreenshot();
- renderMayoiList();renderPromiseList();
+ closeMayoiForm();
+ closeMayoiScreenshot();
+ closePromiseForm();
+ closePromiseScreenshot();
+ renderMayoiList();
+ renderPromiseList();
 }
+
 function renderCharacterList(containerId,selected=[]){
  const box=document.getElementById(containerId);
  let html="";
@@ -294,27 +417,38 @@ function renderCharacterList(containerId,selected=[]){
  if(containerId==="characterList")updateQuantityArea();
  else updatePromiseDetail();
 }
+
 function characterChanged(input,containerId){
  input.closest(".char").classList.toggle("selected",input.checked);
  if(containerId==="characterList")updateQuantityArea();
  else updatePromiseDetail();
 }
+
 function getSelectedCharacters(containerId){
  return [...document.querySelectorAll(`#${containerId} input:checked`)]
  .map(i=>({full:i.value,short:i.dataset.short}));
 }
+
 function selectAll(containerId){
  document.querySelectorAll(`#${containerId} input[type=checkbox]`)
- .forEach(i=>{i.checked=true;i.closest(".char").classList.add("selected");});
+ .forEach(i=>{
+  i.checked=true;
+  i.closest(".char").classList.add("selected");
+ });
  if(containerId==="characterList")updateQuantityArea();
  else updatePromiseDetail();
 }
+
 function clearAll(containerId){
  document.querySelectorAll(`#${containerId} input[type=checkbox]`)
- .forEach(i=>{i.checked=false;i.closest(".char").classList.remove("selected");});
+ .forEach(i=>{
+  i.checked=false;
+  i.closest(".char").classList.remove("selected");
+ });
  if(containerId==="characterList")updateQuantityArea();
  else updatePromiseDetail();
 }
+
 function selectAllMayoi(){selectAll("characterList");}
 function clearAllMayoi(){clearAll("characterList");}
 function selectAllPromise(){selectAll("promiseCharacterList");}
@@ -333,11 +467,13 @@ function openMayoiForm(){
  document.getElementById("imagePreview").src="";
  renderCharacterList("characterList",[]);
 }
+
 function closeMayoiForm(){
  document.getElementById("mayoiForm").style.display="none";
  document.getElementById("mayoiHome").style.display="block";
  renderMayoiList();
 }
+
 function updateQuantityArea(existing=[]){
  const selected=getSelectedCharacters("characterList");
  const area=document.getElementById("quantityArea");
@@ -353,6 +489,7 @@ function updateQuantityArea(existing=[]){
   <input type="number" min="0" value="${Number(old.retrade)||0}" data-retrade></div>`;
  }).join("");
 }
+
 async function saveMayoi(){
  const selected=getSelectedCharacters("characterList");
  if(!selected.length){alert("キャラを1人以上選択してね！");return;}
@@ -366,13 +503,24 @@ async function saveMayoi(){
  let image=old?.image||"";
  const file=document.getElementById("mayoiImage").files[0];
  if(file)image=await compressImage(await fileToDataUrl(file));
- const item={id:editingMayoiId||uid(),type:document.getElementById("mayoiType").value,image,characters};
+ const item={
+  id:editingMayoiId||uid(),
+  type:document.getElementById("mayoiType").value,
+  image,
+  characters
+ };
  const index=mayoiData.findIndex(x=>x.id===item.id);
- if(index>=0)mayoiData[index]=item;else mayoiData.push(item);
- saveLocal();editingMayoiId=null;alert("保存したよ！");closeMayoiForm();
+ if(index>=0)mayoiData[index]=item;
+ else mayoiData.push(item);
+ saveLocal();
+ editingMayoiId=null;
+ alert("保存したよ！");
+ closeMayoiForm();
 }
+
 function editMayoi(id){
- const item=mayoiData.find(x=>x.id===id);if(!item)return;
+ const item=mayoiData.find(x=>x.id===id);
+ if(!item)return;
  editingMayoiId=id;
  document.getElementById("mayoiHome").style.display="none";
  document.getElementById("mayoiForm").style.display="block";
@@ -381,45 +529,56 @@ function editMayoi(id){
  document.getElementById("mayoiType").value=item.type;
  document.getElementById("mayoiImage").value="";
  const p=document.getElementById("imagePreview");
- p.src=item.image||"";p.style.display=item.image?"block":"none";
+ p.src=item.image||"";
+ p.style.display=item.image?"block":"none";
  renderCharacterList("characterList",(item.characters||[]).map(c=>c.full));
  updateQuantityArea(item.characters||[]);
 }
+
 function deleteMayoi(id){
  if(!confirm("この迷子グッズを削除する？"))return;
- mayoiData=mayoiData.filter(x=>x.id!==id);saveLocal();renderMayoiList();
+ mayoiData=mayoiData.filter(x=>x.id!==id);
+ saveLocal();
+ renderMayoiList();
 }
+
 function renderMayoiList(){
  const box=document.getElementById("mayoiList");
- if(!mayoiData.length){box.innerHTML='<div class="empty">まだ登録がないよ</div>';return;}
+ if(!mayoiData.length){
+  box.innerHTML='<div class="empty">まだ登録がないよ</div>';
+  return;
+ }
  box.innerHTML=mayoiData.map(item=>`
- <div class="saved"><div class="saved-top"><div class="saved-type">${escapeHtml(item.type)}</div>
- <div class="saved-actions"><button onclick="editMayoi('${item.id}')">編集</button>
- <button onclick="deleteMayoi('${item.id}')">削除</button></div></div>
+ <div class="saved">
+ <div class="saved-top">
+ <div class="saved-type">${escapeHtml(item.type)}</div>
+ <div class="saved-actions">
+ <button onclick="editMayoi('${item.id}')">編集</button>
+ <button onclick="deleteMayoi('${item.id}')">削除</button>
+ </div></div>
  ${item.image?`<img src="${item.image}" class="saved-image">`:""}
- <div class="chips">${(item.characters||[]).map(c=>`<span class="chip">${escapeHtml(c.short)} ${Number(c.qty)||0}${Number(c.retrade)?` ★${Number(c.retrade)}`:""}</span>`).join("")}</div></div>`).join("");
+ <div class="chips">${(item.characters||[]).map(c=>`<span class="chip">${escapeHtml(c.short)} ${Number(c.qty)||0}${Number(c.retrade)?` ★${Number(c.retrade)}`:""}</span>`).join("")}</div>
+ </div>`).join("");
 }
 
 /* スクショ表示 */
 function getScreenshotGridClass(type){
  return "cols4";
 }
+
 function makeScreenshot(data,title,isPromise){
  if(!data.length)return '<div class="empty">まだ登録がないよ</div>';
 
  const sections=data.map(item=>{
   const purchase=Number(item.purchaseQty??item.characters?.[0]?.qty??0);
 
-  /* 表示用の数量を計算。保存済みデータは変更しない */
   const visibleCharacters=(item.characters||[]).map(c=>{
    const qty=isPromise
     ?Math.max(0,purchase-Number(c.promised||0))
     :Math.max(0,Number(c.qty)||0);
-
    return {...c,displayQty:qty};
   }).filter(c=>c.displayQty>0);
 
-  /* 表示するキャラがいないグッズは非表示 */
   if(!visibleCharacters.length)return "";
 
   return `<div class="ss-section">
@@ -444,12 +603,14 @@ function makeScreenshot(data,title,isPromise){
 
  return `<div class="screenshot"><div class="ss-title">${escapeHtml(title)}</div>${sections}</div>`;
 }
+
 function showMayoiScreenshot(){
  document.getElementById("mayoiHome").style.display="none";
  document.getElementById("mayoiForm").style.display="none";
  document.getElementById("mayoiScreenshot").style.display="block";
  document.getElementById("mayoiScreenshotContent").innerHTML=makeScreenshot(mayoiData,"迷子グッズ",false);
 }
+
 function closeMayoiScreenshot(){
  document.getElementById("mayoiScreenshot").style.display="none";
  document.getElementById("mayoiHome").style.display="block";
@@ -467,19 +628,23 @@ function openPromiseForm(){
  document.getElementById("promisePurchaseQty").value=1;
  document.getElementById("promiseImage").value="";
  const p=document.getElementById("promiseImagePreview");
- p.src="";p.style.display="none";
+ p.src="";
+ p.style.display="none";
  renderCharacterList("promiseCharacterList",[]);
 }
+
 function closePromiseForm(){
  document.getElementById("promiseForm").style.display="none";
  document.getElementById("promiseHome").style.display="block";
  renderPromiseList();
 }
+
 function updatePromiseDetail(existing=[]){
  const selected=getSelectedCharacters("promiseCharacterList");
  const area=document.getElementById("promiseDetail");
  if(!selected.length){area.innerHTML="";return;}
- const oldMap={};existing.forEach(c=>oldMap[c.full]=c);
+ const oldMap={};
+ existing.forEach(c=>oldMap[c.full]=c);
  const purchase=Math.max(0,Number(document.getElementById("promisePurchaseQty").value)||0);
 
  area.innerHTML=selected.map(c=>{
@@ -491,6 +656,7 @@ function updatePromiseDetail(existing=[]){
   <input type="number" min="0" value="${Number(old.retrade)||0}" data-retrade></div>`;
  }).join("");
 }
+
 function updateAllPromiseRemaining(){
  const purchase=Math.max(0,Number(document.getElementById("promisePurchaseQty").value)||0);
  document.querySelectorAll("#promiseDetail .promise-row").forEach(row=>{
@@ -498,6 +664,7 @@ function updateAllPromiseRemaining(){
   row.querySelector("[data-premain]").value=Math.max(0,purchase-promised);
  });
 }
+
 async function savePromise(){
  const selected=getSelectedCharacters("promiseCharacterList");
  if(!selected.length){alert("キャラを1人以上選択してね！");return;}
@@ -538,6 +705,7 @@ async function savePromise(){
  alert("保存したよ！");
  closePromiseForm();
 }
+
 function editPromise(id){
  const item=promiseData.find(x=>x.id===id);
  if(!item)return;
@@ -558,12 +726,14 @@ function editPromise(id){
  renderCharacterList("promiseCharacterList",(item.characters||[]).map(c=>c.full));
  updatePromiseDetail(item.characters||[]);
 }
+
 function deletePromise(id){
  if(!confirm("この仮約束を削除する？"))return;
  promiseData=promiseData.filter(x=>x.id!==id);
  saveLocal();
  renderPromiseList();
 }
+
 function renderPromiseList(){
  const box=document.getElementById("promiseList");
  if(!promiseData.length){
@@ -586,12 +756,14 @@ function renderPromiseList(){
   </div>`;
  }).join("");
 }
+
 function showPromiseScreenshot(){
  document.getElementById("promiseHome").style.display="none";
  document.getElementById("promiseForm").style.display="none";
  document.getElementById("promiseScreenshot").style.display="block";
  document.getElementById("promiseScreenshotContent").innerHTML=makeScreenshot(promiseData,"仮約束",true);
 }
+
 function closePromiseScreenshot(){
  document.getElementById("promiseScreenshot").style.display="none";
  document.getElementById("promiseHome").style.display="block";
